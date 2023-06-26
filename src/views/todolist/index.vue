@@ -4,7 +4,7 @@ import { useHomeStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import { Minus, Plus } from '@element-plus/icons-vue';
 import type { FormInstance, FormRules } from 'element-plus';
-import type { groupItem } from '@/types';
+import type { groupItem, itemType } from '@/types';
 // 数字滚动
 let count = reactive([0, 0]);
 const number1 = ref(0);
@@ -28,13 +28,13 @@ home.A_GET_TASK_GROUP();
 const homeInfo = storeToRefs(home);
 const getlist = computed(() => homeInfo.todoData.value);
 //修改分组标题
-const editTitle = (e: String, groupId: String | Number) => {
+const editTitle = async (e: String, groupId: String | Number) => {
   if (e) {
     let data = {
       group_title: e,
       id: groupId,
     };
-    home.A_CREATE_TASK_GROUP(data);
+    let res = await home.A_CREATE_TASK_GROUP(data);
   }
 };
 // 使用 watch 函数进行深度监听
@@ -61,12 +61,12 @@ watch(
 );
 
 const groupIndex = ref<Number>();
-let listItem = reactive({
+let listItem = reactive<itemType>({
   title: '',
   description: '',
   level: 0,
   imgs: [],
-  id: null,
+  id: '',
 });
 const addItem = (group_id: Number) => {
   groupIndex.value = group_id;
@@ -85,6 +85,7 @@ const handleClose = () => {
     description: '',
     level: 0,
     imgs: [],
+    id: '',
   });
   ruleFormRef.value.clearValidate();
   // ruleFormRef.value.resetFields();
@@ -114,7 +115,7 @@ const rules = reactive<InstanceType<typeof FormRules>>({
 });
 //提交表单
 const trueForm = async () => {
-  await ruleFormRef.value.validate((valid, fields) => {
+  await ruleFormRef.value.validate((valid: boolean, fields: any) => {
     if (valid) {
       home.A_CREATED_TASK({
         group_id: groupIndex.value,
@@ -128,8 +129,13 @@ const trueForm = async () => {
 };
 
 //附件
-const preview = (img: any) => {};
-const fileInput = ref(null);
+const preview = (img: any) => {
+  console.log('src', img);
+};
+const fileInput = ref<any>(null);
+const reduceFile = () => {
+  listItem.imgs.splice(0, listItem.imgs.length);
+};
 const clickFileInput = () => {
   if (fileInput.value) {
     fileInput.value.click();
@@ -144,9 +150,12 @@ const fileChange = (e: any) => {
   reader.readAsDataURL(file);
   reader.onload = function (e) {
     console.log(reader.result);
-    listItem.imgs.push(reader.result);
+    let arr = [];
+    arr.push(reader.result);
+    listItem.imgs = arr;
   };
 };
+
 const LEVEL_LIST = reactive([
   {
     value: 0,
@@ -162,9 +171,17 @@ const LEVEL_LIST = reactive([
   },
 ]);
 //编辑
-const editEcho = (e) => {
-  groupIndex.value = e.group_id;
-  listItem = reactive(e);
+const editEcho = (item: any) => {
+  groupIndex.value = item.group_id;
+  let imglist = item.enclosure ? reactive([item.enclosure]) : reactive([]);
+  listItem = reactive<itemType>(
+    Object.assign(
+      {
+        imgs: imglist,
+      },
+      item
+    )
+  );
   dialogVisible.value = true;
 };
 //新建分组
@@ -178,7 +195,7 @@ const addNewGroup = () => {
   groupVisible.value = true;
 };
 const TrueCreateGroup = async () => {
-  await addGroupRef.value.validate((valid, fields) => {
+  await addGroupRef.value.validate((valid: boolean, fields: any) => {
     if (valid) {
       home.A_CREATE_TASK_GROUP(groupData);
       groupClose();
@@ -279,13 +296,20 @@ const observeBox = () => {
           <div class="img_pre">
             <img
               class="img_sinple"
-              :src="img"
+              :src="String(img)"
               @click="preview(img)"
               v-for="(img, index) in listItem.imgs"
               :key="index"
             />
-            <div class="add-img-btn" @click="clickFileInput">
+            <div
+              v-if="listItem.imgs.length == 0"
+              class="add-img-btn"
+              @click="clickFileInput"
+            >
               <Plus></Plus>
+            </div>
+            <div v-else class="add-img-btn" @click="reduceFile">
+              <Minus></Minus>
             </div>
             <input
               class="file-input"
@@ -475,8 +499,11 @@ const observeBox = () => {
   display: flex;
   vertical-align: baseline;
   .img_sinple {
-    width: 50px;
-    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 100px;
+    max-height: 100px;
+    background-image: contain;
     margin-right: 10px;
   }
   .add-img-btn {

@@ -60,7 +60,7 @@ export const useHomeStore = defineStore('home', {
     },
     // 创建任务分组
     A_CREATE_TASK_GROUP(data: object) {
-      http('POST', '/task/create-task-group', true, data).then(() => {
+      http('POST', '/task/create-task-group', true, data).then((res) => {
         this.A_GET_TASK_GROUP();
       });
     },

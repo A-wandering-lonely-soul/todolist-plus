@@ -19,3 +19,10 @@ export interface groupItem {
   group_title: string;
   list: List[];
 }
+export interface itemType {
+  title: string;
+  description: string;
+  level: number;
+  imgs: (string | ArrayBuffer | null)[];
+  id?: string | number;
+}
