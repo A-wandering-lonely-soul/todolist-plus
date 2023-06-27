@@ -1,3 +1,8 @@
+export interface result {
+  success: boolean;
+  msg: string;
+  data: Data;
+}
 export interface Enclosure {
   type: string;
   data: number[];

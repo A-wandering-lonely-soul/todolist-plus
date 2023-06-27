@@ -1,5 +1,6 @@
 import axios, { type Method } from 'axios';
 import { ElMessage } from 'element-plus';
+
 const instance = axios.create({
   baseURL: '/api',
   headers: {
@@ -10,7 +11,7 @@ const instance = axios.create({
 
 // 添加请求拦截器
 instance.interceptors.request.use(
-  function (config) {
+  function (config: any) {
     // 在发送请求之前做些什么
     const headers = (config.headers = config.headers || {});
     // 在发送请求之前做些什么

@@ -1,7 +1,8 @@
 import instance, { http } from '@/utils/request';
 import { todoStorage } from '@/utils/storage';
 import { defineStore } from 'pinia';
-
+import { ElMessage } from 'element-plus';
+import type { result } from '@/types';
 export const useHomeStore = defineStore('home', {
   // persist: true,
   // 写法2
@@ -33,6 +34,10 @@ export const useHomeStore = defineStore('home', {
     A_LOGIN(data: object) {
       http('POST', '/user/login', true, data).then(
         (resp) => {
+          ElMessage({
+            type: resp.data.success ? 'success' : 'error',
+            message: resp.data.msg,
+          });
           return Promise.resolve(resp);
         },
         (err) => {
@@ -50,24 +55,40 @@ export const useHomeStore = defineStore('home', {
     A_CREATED_TASK(data: object) {
       http('POST', '/task/update-task', true, data).then((res) => {
         this.A_GET_TASK_GROUP();
+        ElMessage({
+          type: res.data.success ? 'success' : 'error',
+          message: res.data.msg,
+        });
       });
     },
     //删除任务
     A_DELETE_TASK(data: object) {
-      http('POST', '/task/delete-task', true, data).then(() => {
+      http('POST', '/task/delete-task', true, data).then((res) => {
         this.A_GET_TASK_GROUP();
+        ElMessage({
+          type: res.data.success ? 'success' : 'error',
+          message: res.data.msg,
+        });
       });
     },
     // 创建任务分组
     A_CREATE_TASK_GROUP(data: object) {
       http('POST', '/task/create-task-group', true, data).then((res) => {
         this.A_GET_TASK_GROUP();
+        ElMessage({
+          type: res.data.success ? 'success' : 'error',
+          message: res.data.msg,
+        });
       });
     },
     // 删除任务分组
     A_DELETE_TASK_GROUP(data: object) {
-      http('POST', '/task/delete-task-group', true, data).then(() => {
+      http('POST', '/task/delete-task-group', true, data).then((res) => {
         this.A_GET_TASK_GROUP();
+        ElMessage({
+          type: res.data.success ? 'success' : 'error',
+          message: res.data.msg,
+        });
       });
     },
     // 获取所有任务

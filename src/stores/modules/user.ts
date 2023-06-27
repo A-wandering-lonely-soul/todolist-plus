@@ -15,9 +15,8 @@ export const userInfoStore = defineStore('user', {
       localStorage.removeItem('userCount');
     },
     loginOut() {
-      localStorage.removeItem('userCount');
+      // localStorage.removeItem('userCount');
       localStorage.removeItem('x-token');
-      localStorage.removeItem('TODO_LIST_DATA');
       localStorage.removeItem('TODO_LIST_DATA');
     },
   },

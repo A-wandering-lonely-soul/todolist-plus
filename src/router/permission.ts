@@ -3,7 +3,6 @@ import { ElMessage } from 'element-plus';
 // 路由守卫
 router.beforeEach((to, from, next) => {
   const getToken = localStorage.getItem('x-token');
-
   if (getToken) {
     //token存在则不允许会登录页
     if (to.path === '/login' || to.path === '/Login') {

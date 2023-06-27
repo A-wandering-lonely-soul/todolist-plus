@@ -98,8 +98,11 @@ app.post("/user/login", (req, res) => {
 		});
 		user.token = token;
 		res.header("x-token", token);
-
-		res.send(user);
+		res.send({
+			success: true,
+			msg: "登录成功",
+			data: user,
+		});
 	});
 });
 /**
@@ -206,7 +209,11 @@ apiRoutes.post("/task/create-task-group", (req, res) => {
 			console.log("[SELECT ERROR]:", err.message);
 			return sendError(res, err.message);
 		}
-		res.send(result);
+		res.send({
+			success: true,
+			msg: id ? "修改分组成功" : "创建分组成功",
+			data: result,
+		});
 	});
 });
 
@@ -240,7 +247,11 @@ function delTasklistWithGroup(id, res) {
 			console.log("[SELECT ERROR]:", err.message);
 			return sendError(res, err.message);
 		}
-		res.send(result);
+		res.send({
+			success: true,
+			msg: "删除分组成功",
+			data: result,
+		});
 	});
 }
 /**
@@ -259,7 +270,11 @@ apiRoutes.post("/task/delete-task", (req, res) => {
 			console.log("[SELECT ERROR]:", err.message);
 			return sendError(res, err.message);
 		}
-		res.send(result);
+		res.send({
+			success: true,
+			msg: "删除任务成功",
+			data: result,
+		});
 	});
 });
 
@@ -296,7 +311,11 @@ apiRoutes.post("/task/update-task", (req, res) => {
 			console.log("[SELECT ERROR]:", err.message);
 			return sendError(res, err.message);
 		}
-		res.send(result);
+		res.send({
+			success: true,
+			msg: id ? "编辑成功" : "创建任务成功",
+			data: result,
+		});
 	});
 });
 
