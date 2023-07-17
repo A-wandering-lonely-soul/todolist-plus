@@ -4,6 +4,7 @@ import App from './App.vue';
 
 // 引入组件
 import XxtUI from '@/components/index';
+import VueQrcode from '@chenfengyuan/vue-qrcode'; //生成二维码组件
 
 import 'normalize.css'; //所有标签样式统一
 import '@/assets/styles/common.less'; //公共样式
@@ -22,3 +23,4 @@ app.use(permission);
 app.use(router);
 app.use(pinia);
 app.mount('#app');
+app.component(VueQrcode.name, VueQrcode);

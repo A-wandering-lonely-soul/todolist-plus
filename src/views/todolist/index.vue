@@ -205,7 +205,7 @@ const TrueCreateGroup = async () => {
   });
 };
 onMounted(() => {
-  console.log('todoData', toRaw(homeInfo.todoData._object).todoData);
+  // console.log('todoData', toRaw(homeInfo.todoData._object).todoData);
   observeBox();
 });
 const observeBox = () => {
@@ -236,10 +236,7 @@ const observeBox = () => {
     <el-row>
       <div class="wordGroup" v-for="item in getlist" :key="item.group_id">
         <div class="wordHeard">
-          <XxtTextEdit
-            :content="item.group_title"
-            @func="editTitle($event, item.group_id)"
-          ></XxtTextEdit>
+          <XxtTextEdit :content="item.group_title" @func="editTitle($event, item.group_id)"></XxtTextEdit>
 
           <div class="delOrAdd">
             <el-popconfirm
@@ -264,11 +261,7 @@ const observeBox = () => {
         </div>
         <div class="wordList">
           <div v-for="item2 in item.list" :key="item2">
-            <XxtWorkTag
-              :objData="item2"
-              :idIndex="item2.id"
-              @getInfo="editEcho"
-            ></XxtWorkTag>
+            <XxtWorkTag :objData="item2" :idIndex="item2.id" @getInfo="editEcho"></XxtWorkTag>
           </div>
         </div>
       </div>
@@ -301,31 +294,17 @@ const observeBox = () => {
               v-for="(img, index) in listItem.imgs"
               :key="index"
             />
-            <div
-              v-if="listItem.imgs.length == 0"
-              class="add-img-btn"
-              @click="clickFileInput"
-            >
+            <div v-if="listItem.imgs.length == 0" class="add-img-btn" @click="clickFileInput">
               <Plus></Plus>
             </div>
             <div v-else class="add-img-btn" @click="reduceFile">
               <Minus></Minus>
             </div>
-            <input
-              class="file-input"
-              ref="fileInput"
-              type="file"
-              @change="fileChange"
-            />
+            <input class="file-input" ref="fileInput" type="file" @change="fileChange" />
           </div>
         </el-form-item>
         <el-form-item label="优先级">
-          <el-select
-            v-model="listItem.level"
-            class="m-2"
-            placeholder="Select"
-            size="large"
-          >
+          <el-select v-model="listItem.level" class="m-2" placeholder="Select" size="large">
             <el-option
               v-for="item in LEVEL_LIST"
               :key="item.value"
@@ -338,16 +317,11 @@ const observeBox = () => {
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="handleClose">取消</el-button>
-          <el-button type="primary" @click="trueForm"> 确定 </el-button>
+          <el-button type="primary" @click="trueForm">确定</el-button>
         </span>
       </template>
     </el-dialog>
-    <el-dialog
-      v-model="groupVisible"
-      title="新建分组"
-      width="30%"
-      :before-close="groupClose"
-    >
+    <el-dialog v-model="groupVisible" title="新建分组" width="30%" :before-close="groupClose">
       <el-form
         :size="formSize"
         :model="groupData"
@@ -362,7 +336,7 @@ const observeBox = () => {
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="groupClose">取消</el-button>
-          <el-button type="primary" @click="TrueCreateGroup"> 确定 </el-button>
+          <el-button type="primary" @click="TrueCreateGroup">确定</el-button>
         </span>
       </template>
     </el-dialog>

@@ -24,7 +24,17 @@ const cards = reactive([
     img2: 'https://img0.baidu.com/it/u=3222720482,3309345147&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750',
   },
 ]);
+const generateRandomArray = () => {
+  const arr = Array.from({ length: 4 }, (_, i) => i + 1);
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
 onMounted(() => {
+  console.log('generateRandomArray', generateRandomArray());
+
   let count = 0;
   const interval = setInterval(() => {
     if (count < cards.length) {
