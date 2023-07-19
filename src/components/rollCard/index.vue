@@ -102,11 +102,7 @@ const unflipFn = () => {
         <span class="unflip" ref="unflip" @click="unflipFn">返回</span>
       </span>
     </span>
-    <span
-      class="inner-card"
-      ref="innerCard"
-      :style="{ backgroundImage: `url(${bgimg2})` }"
-    >
+    <span class="inner-card" ref="innerCard" :style="{ backgroundImage: `url(${bgimg2})` }">
       <span class="flip" ref="flip" @click="flipFn">翻转</span>
       <span class="glare"></span>
     </span>
@@ -150,10 +146,11 @@ const unflipFn = () => {
   cursor: pointer;
   transition: all 0.1s ease-out;
 }
+
 .blastoise .flip,
 .blastoise .unflip {
-  background: #1b29ed;
-  box-shadow: 0 2px 20px #0b1485;
+  background: #a7abdf;
+  // box-shadow: 0 2px 20px #9fa2cc;
 }
 
 .blastoise .inner-card-backface .image {
@@ -169,8 +166,10 @@ const unflipFn = () => {
 }
 .unflip {
   top: auto;
-  background: #2d2d62;
-  bottom: 1em;
+  // background: #2d2d62;
+  bottom: 0.5em;
+  padding: 0.5em 0.75em;
+  font-size: 14px;
 }
 .flip:hover {
   background: rgba(0, 0, 0, 0.3);
@@ -178,7 +177,7 @@ const unflipFn = () => {
 
 .blastoise .flip:hover,
 .blastoise .unflip:hover {
-  background: #0f1cc5;
+  background: #1c9eff;
 }
 .inner-card-backface {
   transform: rotateX(0) rotateY(0deg) scale(1) translateZ(-4px);

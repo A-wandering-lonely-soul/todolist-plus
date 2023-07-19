@@ -3,46 +3,36 @@
     <div class="main">
       <form v-if="isLogin">
         <p>
-          用户名<br />
-          <input
-            type="text"
-            v-model="loginForm.username"
-            class="textinput"
-            placeholder="请输入用户名"
-          />
+          用户名
+          <br />
+          <input type="text" v-model="loginForm.username" class="textinput" placeholder="请输入用户名" />
         </p>
         <p>
-          密码<br />
-          <input
-            type="password"
-            v-model="loginForm.password"
-            class="textinput"
-            placeholder="请输入密码"
-          />
+          密码
+          <br />
+          <input type="password" v-model="loginForm.password" class="textinput" placeholder="请输入密码" />
         </p>
         <p>
-          <input id="remember" type="checkbox" @click="rememberCount" /><label
-            for="remember"
-            >记住密码</label
-          >
+          <input id="remember" type="checkbox" @click="rememberCount" />
+          <label for="remember">记住密码</label>
         </p>
         <p>
           <input type="button" @click="Login" value="登录" />
         </p>
-        <p class="txt">还没有账户？<a href="#" @click="toRegister">注册</a></p>
+        <p class="txt">
+          还没有账户？
+          <a href="#" @click="toRegister">注册</a>
+        </p>
       </form>
       <form v-else>
         <p>
-          用户名<br />
-          <input
-            type="text"
-            v-model="registerForm.username"
-            class="textinput"
-            placeholder="请输入用户名"
-          />
+          用户名
+          <br />
+          <input type="text" v-model="registerForm.username" class="textinput" placeholder="请输入用户名" />
         </p>
         <p>
-          密码<br />
+          密码
+          <br />
           <input
             type="password"
             v-model="registerForm.password"
@@ -51,7 +41,8 @@
           />
         </p>
         <p>
-          重复密码<br />
+          重复密码
+          <br />
           <input
             type="password2"
             v-model="registerForm.password2"
@@ -60,15 +51,16 @@
           />
         </p>
         <p>
-          <input id="remember" type="checkbox" @click="rememberCount" /><label
-            for="remember"
-            >记住密码</label
-          >
+          <input id="remember" type="checkbox" @click="rememberCount" />
+          <label for="remember">记住密码</label>
         </p>
         <p>
           <input type="button" @click="register" value="注册" />
         </p>
-        <p class="txt">已有账户？<a href="#" @click="toLogin">登录</a></p>
+        <p class="txt">
+          已有账户？
+          <a href="#" @click="toLogin">登录</a>
+        </p>
       </form>
     </div>
   </div>
@@ -107,7 +99,7 @@ onMounted(() => {
   // );
 });
 const rememberCount = () => {
-  isLogin.value != isLogin.value;
+  isRemember.value != isRemember.value;
 };
 
 const registerForm = reactive({
