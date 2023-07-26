@@ -98,11 +98,24 @@ const unflipFn = () => {
     @mouseleave="handleMouseLeave()"
   >
     <span class="inner-card-backface" ref="innerCardBackface">
-      <span class="image" :style="{ backgroundImage: `url(${bgimg1})` }">
+      <span
+        class="image"
+        :style="{
+          backgroundImage: `url(${bgimg1})`,
+          'background-size': '100% 100%',
+        }"
+      >
         <span class="unflip" ref="unflip" @click="unflipFn">返回</span>
       </span>
     </span>
-    <span class="inner-card" ref="innerCard" :style="{ backgroundImage: `url(${bgimg2})` }">
+    <span
+      class="inner-card"
+      ref="innerCard"
+      :style="{
+        backgroundImage: `url(${bgimg2})`,
+        'background-size': '100% 100%',
+      }"
+    >
       <span class="flip" ref="flip" @click="flipFn">翻转</span>
       <span class="glare"></span>
     </span>
@@ -126,8 +139,8 @@ const unflipFn = () => {
   padding: 0;
   height: auto;
   margin: 0 2em;
-  width: 15em;
-  height: 20em;
+  width: 20em;
+  height: 35em;
   float: left;
   transition: all 0.2s ease-out;
   border: none;

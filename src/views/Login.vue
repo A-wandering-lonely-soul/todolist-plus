@@ -574,13 +574,16 @@ const register = () => {
 }
 //水滴表单
 .loginMain {
-  width: 500px;
-  height: 500px;
+  // position: relative;
+  display: flex;
+  align-items: center;
+  width: 45rem;
+  height: 45rem;
   box-sizing: border-box;
   border-radius: 50%;
   background: transparent;
-  box-shadow: inset 15px 10px 40px #00ffff21, 10px 10px 20px #00d0ffa6,
-    15px 15px 30px #fef0f0, inset -10px -10px 20px #00c3ff85;
+  box-shadow: inset 15px 10px 40px #00d0ff21, 10px 10px 20px #0070ffa6,
+    15px 15px 30px #fef0f0, inset -10px -10px 20px #008aff85;
   animation: move-08aaad4e 6s linear infinite;
 }
 
@@ -623,31 +626,31 @@ const register = () => {
 
 @keyframes move2 {
   25% {
-    left: 80px;
-    top: 110px;
+    left: 100px;
+    top: 150px;
   }
   50% {
-    left: 50px;
-    top: 80px;
+    left: 70px;
+    top: 90px;
   }
   75% {
-    left: 80px;
-    top: 120px;
+    left: 100px;
+    top: 130px;
   }
 }
 
 @keyframes move3 {
   25% {
-    left: 100px;
-    top: 90px;
+    left: 110px;
+    top: 100px;
   }
   50% {
-    left: 110px;
-    top: 75px;
+    left: 120px;
+    top: 85px;
   }
   75% {
-    left: 130px;
-    top: 100px;
+    left: 140px;
+    top: 110px;
   }
 }
 form {
@@ -662,18 +665,19 @@ form {
 }
 p {
   -webkit-text-stroke: 1px #8e87c3;
+  font-size: 25px;
   line-height: 40px;
 }
 
 .textinput {
-  height: 40px;
-  font-size: 15px;
-  width: 200px;
+  height: 4rem;
+  font-size: 1.5rem;
+  width: 20rem;
   padding: 0 35px;
   border: none;
   background: rgba(250, 249, 249, 0.532);
-  box-shadow: inset 4px 4px 10px #00ccff99, 4px 4px 10px #007eff,
-    15px 15px 30px #fde2e2, inset -2px -2px 10px #00c5ff;
+  box-shadow: inset 4px 4px 10px #5561c999, 4px 4px 10px #0043ff,
+    15px 15px 30px #d3bcbc, inset -2px -2px 10px #546273;
   border-radius: 50px;
   -webkit-text-stroke: 0px;
   color: saddlebrown;
