@@ -4,7 +4,7 @@ import storage from 'store2';
 const TODO_LIST_DATA = 'TODO_LIST_DATA';
 
 export const todoStorage = {
-  set setTodoList(val) {
+  set setTodoList(val: any) {
     if (!val) {
       storage.remove(TODO_LIST_DATA);
     } else {

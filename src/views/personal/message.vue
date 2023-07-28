@@ -1,32 +1,42 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
-const rollcard = ref(null);
-const cardList = reactive<any>([]);
+import talo from '@/assets/taluopai/卡背.webp';
+import talo1 from '@/assets/taluopai/权杖.webp';
+import talo2 from '@/assets/taluopai/圣杯.webp';
+import talo3 from '@/assets/taluopai/新币.webp';
+import talo4 from '@/assets/taluopai/宝剑.webp';
+
+let cardList = reactive<any>([]);
 const cards = reactive([
   {
     id: 1,
-    img1: 'https://img2.baidu.com/it/u=3267963114,231077277&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=679',
-    img2: 'https://img2.baidu.com/it/u=1669502173,1438611822&fm=253&fmt=auto&app=138&f=PNG?w=500&h=750',
+    img1: talo1,
+    img2: talo,
   },
   {
     id: 2,
-    img1: 'https://img.zcool.cn/community/01114c5d073c24a801205e4bc9a9fb.gif',
-    img2: 'https://img1.baidu.com/it/u=2397739727,2002942261&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=667',
+    img1: talo2,
+    img2: talo,
   },
   {
     id: 3,
-    img1: 'https://img2.baidu.com/it/u=928090031,1968336196&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=680',
-    img2: 'https://img2.baidu.com/it/u=1386560211,1340648601&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=729',
+    img1: talo3,
+    img2: talo,
   },
   {
     id: 4,
-    img1: 'https://img1.baidu.com/it/u=2826690795,1644387551&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=753',
-    img2: 'https://img0.baidu.com/it/u=3222720482,3309345147&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750',
+    img1: talo4,
+    img2: talo,
   },
 ]);
+const refresh = () => {
+  console.log(cardList);
 
-onMounted(() => {
-  const arr = Array.from({ length: 4 }, (_, i) => i);
+  cardList.splice(0, cardList.length);
+  getCardList();
+};
+const getCardList = () => {
+  const arr = Array.from({ length: cards.length }, (_, i) => i);
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -42,19 +52,19 @@ onMounted(() => {
       clearInterval(interval);
     }
   }, 1000);
-});
-const fresh = () => {
-  rollcard.value[0].unflipFn();
 };
+onMounted(() => {
+  getCardList();
+});
 </script>
 
 <template>
+  <div class="refresh">
+    <i @click="refresh">
+      <RefreshRight style="width: 2em; height: 2em" />
+    </i>
+  </div>
   <div class="box">
-    <div style="height: 50px; width: 50px">
-      <el-icon @click="fresh">
-        <Refresh />
-      </el-icon>
-    </div>
     <div v-for="card in cardList" :key="card.id" class="card">
       <XxtRollCard ref="rollcard" :image1="card.img1" :image2="card.img2"></XxtRollCard>
     </div>
@@ -62,14 +72,36 @@ const fresh = () => {
 </template>
 
 <style lang="less" scoped>
+.refresh {
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #660fb8;
+  i {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+    color: #fff;
+    cursor: pointer;
+  }
+}
 .box {
   display: flex;
+  // flex-direction: column;
+  align-items: flex-start;
   width: 100%;
   height: 100%;
   margin: 0;
   // background: #152036;
   padding: 1em 0em;
   font-family: Inter, sans-serif;
+
+  .card {
+    animation: slideIn 0.5s;
+    margin-bottom: 1em;
+  }
 }
 @keyframes slideIn {
   0% {
@@ -78,9 +110,5 @@ const fresh = () => {
   100% {
     transform: translateX(0);
   }
-}
-
-.card {
-  animation: slideIn 0.5s;
 }
 </style>

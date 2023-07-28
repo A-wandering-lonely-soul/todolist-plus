@@ -1,19 +1,18 @@
 <template>
-  <div class="gggg" :style="{ backgroundImage: `url(${image1})` }"></div>
-  <vue-qrcode value="https://juejin.cn/123" :options="{ width: 200 }"></vue-qrcode>
+  <div class="bigbox">
+    <h1>友情链接</h1>
+    <vue-qrcode value="https://lateautumn02.com/" :options="{ width: 200 }"></vue-qrcode>
+  </div>
 </template>
 <script setup lang="tsx">
 import { ref, onMounted } from 'vue';
-import image1 from '../../assets/styleBg2.jpg';
-// const bgimg2 = ref('');
-// onMounted(async () => {
-//   const image = await import('../../assets/styleBg2.jpg');
-//   bgimg2.value = image.default;
-// });
 </script>
 <style lang="less" scoped>
-.gggg {
-  width: 300px;
-  height: 300px;
+.bigbox {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

@@ -208,8 +208,9 @@ onMounted(() => {
   // console.log('todoData', toRaw(homeInfo.todoData._object).todoData);
   observeBox();
 });
+
 const observeBox = () => {
-  const observer = new ResizeObserver((entries) => {
+  const observer: any = new ResizeObserver((entries) => {
     console.log('entries', entries);
     for (let entry of entries) {
       if (entry.target === box.value) {
@@ -348,7 +349,8 @@ const observeBox = () => {
   position: relative;
   width: 100%;
   height: 100%;
-  background: url('../../assets/styleBg1.jpg');
+  background: url('../../assets/wuwa.png');
+  background-size: cover;
   .container {
     position: absolute;
     width: 100%;
@@ -366,7 +368,8 @@ const observeBox = () => {
       transparent 200px,
       #fff 120px
     );
-    background: url('../../assets/styleBg2.jpg');
+    background: url('../../assets/youwa.png');
+    background-size: cover;
   }
 }
 
