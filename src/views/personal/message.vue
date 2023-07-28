@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
-
+const rollcard = ref(null);
 const cardList = reactive<any>([]);
 const cards = reactive([
   {
@@ -43,12 +43,20 @@ onMounted(() => {
     }
   }, 1000);
 });
+const fresh = () => {
+  rollcard.value[0].unflipFn();
+};
 </script>
 
 <template>
   <div class="box">
+    <div style="height: 50px; width: 50px">
+      <el-icon @click="fresh">
+        <Refresh />
+      </el-icon>
+    </div>
     <div v-for="card in cardList" :key="card.id" class="card">
-      <XxtRollCard :image1="card.img1" :image2="card.img2"></XxtRollCard>
+      <XxtRollCard ref="rollcard" :image1="card.img1" :image2="card.img2"></XxtRollCard>
     </div>
   </div>
 </template>
@@ -59,7 +67,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   margin: 0;
-  background: #152036;
+  // background: #152036;
   padding: 1em 0em;
   font-family: Inter, sans-serif;
 }
