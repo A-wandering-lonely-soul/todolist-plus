@@ -4,7 +4,7 @@
     <vue-qrcode value="https://lateautumn02.com/" :options="{ width: 200 }"></vue-qrcode>
   </div>
 </template>
-<script setup lang="tsx">
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 </script>
 <style lang="less" scoped>

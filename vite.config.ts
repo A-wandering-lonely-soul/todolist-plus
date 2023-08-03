@@ -6,6 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? './' : '/',
   //设置反向代理，跨域
   server: {
     // host: '0.0.0.0',//设置地址：http://localhost

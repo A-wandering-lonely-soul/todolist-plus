@@ -1,5 +1,6 @@
 import axios, { type Method } from 'axios';
 import { ElMessage } from 'element-plus';
+import router from '@/router';
 
 const instance = axios.create({
   baseURL: '/api',
@@ -48,7 +49,7 @@ instance.interceptors.response.use(
           type: 'error',
         });
         setTimeout(() => {
-          location.href = '/login?type=1';
+          router.push('/login?type=1');
         }, 500);
         break;
     }
@@ -63,12 +64,6 @@ interface ApiRes<T = unknown> {
   result: T;
 }
 
-/**
- * axios 二次封装，整合 TS 类型
- * @param method  请求类型
- * @param url  请求地址
- * @param submitData  对象类型，提交数据
- */
 export const http = <T>(
   method: Method,
   url: string,
