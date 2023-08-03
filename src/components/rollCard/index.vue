@@ -149,7 +149,7 @@ const unflipFn = () => {
 .flip,
 .unflip {
   background: rgba(0, 0, 0, 0.1);
-  font-size: 0.5em;
+  font-size: 0.8em;
   position: absolute;
   top: 0.5em;
   right: 0.5em;
@@ -182,7 +182,7 @@ const unflipFn = () => {
   // background: #2d2d62;
   bottom: 0.5em;
   padding: 0.5em 0.75em;
-  font-size: 14px;
+  font-size: 1.5rem;
 }
 .flip:hover {
   background: rgba(0, 0, 0, 0.3);

@@ -94,7 +94,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   margin: 0;
-  // background: #152036;
+  background: #152036;
   padding: 1em 0em;
   font-family: Inter, sans-serif;
 

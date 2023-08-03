@@ -1,11 +1,6 @@
 <template>
   <div class="body">
-    <div
-      class="button"
-      @click="getInfoById"
-      :class="`level${level}`"
-      :id="`button${idIndex}`"
-    >
+    <div class="button" @click="getInfoById" :class="`level${level}`" :id="`button${idIndex}`">
       <span>{{ title || '默认' }}</span>
       <div class="carry">
         <CircleClose @click.stop="deleteFn" class="close_icon"></CircleClose>
@@ -14,7 +9,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { CircleClose } from '@element-plus/icons-vue';
+// import { CircleClose } from '@element-plus/icons-vue';
 import { ref, onMounted, watch, reactive } from 'vue';
 import { useHomeStore } from '@/stores';
 const home = useHomeStore();
@@ -61,7 +56,7 @@ const deleteFn = () => {
   home.A_DELETE_TASK({ id: props.objData.id });
 };
 const getInfoById = async () => {
-  let res = await home.A_SELECT_TASK_BYID({ id: props.objData.id });
+  let res: any = await home.A_SELECT_TASK_BYID({ id: props.objData.id });
   if (JSON.stringify(res.data) != '{}') {
     let listItem = res.data[0];
 

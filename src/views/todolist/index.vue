@@ -248,6 +248,9 @@ const observeBox = () => {
                 <span class="deltask">
                   <a href="#" class="pulse" style="filter: hue-rotate(80deg)">
                     <i class="fas fa-minus"></i>
+                    <!-- <i style="width: 1.5em; height: 1.5em">
+                      <Minus />
+                    </i>-->
                   </a>
                 </span>
               </template>
@@ -256,6 +259,9 @@ const observeBox = () => {
             <span class="addtask" @click="addItem(item.group_id)">
               <a href="#" class="pulse" style="filter: hue-rotate(120deg)">
                 <i class="fas fa-plus"></i>
+                <!-- <i>
+                  <Plus style="width: 1.5em; height: 1.5em;" />
+                </i>-->
               </a>
             </span>
           </div>

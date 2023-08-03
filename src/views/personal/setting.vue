@@ -154,9 +154,7 @@ const handleMouseup = () => {
       <el-col :span="4" class="leftInfo">
         <div class="card">
           <div class="imgBox">
-            <img
-              src="https://p1.music.126.net/pk2BTJx_Av2xYP8YbRqPKw==/109951165604877087.jpg?param=180y180"
-            />
+            <img src="https://pic.baike.soso.com/p/20131210/20131210175039-1645093212.jpg" />
           </div>
           <div class="content_card">
             <div class="details">
@@ -168,9 +166,9 @@ const handleMouseup = () => {
                 <h4>
                   社交网络:&nbsp;
                   <span>
-                    <a href="https://juejin.cn/user/4341314038804935">
+                    <a href="https://lateautumn02.com/">
                       <img
-                        src="https://lf-cdn-tos.bytescm.com/obj/static/xitu_extension/static/gold.981a5510.svg"
+                        src="https://ts1.cn.mm.bing.net/th/id/R-C.3ace977eb9e1da7f05ad4724d2ecb842?rik=RwkVvolTwAeK1g&riu=http%3a%2f%2fpic.ntimg.cn%2ffile%2f20191004%2f30213039_130934100546_2.jpg&ehk=8rzB1aJO0D6qx%2bHGHIsCVNlxpD6uNU8ZZry1e0Rc%2f0Y%3d&risl=&pid=ImgRaw&r=0"
                         alt="gold"
                         class="icon source-icon"
                         data-v-96420278
@@ -186,7 +184,7 @@ const handleMouseup = () => {
               <div class="data">
                 <div>
                   <h3>
-                    14
+                    11
                     <br />
                     <span>动态</span>
                   </h3>
@@ -194,7 +192,7 @@ const handleMouseup = () => {
                 <span style="border: solid 0.1px #555"></span>
                 <div>
                   <h3>
-                    33
+                    22
                     <br />
                     <span>关注</span>
                   </h3>
@@ -202,7 +200,7 @@ const handleMouseup = () => {
                 <span style="border: solid 1px #555"></span>
                 <div>
                   <h3>
-                    10
+                    33
                     <br />
                     <span>粉丝</span>
                   </h3>
@@ -390,7 +388,7 @@ const handleMouseup = () => {
 
 .card {
   margin-top: 8rem;
-  background-image: url(https://img-baofun.zhhainiao.com/pcwallpaper_ugc/static/2242c60f0b0127977f5f543841940b40.jpg?x-oss-process=image%2fresize%2cm_lfit%2cw_960%2ch_540);
+  background-image: url(https://tse1-mm.cn.bing.net/th/id/OIP-C.wkyv5_jbDUpoNjrI8Nm1SwHaFj?pid=ImgDet&rs=1);
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
@@ -404,7 +402,7 @@ const handleMouseup = () => {
 
 .card:hover {
   height: 26rem;
-  background-image: url(https://wallpaper-static.cheetahfun.com/wallpaper/sites/mobile/statics/anime/1.jpg);
+  background-image: url(https://tse1-mm.cn.bing.net/th/id/OIF-C.KpLfQ9xycyE4bkH0zSlmog?pid=ImgDet&rs=1);
 }
 
 .imgBox {
