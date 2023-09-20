@@ -34,35 +34,40 @@ onMounted(() => {
       :default-active="$route.path"
       router
     >
-      <template v-for="(item, index) in menulist">
+      <template v-for="(item, index) in menulist" :key="index">
         <el-sub-menu :index="item.path" v-if="item.children">
           <template #title>
             <img
               class="smallIcon"
               :src="`static/${item.meta.icon}.jpg`"
-              alt=""
+              alt="item2.meta.altText as string"
             />
             <span style="margin: 0 10px">{{ item.meta.title }}</span>
           </template>
           <el-menu-item-group>
-            <template v-for="(item2, index2) in item.children">
+            <template v-for="(item2, index2) in item.children" :key="index2">
               <el-menu-item :index="item2.path">
                 <img
                   class="smallIcon"
                   :src="`static/${item2.meta.icon}.jpg`"
-                  alt=""
-                /><span style="margin: 0 10px">{{
-                  item2.meta.title
-                }}</span></el-menu-item
-              ></template
-            >
+                  alt="item2.meta.altText as string"
+                />
+                <span style="margin: 0 10px">
+                  {{ item2.meta.title }}
+                </span>
+              </el-menu-item>
+            </template>
           </el-menu-item-group>
         </el-sub-menu>
         <el-menu-item v-else :index="item.path">
-          <img class="smallIcon" :src="`static/${item.meta.icon}.jpg`" alt="" />
-          <template #title
-            ><span style="margin: 0 10px">{{ item.meta.title }}</span></template
-          >
+          <img
+            class="smallIcon"
+            :src="`static/${item.meta.icon}.jpg`"
+            alt="item2.meta.altText as string"
+          />
+          <template #title>
+            <span style="margin: 0 10px">{{ item.meta.title }}</span>
+          </template>
         </el-menu-item>
       </template>
     </el-menu>
