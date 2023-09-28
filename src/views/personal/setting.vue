@@ -1,5 +1,9 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue';
+const toMyBlog = () => {
+  //跳转到我的博客
+  window.location.href = 'http://winterfinale.com:8080/';
+};
 const isAmplify = ref(false); //是否拥有放大功能
 const toggleAmplify = () => {
   isAmplify.value = !isAmplify.value;
@@ -166,7 +170,7 @@ const handleMouseup = () => {
                 <h4>
                   社交网络:&nbsp;
                   <span>
-                    <a href="https://lateautumn02.com/">
+                    <a href="https://github.com/">
                       <img
                         src="https://ts1.cn.mm.bing.net/th/id/R-C.3ace977eb9e1da7f05ad4724d2ecb842?rik=RwkVvolTwAeK1g&riu=http%3a%2f%2fpic.ntimg.cn%2ffile%2f20191004%2f30213039_130934100546_2.jpg&ehk=8rzB1aJO0D6qx%2bHGHIsCVNlxpD6uNU8ZZry1e0Rc%2f0Y%3d&risl=&pid=ImgRaw&r=0"
                         alt="gold"
@@ -207,7 +211,7 @@ const handleMouseup = () => {
                 </div>
               </div>
               <div class="Btn">
-                <button>+关注</button>
+                <button @click="toMyBlog">+关注</button>
                 <button>
                   <span>
                     <svg
@@ -237,7 +241,7 @@ const handleMouseup = () => {
                       />
                     </svg>
                   </span>
-                  <span>私信</span>
+                  <span @click="toMyBlog">私信</span>
                 </button>
               </div>
             </div>
@@ -402,7 +406,7 @@ const handleMouseup = () => {
 
 .card:hover {
   height: 26rem;
-  background-image: url(https://tse1-mm.cn.bing.net/th/id/OIF-C.KpLfQ9xycyE4bkH0zSlmog?pid=ImgDet&rs=1);
+  background-image: url(https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202003%2F22%2F20200322145347_vzjkb.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1698481617&t=3560b7b590e8778f291f411a8fb3a7af);
 }
 
 .imgBox {

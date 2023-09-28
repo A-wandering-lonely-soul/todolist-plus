@@ -18,7 +18,7 @@ function writeText(t: any, delay = 200) {
 }
 
 const main = async (str: any) => {
-  while (true) {
+  while (str != undefined) {
     // 无限循环
     for (let j = 0; j < str.length; j++) {
       // 写入
@@ -135,17 +135,17 @@ const register = () => {
   <div class="bigBox">
     <header class="header">
       <!-- 网站Logo -->
-      <a href="#" class="logo">This is a Logo!</a>
+      <a href="http://winterfinale.com:8080/" class="logo">This is a Logo!</a>
       <!-- 导航栏 -->
       <nav class="navbar">
         <!-- 导航栏选项1 -->
-        <a href="#" class="item" style="--i: 1">Home</a>
+        <a href="http://winterfinale.com:8080/" class="item" style="--i: 1">Home</a>
         <!-- 导航栏选项2 -->
-        <a href="#" class="item" style="--i: 2">About</a>
+        <a href="http://winterfinale.com:8080/" class="item" style="--i: 2">About</a>
         <!-- 导航栏选项3 -->
-        <a href="#" class="item" style="--i: 3">Skills</a>
+        <a href="http://winterfinale.com:8080/" class="item" style="--i: 3">Skills</a>
         <!-- 导航栏选项4 -->
-        <a href="#" class="item" style="--i: 4">Me</a>
+        <a href="http://winterfinale.com:8080/" class="item" style="--i: 4">Me</a>
       </nav>
     </header>
 
@@ -167,24 +167,24 @@ const register = () => {
         <!-- 社交媒体链接 -->
         <div class="social-media">
           <!-- 社交媒体链接1 -->
-          <a href="#" style="--i: 7">
+          <a href="http://winterfinale.com:8080/" style="--i: 7">
             <i class="bx bxl-tiktok"></i>
           </a>
           <!-- 社交媒体链接2 -->
-          <a href="#" style="--i: 8">
+          <a href="http://winterfinale.com:8080/" style="--i: 8">
             <i class="bx bxl-facebook-circle"></i>
           </a>
           <!-- 社交媒体链接3 -->
-          <a href="#" style="--i: 9">
+          <a href="http://winterfinale.com:8080/" style="--i: 9">
             <i class="bx bxl-google"></i>
           </a>
           <!-- 社交媒体链接4 -->
-          <a href="#" style="--i: 10">
+          <a href="http://winterfinale.com:8080/" style="--i: 10">
             <i class="bx bxl-linkedin-square"></i>
           </a>
         </div>
         <!-- 主页按钮 -->
-        <a href="#" class="btn">Learn More</a>
+        <a href="http://winterfinale.com:8080/" class="btn">Learn More</a>
       </div>
       <!-- 主页图片 -->
       <div class="loginMain">

@@ -1,4 +1,4 @@
-import axios, { type Method } from 'axios';
+import axios, { type Method, type AxiosRequestConfig } from 'axios';
 import { ElMessage } from 'element-plus';
 import router from '@/router';
 
@@ -18,10 +18,10 @@ instance.interceptors.request.use(
     // 在发送请求之前做些什么
     const token = localStorage.getItem('x-token');
     headers['x-token'] = token;
-    if (config.json) {
-      headers['Content-Type'] = 'application/json; charset=UTF-8';
-      delete config.json;
-    }
+    // if (config.json) {
+    //   headers['Content-Type'] = 'application/json; charset=UTF-8';
+    //   delete config.json;
+    // }
     return config;
   },
   function (error) {
@@ -57,7 +57,6 @@ instance.interceptors.response.use(
   }
 );
 
-// 后端返回的接口数据格式
 interface ApiRes<T = unknown> {
   code: number;
   msg: string;
@@ -67,16 +66,45 @@ interface ApiRes<T = unknown> {
 export const http = <T>(
   method: Method,
   url: string,
-  json: boolean,
+  isJson: boolean,
   submitData?: object
 ) => {
-  return instance.request<ApiRes<T>>({
+  const requestData: AxiosRequestConfig = {
     url,
     method,
-    json,
-    // 🔔 自动设置合适的 params/data 键名称，如果 method 为 get 用 params 传请求参数，否则用 data
-    [method.toUpperCase() === 'GET' ? 'params' : 'data']: submitData,
+    ...(method.toUpperCase() === 'GET'
+      ? { params: submitData }
+      : { data: submitData }),
+  };
+
+  instance.interceptors.request.use((config) => {
+    if (isJson) {
+      config.headers['Content-Type'] = 'application/json;charset=UTF-8';
+    }
+    return config;
   });
+
+  return instance.request<ApiRes<T>>(requestData);
 };
+// interface ApiRes<T = unknown> {
+//   code: number;
+//   msg: string;
+//   result: T;
+// }
+
+// export const http = <T>(
+//   method: Method,
+//   url: string,
+//   json: boolean,
+//   submitData?: object
+// ) => {
+//   return instance.request<ApiRes<T>>({
+//     url,
+//     method,
+//     json,
+//     // 🔔 自动设置合适的 params/data 键名称，如果 method 为 get 用 params 传请求参数，否则用 data
+//     [method.toUpperCase() === 'GET' ? 'params' : 'data']: submitData,
+//   });
+// };
 
 export default instance;

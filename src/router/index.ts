@@ -11,13 +11,13 @@ export const staticRouter = [
     component: () => import('@/views/Home.vue'),
     children: [
       {
-        path: '/personal/message',
-        name: 'message',
+        path: '/personal/resource',
+        name: 'resource',
         meta: {
           icon: 'Message',
-          title: '我的消息',
+          title: '我的资源',
         },
-        component: () => import('@/views/personal/message.vue'),
+        component: () => import('@/views/personal/resource.vue'),
       },
       {
         path: '/personal/setting',
