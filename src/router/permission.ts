@@ -13,7 +13,7 @@ router.beforeEach((to, from, next) => {
   } else {
     //没有token就调转到登录页
     if (to.path === '/login' || to.path === '/Login') {
-      ElMessage.error('token过期');
+      ElMessage.error('token过期，请重新登录');
       next();
     } else {
       next({

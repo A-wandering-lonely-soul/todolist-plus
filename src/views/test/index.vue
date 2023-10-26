@@ -1,18 +1,19 @@
-<template>
-  <div class="bigbox">
-    <h1>友情链接</h1>
-    <vue-qrcode value="https://lateautumn02.com/" :options="{ width: 200 }"></vue-qrcode>
-  </div>
-</template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { useBlogStore } from '@/stores';
+const blog = useBlogStore();
+
+const sendRquest = () => {
+  let data = {
+    title: '标题',
+    keywords: 'taro',
+  };
+  blog.GET_BLOG_DATA(data);
+};
 </script>
-<style lang="less" scoped>
-.bigbox {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  flex-direction: column;
-  align-items: center;
-}
-</style>
+
+<template>
+  <h1>首页</h1>
+  <button @click="sendRquest">发送请求</button>
+</template>
+
+<style lang="less" scoped></style>

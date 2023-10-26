@@ -46,7 +46,36 @@ export const staticRouter = [
           icon: 'List',
           title: '待办列表',
         },
-        component: () => import('@/views/todolist/index.vue'),
+        // component: () => import('@/views/todolist/index.vue'),
+      },
+    ],
+  },
+  {
+    path: '/blog',
+    name: 'blog',
+    meta: {
+      icon: 'gpt',
+      title: '博客管理',
+    },
+    component: () => import('@/views/Home.vue'),
+    children: [
+      {
+        path: '/blog/manage',
+        name: 'manage',
+        meta: {
+          icon: 'Blog',
+          title: '博客列表',
+        },
+        component: () => import('@/views/blog/index.vue'),
+      },
+      {
+        path: '/blog/issue',
+        name: 'issue',
+        meta: {
+          icon: 'Pen',
+          title: '博客发布',
+        },
+        component: () => import('@/views/blog/issue.vue'),
       },
     ],
   },

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { useHomeStore } from '@/stores';
-const home = useHomeStore();
+import { useBlogStore } from '@/stores';
+const blog = useBlogStore();
 
 const sendRquest = () => {
   let data = {
     password: '123456',
     username: 'admin',
   };
-  home.A_LOGIN(data);
+  blog.GET_BLOG_DATA();
 };
 </script>
 
