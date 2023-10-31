@@ -46,7 +46,7 @@ export const staticRouter = [
           icon: 'List',
           title: '待办列表',
         },
-        // component: () => import('@/views/todolist/index.vue'),
+        component: () => import('@/views/todolist/index.vue'),
       },
     ],
   },
@@ -71,6 +71,7 @@ export const staticRouter = [
       {
         path: '/blog/issue',
         name: 'issue',
+        props: (route) => ({ id: route.query.id }),
         meta: {
           icon: 'Pen',
           title: '博客发布',

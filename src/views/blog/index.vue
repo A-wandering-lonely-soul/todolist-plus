@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { reactive, ref, onMounted } from 'vue';
 import { useBlogStore } from '@/stores';
+import { useRouter } from 'vue-router';
+import { ElMessage, ElMessageBox } from 'element-plus';
+const router = useRouter();
 const blog = useBlogStore();
 const formInline = reactive({
   title: '',
@@ -31,8 +34,32 @@ const getBlogData = () => {
   //   Object.assign(blogList, data);
   // });
 };
-const delFn = () => {};
-const editFn = () => {};
+type RouteParamValueRaw = /*unresolved*/ any;
+const delFn = (id: RouteParamValueRaw | (string | number)[]) => {
+  ElMessageBox.confirm(
+    'proxy will permanently delete the file. Continue?',
+    'Warning',
+    {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+      type: 'warning',
+      draggable: true,
+    }
+  )
+    .then(async () => {
+      await blog.DELETE_BLOG_DATA({ id });
+      getBlogData();
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Delete canceled',
+      });
+    });
+};
+const editFn = (id: RouteParamValueRaw | (string | number)[]) => {
+  router.push({ name: 'issue', query: { id: id } });
+};
 </script>
 
 <template>
@@ -65,13 +92,13 @@ const editFn = () => {};
     <div class="mdeditor">
       <el-table :data="blogList" style="width: 100%">
         <el-table-column type="index" width="50" />
-        <el-table-column fixed prop="date" label="创建日期" />
+        <el-table-column prop="date" label="创建日期" />
         <el-table-column prop="title" label="标题" />
         <el-table-column prop="keywords" label="关键字" />
         <el-table-column align="right">
-          <template #default>
-            <el-button link type="primary" size="small" @click="delFn">删除</el-button>
-            <el-button link type="primary" size="small" @click="editFn">编辑</el-button>
+          <template v-slot="{ row }">
+            <el-button link type="primary" size="small" @click="delFn(row.id)">删除</el-button>
+            <el-button link type="primary" size="small" @click="editFn(row.id)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>

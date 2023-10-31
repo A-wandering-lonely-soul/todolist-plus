@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { nextTick, onActivated, reactive, ref, watch } from 'vue';
+import { nextTick, onMounted, reactive, ref, watch } from 'vue';
 import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import type { FormInstance, FormRules } from 'element-plus';
 import { useBlogStore } from '@/stores';
+import { useRoute } from 'vue-router';
+const route = useRoute();
 const blog = useBlogStore();
 const ruleFormRef = ref<InstanceType<typeof FormInstance>>();
 const addGroupRef = ref<InstanceType<typeof FormInstance>>();
@@ -28,9 +30,11 @@ const rules = reactive<InstanceType<typeof FormRules>>({
 const onSubmit = async () => {
   await ruleFormRef.value.validate((valid: boolean, fields: any) => {
     if (valid) {
+      //新增
       blog.CREATED_BLOG(formModel).then((res) => {
         if (res.data.success) {
           Object.assign(formModel, {
+            id: blogId ? blogId : null,
             title: '',
             keywords: '',
             contentHtml: '',
@@ -42,6 +46,17 @@ const onSubmit = async () => {
     }
   });
 };
+
+let blogId = reactive<any>(null);
+onMounted(() => {
+  console.log(route.query);
+  if (route.query.id) {
+    blogId = route.query.id;
+    blog.GET_BLOG_BYID({ id: blogId }).then((res) => {
+      Object.assign(formModel, res.data[0]);
+    });
+  }
+});
 </script>
 
 <template>

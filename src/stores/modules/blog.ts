@@ -20,7 +20,6 @@ export const useBlogStore = defineStore('blog', {
     //删除
     DELETE_BLOG_DATA(data: object) {
       return http('POST', '/blog/delete-blog', true, data).then((res: any) => {
-        this.GET_BLOG_DATA();
         ElMessage({
           type: res.data.success ? 'success' : 'error',
           message: res.data.msg,
@@ -34,6 +33,12 @@ export const useBlogStore = defineStore('blog', {
           type: res.data.success ? 'success' : 'error',
           message: res.data.msg,
         });
+        return res;
+      });
+    },
+    //根据id获取博客
+    GET_BLOG_BYID(data?: object) {
+      return http('GET', '/blog/get-blog-byId', true, data).then((res) => {
         return res;
       });
     },
