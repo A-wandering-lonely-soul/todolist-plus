@@ -9,10 +9,14 @@ const formInline = reactive({
   title: '',
   keywords: '',
   date: '',
+  pageNum: 1,
+  pageSize: 10,
 });
+let total = ref(0);
 let blogList = ref([]);
-const onSubmit = () => {
-  console.log('submit!');
+const changePage = (e: number) => {
+  formInline.pageNum = e;
+  getBlogData();
 };
 onMounted(() => {
   getBlogData();
@@ -22,13 +26,17 @@ const resetData = () => {
     title: '',
     keywords: '',
     date: '',
+    pageNum: 1,
+    pageSize: 10,
   });
 
   getBlogData();
 };
 const getBlogData = () => {
+  //获取列表
   blog.GET_BLOG_DATA(formInline).then((res) => {
     blogList.value = res.data.data; // 更新响应式变量的值
+    total.value = res.data.total;
   });
   // blog.GET_BLOG_DATA(formInline).then((res) => {
   //   Object.assign(blogList, data);
@@ -92,16 +100,24 @@ const editFn = (id: RouteParamValueRaw | (string | number)[]) => {
     <div class="mdeditor">
       <el-table :data="blogList" style="width: 100%">
         <el-table-column type="index" width="50" />
-        <el-table-column prop="date" label="创建日期" />
-        <el-table-column prop="title" label="标题" />
-        <el-table-column prop="keywords" label="关键字" />
-        <el-table-column align="right">
+        <el-table-column prop="date" label="创建日期" align="center" />
+        <el-table-column prop="title" label="标题" align="center" />
+        <el-table-column prop="keywords" label="关键字" align="center" />
+        <el-table-column fixed="right" align="center" label="操作">
           <template v-slot="{ row }">
             <el-button link type="primary" size="small" @click="delFn(row.id)">删除</el-button>
             <el-button link type="primary" size="small" @click="editFn(row.id)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
+    </div>
+    <div class="pagination">
+      <el-pagination
+        background
+        layout="prev, pager, next,total"
+        @current-change="changePage"
+        :total="total"
+      />
     </div>
   </div>
 </template>
@@ -128,7 +144,15 @@ const editFn = (id: RouteParamValueRaw | (string | number)[]) => {
     align-items: center;
   }
   .mdeditor {
-    flex: 1;
+    width: 100%;
+    min-height: 70vh;
+    overflow: auto;
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
   }
 }
 </style>

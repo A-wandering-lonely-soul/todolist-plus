@@ -6,12 +6,12 @@ import Hearder from '@/Layout/Header.vue';
 <template>
   <div class="main">
     <Hearder></Hearder>
-    <el-row class="content">
+    <div class="content">
       <Menu></Menu>
       <div class="routerView">
         <RouterView :key="$route.fullPath"></RouterView>
       </div>
-    </el-row>
+    </div>
   </div>
 </template>
 
