@@ -14,6 +14,7 @@ const formInline = reactive({
 });
 let total = ref(0);
 let blogList = ref([]);
+//反野
 const changePage = (e: number) => {
   formInline.pageNum = e;
   getBlogData();
@@ -21,6 +22,7 @@ const changePage = (e: number) => {
 onMounted(() => {
   getBlogData();
 });
+//清空表单
 const resetData = () => {
   Object.assign(formInline, {
     title: '',
@@ -44,16 +46,12 @@ const getBlogData = () => {
 };
 type RouteParamValueRaw = /*unresolved*/ any;
 const delFn = (id: RouteParamValueRaw | (string | number)[]) => {
-  ElMessageBox.confirm(
-    'proxy will permanently delete the file. Continue?',
-    'Warning',
-    {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
-      type: 'warning',
-      draggable: true,
-    }
-  )
+  ElMessageBox.confirm('你想要删除这个博客吗?', '警告', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning',
+    draggable: true,
+  })
     .then(async () => {
       await blog.DELETE_BLOG_DATA({ id });
       getBlogData();
@@ -61,13 +59,29 @@ const delFn = (id: RouteParamValueRaw | (string | number)[]) => {
     .catch(() => {
       ElMessage({
         type: 'info',
-        message: 'Delete canceled',
+        message: '取消删除',
       });
     });
 };
 const editFn = (id: RouteParamValueRaw | (string | number)[]) => {
   router.push({ name: 'issue', query: { id: id } });
 };
+//表格样式
+const tableStyle = reactive({
+  background: '#F3F7FA',
+  height: '77px',
+  'font-size': '20px',
+  'font-family': 'Microsoft YaHei-Bold, Microsoft YaHei',
+  'font-weight': 'bold',
+  color: '#5987AA',
+});
+const rowStyle = reactive({
+  height: '48px',
+  'font-size': '18px',
+  'font-family': 'Microsoft YaHei-Regular, Microsoft YaHei',
+  'font-weight': '400',
+  color: '#333333',
+});
 </script>
 
 <template>
@@ -75,17 +89,17 @@ const editFn = (id: RouteParamValueRaw | (string | number)[]) => {
     <div class="topBar">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="标题">
-          <el-input v-model="formInline.title" placeholder="title by" clearable />
+          <el-input v-model="formInline.title" placeholder="请输入标题" clearable />
         </el-form-item>
         <el-form-item label="标签">
-          <el-input v-model="formInline.keywords" placeholder="keywords by" clearable />
+          <el-input v-model="formInline.keywords" placeholder="请添加标签" clearable />
         </el-form-item>
         <el-form-item label="日期">
           <el-date-picker
             v-model="formInline.date"
             value-format="YYYY-MM-DD"
             type="date"
-            placeholder="Pick a date"
+            placeholder="请选择日期"
             clearable
           />
         </el-form-item>
@@ -98,15 +112,20 @@ const editFn = (id: RouteParamValueRaw | (string | number)[]) => {
       </el-form>
     </div>
     <div class="mdeditor">
-      <el-table :data="blogList" style="width: 100%">
+      <el-table
+        :data="blogList"
+        style="width: 100%"
+        :header-cell-style="tableStyle"
+        :row-style="rowStyle"
+      >
         <el-table-column type="index" width="50" />
         <el-table-column prop="date" label="创建日期" align="center" />
         <el-table-column prop="title" label="标题" align="center" />
         <el-table-column prop="keywords" label="关键字" align="center" />
         <el-table-column fixed="right" align="center" label="操作">
           <template v-slot="{ row }">
-            <el-button link type="primary" size="small" @click="delFn(row.id)">删除</el-button>
-            <el-button link type="primary" size="small" @click="editFn(row.id)">编辑</el-button>
+            <el-button link type="primary" size="middle" @click="delFn(row.id)">删除</el-button>
+            <el-button link type="primary" size="middle" @click="editFn(row.id)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -70,10 +70,10 @@ onMounted(() => {
         class="demo-form-inline"
       >
         <el-form-item label="标题" prop="title">
-          <el-input v-model="formModel.title" placeholder="title by" clearable />
+          <el-input v-model="formModel.title" placeholder="请输入标题" clearable />
         </el-form-item>
         <el-form-item label="标签" prop="keywords">
-          <el-input v-model="formModel.keywords" placeholder="keywords by" clearable />
+          <el-input v-model="formModel.keywords" placeholder="请添加标签" clearable />
         </el-form-item>
       </el-form>
       <el-button type="primary" @click="onSubmit">提交</el-button>
