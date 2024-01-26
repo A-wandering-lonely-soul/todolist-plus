@@ -460,7 +460,9 @@ const observeBox = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(102, 15, 184);
+  background: linear-gradient(-45deg, #52dcee, #3ece45, #d52323, #5223d5);
+  background-size: 400% 400%;
+  animation: anime 8s ease infinite;
   height: 40px;
   .total_scroll {
     display: flex;
@@ -476,6 +478,31 @@ const observeBox = () => {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+  }
+}
+@keyframes anime {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@-webkit-keyframes anime {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
   }
 }
 .img_pre {
@@ -497,6 +524,7 @@ const observeBox = () => {
     align-items: center;
     background-color: #bdbcbc;
     margin-right: 10px;
+    cursor: url('/static/pokemon/后台运行.cur'), pointer;
   }
   .file-input {
     display: none;
@@ -529,7 +557,7 @@ const observeBox = () => {
       display: flex;
       justify-content: space-between;
       .deltask {
-        cursor: pointer;
+        cursor: url('/static/pokemon/后台运行.cur'), auto;
         display: flex;
         width: 100%;
         height: 100%;
@@ -537,7 +565,7 @@ const observeBox = () => {
         align-items: center;
       }
       .addtask {
-        cursor: pointer;
+        cursor: url('/static/pokemon/后台运行.cur'), auto;
         display: flex;
         width: 100%;
         height: 100%;

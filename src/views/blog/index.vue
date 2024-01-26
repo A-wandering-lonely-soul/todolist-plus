@@ -36,9 +36,9 @@ const resetData = () => {
 };
 const getBlogData = () => {
   //获取列表
-  blog.GET_BLOG_DATA(formInline).then((res) => {
-    blogList.value = res.data.data; // 更新响应式变量的值
-    total.value = res.data.total;
+  blog.GET_BLOG_DATA(formInline).then((res: any) => {
+    blogList.value = res.data; // 更新响应式变量的值
+    total.value = res.total;
   });
   // blog.GET_BLOG_DATA(formInline).then((res) => {
   //   Object.assign(blogList, data);
@@ -111,38 +111,40 @@ const rowStyle = reactive({
         </el-form-item>
       </el-form>
     </div>
-    <div class="mdeditor">
-      <el-table
-        :data="blogList"
-        style="width: 100%"
-        :header-cell-style="tableStyle"
-        :row-style="rowStyle"
-      >
-        <el-table-column type="index" width="50" />
-        <el-table-column prop="date" label="创建日期" align="center" />
-        <el-table-column prop="title" label="标题" align="center" />
-        <el-table-column prop="keywords" label="关键字" align="center" />
-        <el-table-column fixed="right" align="center" label="操作">
-          <template v-slot="{ row }">
-            <el-button link type="primary" size="middle" @click="delFn(row.id)">删除</el-button>
-            <el-button link type="primary" size="middle" @click="editFn(row.id)">编辑</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
-    <div class="pagination">
-      <el-pagination
-        background
-        layout="prev, pager, next,total"
-        @current-change="changePage"
-        :total="total"
-      />
-    </div>
+    <el-card>
+      <div class="mdeditor">
+        <el-table
+          :data="blogList"
+          style="width: 100%"
+          :header-cell-style="tableStyle"
+          :row-style="rowStyle"
+        >
+          <el-table-column type="index" width="50" />
+          <el-table-column prop="date" label="创建日期" align="center" />
+          <el-table-column prop="title" label="标题" align="center" />
+          <el-table-column prop="keywords" label="关键字" align="center" />
+          <el-table-column fixed="right" align="center" label="操作">
+            <template v-slot="{ row }">
+              <el-button link type="primary" size="default" @click="delFn(row.id)">删除</el-button>
+              <el-button link type="primary" size="default" @click="editFn(row.id)">编辑</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next,total"
+          @current-change="changePage"
+          :total="total"
+        />
+      </div>
+    </el-card>
   </div>
 </template>
 
 <style lang="less" scoped>
-::v-deep .el-table--fit {
+:deep(.el-table--fit) {
   height: 100%;
   overflow: auto;
 }

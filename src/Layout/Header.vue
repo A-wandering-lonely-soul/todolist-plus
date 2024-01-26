@@ -10,7 +10,7 @@
         <span class="text-large font-600 mr-3">NEXT</span>
         <span class="text-sm mr-2" style="color: var(--el-text-color-regular)">博客</span>
         <el-tag class="blogLink">
-          <a href="http://winterfinale.com:8080/">点击跳转</a>
+          <a :href="blogAddress">点击跳转</a>
         </el-tag>
       </div>
     </template>
@@ -25,6 +25,9 @@
 import router from '@/router';
 import { ElNotification as notify } from 'element-plus';
 import { userInfoStore } from '@/stores';
+const blogAddress = `https://winterfinale.com:8080?token=${localStorage.getItem(
+  'x-token'
+)}`;
 const loginOut = () => {
   userInfoStore().loginOut();
   router.push('/login');
@@ -55,6 +58,7 @@ const onBack = () => {
   margin: 0.2em;
   a:hover {
     color: skyblue;
+    cursor: url('/static/pokemon/后台运行.cur'), auto;
   }
 }
 </style>

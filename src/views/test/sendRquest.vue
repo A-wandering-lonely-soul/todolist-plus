@@ -4,10 +4,10 @@ const blog = useBlogStore();
 
 const sendRquest = () => {
   let data = {
-    password: '123456',
-    username: 'admin',
+    title: '标题',
+    keywords: 'taro',
   };
-  blog.GET_BLOG_DATA();
+  blog.GET_BLOG_DATA(data);
 };
 </script>
 

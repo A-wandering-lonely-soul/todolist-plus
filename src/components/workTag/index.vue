@@ -101,7 +101,7 @@ watch(
   border: none;
   color: white;
   font-size: 1.2em;
-  // cursor: pointer;
+  // cursor: url('/static/pokemon/后台运行.cur'), auto;
   outline: none;
   overflow: hidden;
   border-radius: 100px;
@@ -126,7 +126,7 @@ watch(
     .close_icon {
       width: 2em;
       height: 2em;
-      cursor: pointer;
+      cursor: url('/static/pokemon/后台运行.cur'), auto;
       &:hover {
         color: skyblue;
       }

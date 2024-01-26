@@ -156,7 +156,7 @@ const unflipFn = () => {
   padding: 0.5em 0.75em;
   border-radius: 100px;
   line-height: 1em;
-  cursor: pointer;
+  cursor: url('/static/pokemon/后台运行.cur'), auto;
   transition: all 0.1s ease-out;
 }
 

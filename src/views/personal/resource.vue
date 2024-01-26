@@ -78,13 +78,41 @@ onMounted(() => {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: #660fb8;
+  background: linear-gradient(-45deg, #52eeb2, #ce3e3e, #3523d5, #239dd5);
+  background-size: 400% 400%;
+  animation: anime 8s ease infinite;
   i {
     width: 2rem;
     height: 2rem;
     margin-right: 0.5rem;
     color: #fff;
-    cursor: pointer;
+    cursor: url('/static/pokemon/后台运行.cur'), auto;
+  }
+}
+
+@keyframes anime {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@-webkit-keyframes anime {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
   }
 }
 .box {

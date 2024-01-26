@@ -2,7 +2,7 @@
 import { ref, onMounted, reactive } from 'vue';
 const toMyBlog = () => {
   //跳转到我的博客
-  window.location.href = 'http://winterfinale.com:8080/';
+  window.location.href = 'https://winterfinale.com:8080/';
 };
 const isAmplify = ref(false); //是否拥有放大功能
 const toggleAmplify = () => {
@@ -341,7 +341,7 @@ const handleMouseup = () => {
 /* 设置镜子元素 */
 .mirror {
   /* 定义鼠标悬停时的光标形状 */
-  cursor: pointer;
+  cursor: url('/static/pokemon/后台运行.cur'), auto;
   /* 将镜子元素的宽度设置为 10% 的容器元素宽度 */
   width: 250px;
   /* 将镜子元素的高度设置为 20% 的容器元素高度 */
@@ -512,20 +512,21 @@ const handleMouseup = () => {
   height: 1rem;
 }
 .card .content_card .details .Btn {
-  width: 16rem;
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
 .card .content_card .details .Btn button {
-  padding: 0.75rem 2.25rem;
+  padding: 0.75rem 1.25rem;
   border-radius: 0.75rem;
   border: none;
   outline: none;
   font-size: 1rem;
   font-weight: 500;
-  cursor: pointer;
+  cursor: url('/static/pokemon/后台运行.cur'), auto;
 }
 .content_menu {
+  cursor: url('/static/pokemon/后台运行.cur'), auto;
   position: absolute;
   bottom: 20vh;
   right: 15vw;

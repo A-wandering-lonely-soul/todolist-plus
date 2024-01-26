@@ -15,7 +15,6 @@ instance.interceptors.request.use(
   function (config: any) {
     // 在发送请求之前做些什么
     const headers = (config.headers = config.headers || {});
-    // 在发送请求之前做些什么
     const token = localStorage.getItem('x-token');
     headers['x-token'] = token;
     // if (config.json) {

@@ -25,7 +25,7 @@ import Hearder from '@/Layout/Header.vue';
     display: flex;
     .routerView {
       flex: 1;
-      background-color: #f5f5f5;
+      background-color: #edf8f3;
     }
   }
 }
