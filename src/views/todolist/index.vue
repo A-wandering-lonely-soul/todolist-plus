@@ -130,7 +130,7 @@ const trueForm = async () => {
 
 //附件
 const preview = (img: any) => {
-  console.log('src', img);
+  // console.log('src', img);
 };
 const fileInput = ref<any>(null);
 const reduceFile = () => {

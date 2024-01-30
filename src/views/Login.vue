@@ -313,8 +313,6 @@ const register = () => {
   /* 取消下划线 */
   font-weight: 600;
   /* 设置字体粗细 */
-  cursor: default;
-  /* 设置鼠标样式为默认 */
   opacity: 0;
   /* 设置初始透明度为0 */
   animation: slideRight 1s ease forwards;
@@ -662,6 +660,7 @@ form {
 }
 #remember {
   margin: auto 5px;
+  cursor: url('/static/pokemon/正常选择.cur'), default;
 }
 p {
   -webkit-text-stroke: 1px #8e87c3;

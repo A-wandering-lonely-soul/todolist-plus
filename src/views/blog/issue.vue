@@ -5,7 +5,11 @@ import 'md-editor-v3/lib/style.css';
 import type { FormInstance, FormRules } from 'element-plus';
 import { useBlogStore } from '@/stores';
 import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
+
+import axios from 'axios';
 const route = useRoute();
+const router = useRouter();
 const blog = useBlogStore();
 const ruleFormRef = ref<InstanceType<typeof FormInstance>>();
 const addGroupRef = ref<InstanceType<typeof FormInstance>>();
@@ -17,7 +21,7 @@ let formModel = reactive({
 const rules = reactive<InstanceType<typeof FormRules>>({
   title: [
     { required: true, message: '请输入标题', trigger: 'blur' },
-    { min: 1, max: 10, message: '长度1到10之间', trigger: 'blur' },
+    { min: 1, max: 20, message: '长度1到20之间', trigger: 'blur' },
   ],
   keywords: [
     {
@@ -39,12 +43,50 @@ const onSubmit = async () => {
             keywords: '',
             contentHtml: '',
           });
+          router.push('/blog/manage');
         }
       });
     } else {
       console.log('error submit!', fields);
     }
   });
+};
+const handleOnUploadImg = async (
+  files: Array<File>,
+  callback: (urls: string[]) => void
+) => {
+  const res = await Promise.all(
+    files.map((file) => {
+      return new Promise((rev, rej) => {
+        const form = new FormData();
+        form.append('avatar', file);
+        axios
+          .post('/api/getimg', form, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'x-token': window.localStorage.getItem('x-token'),
+            },
+          })
+          .then((res) => rev(res))
+          .catch((error) => rej(error));
+      });
+    })
+  );
+  callback(
+    res.map((item: any) => {
+      return item.data.data;
+    })
+  );
+  // let file = files[0];
+  // let formData = new FormData();
+  // formData.append('avatar', file);
+  // axios.post('/api/getimg', formData, {
+  //   headers: {
+  //     'Content-Type': 'multipart/form-data',
+  //     litpToken: window.localStorage.getItem('x-token'),
+  //   },
+  // }).then((res) => {})
+  //   .catch((error)=>{});
 };
 
 let blogId = reactive<any>(null);
@@ -79,7 +121,11 @@ onMounted(() => {
       <el-button type="primary" @click="onSubmit">提交</el-button>
     </div>
     <div class="mdeditor">
-      <MdEditor v-model="formModel.contentHtml" style="height: calc(100vh - 305px)" />
+      <MdEditor
+        v-model="formModel.contentHtml"
+        @onUploadImg="handleOnUploadImg"
+        style="height: calc(100vh - 305px)"
+      />
     </div>
   </div>
   <!-- markdown 编辑器 -->
