@@ -13,6 +13,8 @@ import { createPinia } from 'pinia';
 import permission from '@/router/permission'; //路由守卫
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
+import 'element-plus/theme-chalk/dark/css-vars.css'; //暗黑主题样式
+import '@/style/dark-var.less'; //自定义主题样式
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 const pinia = createPinia();
 const app = createApp(App);

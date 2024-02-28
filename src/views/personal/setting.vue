@@ -124,6 +124,32 @@ const handleMouseMove = (e) => {
 const handleMouseup = () => {
   isDragging.value = false;
 };
+//切换黑夜白天模式
+import { useDark, useToggle } from '@vueuse/core';
+const isDark = useDark();
+
+const toggleSunny = () => {
+  isDark.value = false;
+  changeSun();
+  useToggle(isDark);
+};
+const toggleMoon = () => {
+  isDark.value = true;
+  changeMoon();
+  useToggle(isDark);
+};
+function changeMoon() {
+  let domStyle = document.documentElement.style;
+  domStyle.setProperty('--title-color', 'pink');
+  domStyle.setProperty('--content-background', '#121212');
+  domStyle.setProperty('--page-background', '#143f5f');
+}
+function changeSun() {
+  let domStyle = document.documentElement.style;
+  domStyle.setProperty('--title-color', '#000');
+  domStyle.setProperty('--content-background', '#fff');
+  domStyle.setProperty('--page-background', '#edf8f3');
+}
 </script>
 
 <template>
@@ -154,8 +180,8 @@ const handleMouseup = () => {
         <!-- 视频资源地址和格式 -->
       </video>
     </div>
-    <el-row class="bigbox">
-      <el-col :span="4" class="leftInfo">
+    <el-row class="bigbox" @mouseup="()=>isActive=false">
+      <el-col :span="5" class="leftInfo">
         <div class="card">
           <div class="imgBox">
             <img src="https://pic.baike.soso.com/p/20131210/20131210175039-1645093212.jpg" />
@@ -248,8 +274,63 @@ const handleMouseup = () => {
           </div>
         </div>
       </el-col>
-      <el-col :span="16"></el-col>
-      <el-col :span="4"></el-col>
+      <el-col :span="16">
+        <div class="introducePage">
+          <div class="pageTitle">关于我的页面</div>
+          <!-- 博客前台 -->
+          <div class="foreground">
+            <div class="describe">
+              <div class="projectName">博客前台</div>
+              <div class="projectContent">
+                <p>基于Next.js 13开发</p>
+                <p>UI层使用Antd、Sass、Tailwind</p>
+                <p>数据请求使用Fetch</p>
+                <p>解析markdown采用 marked</p>
+                <p>生成文章目录使用 markdown-navbar ，语法高亮 highlight.js</p>
+              </div>
+            </div>
+            <div class="pageImage">
+              <div class="imageTitle">前台码源</div>
+              <div class="imageAbout"></div>
+            </div>
+          </div>
+          <!-- 后台管理系统 -->
+          <div class="background">
+            <div class="describe">
+              <div class="projectName">后台管理系统</div>
+              <div class="projectContent">
+                <p>基于VUE 3开发</p>
+                <p>UI层使用Element plus</p>
+                <p>数据请求使用axios</p>
+                <p>数据储存使用pinia</p>
+                <p>解析markdown采用 md-editor-v3</p>
+              </div>
+            </div>
+            <div class="pageImage">
+              <div class="imageTitle">后台码源</div>
+              <div class="imageAbout"></div>
+            </div>
+          </div>
+          <!-- 中台数据接口 -->
+          <div class="middleground">
+            <div class="describe">
+              <div class="projectName">博客前台</div>
+              <div class="projectContent">
+                <p>基于express + MySQL开发</p>
+                <p>使用nginx反向代理获取储存文件</p>
+                <p>登录使用jwk校验</p>
+                <p>后台服务通过nginx部署</p>
+                <p>数据库MySQL通过宝塔一键部署</p>
+              </div>
+            </div>
+            <div class="pageImage">
+              <div class="imageTitle">前台码源</div>
+              <div class="imageAbout"></div>
+            </div>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="3"></el-col>
       <div
         class="content_menu"
         ref="content"
@@ -279,22 +360,32 @@ const handleMouseup = () => {
                 <Search />
               </i>
             </p>
-            <p class="panel" style="--i: 2" :class="{ active: isActive }" @click="toggleActive">
+            <p class="panel" style="--i: 2" :class="{ active: isActive }" @click="toggleSunny">
+              <i style="width: 1.5em; height: 1.5em">
+                <Sunny />
+              </i>
+            </p>
+            <p class="panel" style="--i: 3" :class="{ active: isActive }" @click="toggleMoon">
+              <i style="width: 1.5em; height: 1.5em">
+                <Moon />
+              </i>
+            </p>
+            <p
+              class="panel"
+              style="--i: 4"
+              :class="{ active: isActive }"
+              @click="()=>isActive=false"
+            >
               <i style="width: 1.5em; height: 1.5em">
                 <CircleCloseFilled />
               </i>
             </p>
-            <p class="panel" style="--i: 3" :class="{ active: isActive }" @click="toggleActive">
-              <i style="width: 1.5em; height: 1.5em">
-                <CircleCloseFilled />
-              </i>
-            </p>
-            <p class="panel" style="--i: 4" :class="{ active: isActive }" @click="toggleActive">
-              <i style="width: 1.5em; height: 1.5em">
-                <CircleCloseFilled />
-              </i>
-            </p>
-            <p class="panel" style="--i: 5" :class="{ active: isActive }" @click="toggleActive">
+            <p
+              class="panel"
+              style="--i: 5"
+              :class="{ active: isActive }"
+              @click="()=>isActive=false"
+            >
               <i style="width: 1.5em; height: 1.5em">
                 <CircleCloseFilled />
               </i>
@@ -387,6 +478,59 @@ const handleMouseup = () => {
   .leftInfo {
     display: flex;
     justify-content: center;
+  }
+  .introducePage {
+    height: 100%;
+    width: 100%;
+    box-shadow: 0 13px 8px 6px rgba(7, 17, 27, 0.56);
+    &:hover {
+      border: 1px solid #ccc;
+      transition: box-shadow 0.3s ease; /* 添加过渡效果 */
+      /* 根据鼠标移入状态，添加阴影效果 */
+      box-shadow: 15px 9px 14px 6px rgb(247 247 247 / 15%); /* 阴影样式可以根据需要调整 */
+    }
+    .pageTitle {
+      height: 10%;
+      font-weight: 700;
+      font-size: 30px;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .foreground,
+    .background,
+    .middleground {
+      display: flex;
+      justify-content: space-between;
+      height: 30%;
+      .describe {
+        width: 50%;
+        height: 100%;
+        padding: 10px;
+        .projectName {
+          color: #e7f2fd;
+          font-size: 23px;
+          margin: 10px;
+        }
+        .projectContent {
+          font-size: 18px;
+          line-height: 30px;
+          color: white;
+        }
+      }
+      .pageImage {
+        width: 50%;
+        height: 100%;
+        .imageTitle {
+          color: #dae6f3;
+          font-size: 23px;
+          margin: 10px;
+        }
+        .imageAbout {
+        }
+      }
+    }
   }
 }
 

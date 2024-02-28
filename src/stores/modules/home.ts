@@ -27,13 +27,25 @@ export const useHomeStore = defineStore('home', {
   },
   getters: {},
   actions: {
+    // 通过id获取个人信息
+    getUserById(data: object) {
+      return http('GET', '/user/get-user-byId', true, data).then((res) => {
+        return res;
+      });
+    },
+    //上传头像
+    upLoadAvatar(data: object) {
+      return http('POST', '/user/set-avatar', true, data).then((res) => {
+        return res;
+      });
+    },
     //注册
     A_REGISTER(data: object) {
       http('POST', '/user/register', true, data);
     },
 
     A_LOGIN(data: object) {
-      http('POST', '/user/login', true, data).then(
+      return http('POST', '/user/login', true, data).then(
         (resp: any) => {
           ElMessage({
             type: resp.data.success ? 'success' : 'error',

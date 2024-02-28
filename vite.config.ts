@@ -12,7 +12,7 @@ export default defineConfig({
     // host: '0.0.0.0',//设置地址：http://localhost
     port: 2233, // 设置服务启动端口号
     // open: true, // 设置服务启动时是否自动打开浏览器
-    // cors: true, // 允许跨域
+    cors: true, // 允许跨域
     proxy: {
       '/api': {
         target: 'http://206.237.29.83:3000/', //代理的地址

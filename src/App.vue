@@ -14,6 +14,7 @@
 :deep([type='button']),
 :deep(a),
 :deep(label),
+:deep(.el-upload),
 :deep(.el-button),
 :deep(.el-sub-menu__title),
 :deep(.el-radio-button__inner),
@@ -24,7 +25,7 @@
 }
 :deep(.el-input__inner),
 :deep(.el-textarea__inner),
-:deep(#md-editor-v3-textarea),
+// :deep(#md-editor-v3-textarea),
 :deep(.textinput) {
   cursor: url('/static/pokemon/文本选择.cur'), pointer;
 }

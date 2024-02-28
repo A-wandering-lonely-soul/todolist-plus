@@ -77,16 +77,6 @@ const handleOnUploadImg = async (
       return item.data.data;
     })
   );
-  // let file = files[0];
-  // let formData = new FormData();
-  // formData.append('avatar', file);
-  // axios.post('/api/getimg', formData, {
-  //   headers: {
-  //     'Content-Type': 'multipart/form-data',
-  //     litpToken: window.localStorage.getItem('x-token'),
-  //   },
-  // }).then((res) => {})
-  //   .catch((error)=>{});
 };
 
 let blogId = reactive<any>(null);
@@ -94,7 +84,7 @@ onMounted(() => {
   console.log(route.query);
   if (route.query.id) {
     blogId = route.query.id;
-    blog.GET_BLOG_BYID({ id: blogId }).then((res) => {
+    blog.GET_BLOG_BYID({ id: blogId }).then((res: any) => {
       Object.assign(formModel, res.data[0]);
     });
   }
@@ -124,7 +114,7 @@ onMounted(() => {
       <MdEditor
         v-model="formModel.contentHtml"
         @onUploadImg="handleOnUploadImg"
-        style="height: calc(100vh - 305px)"
+        style="height: calc(100vh - 205px)"
       />
     </div>
   </div>

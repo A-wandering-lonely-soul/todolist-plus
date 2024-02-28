@@ -71,7 +71,7 @@ export const staticRouter = [
       {
         path: '/blog/issue',
         name: 'issue',
-        props: (route) => ({ id: route.query.id }),
+        props: (route: any) => ({ id: route.query.id }),
         meta: {
           icon: 'Pen',
           title: '博客发布',

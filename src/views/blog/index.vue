@@ -44,8 +44,7 @@ const getBlogData = () => {
   //   Object.assign(blogList, data);
   // });
 };
-type RouteParamValueRaw = /*unresolved*/ any;
-const delFn = (id: RouteParamValueRaw | (string | number)[]) => {
+const delFn = (id: string | number) => {
   ElMessageBox.confirm('你想要删除这个博客吗?', '警告', {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
@@ -63,7 +62,7 @@ const delFn = (id: RouteParamValueRaw | (string | number)[]) => {
       });
     });
 };
-const editFn = (id: RouteParamValueRaw | (string | number)[]) => {
+const editFn = (id: string | number) => {
   router.push({ name: 'issue', query: { id: id } });
 };
 //表格样式
@@ -122,7 +121,7 @@ const rowStyle = reactive({
           <el-table-column type="index" width="50" />
           <el-table-column prop="date" label="创建日期" align="center" />
           <el-table-column prop="title" label="标题" align="center" />
-          <el-table-column prop="keywords" label="关键字" align="center" />
+          <el-table-column prop="keywords" label="标签" align="center" />
           <el-table-column fixed="right" align="center" label="操作">
             <template v-slot="{ row }">
               <el-button link type="primary" size="default" @click="delFn(row.id)">删除</el-button>

@@ -53,7 +53,8 @@ const router = useRouter();
 const home = useHomeStore();
 const user = userInfoStore();
 const userInfo = storeToRefs(user);
-const userCount = computed(() => {
+const Count = computed(() => {
+  //用户账号和密码
   return userInfo.userCount.value || {};
 });
 
@@ -61,22 +62,18 @@ const userCount = computed(() => {
 // import router from '@/router';
 
 const isLogin = ref(true);
-const isRemember = ref(true);
+const isRemember = ref(false);
 const loginForm = reactive({
   username: '',
   password: '',
 });
 onMounted(() => {
-  JSON.stringify(userCount.value) != '{}'
-    ? Object.assign(loginForm, userCount.value)
+  JSON.stringify(Count.value) != '{}'
+    ? Object.assign(loginForm, Count.value)
     : '';
-  // console.log(
-  //   'router.currentRoute.value',
-  //   router.currentRoute.value.query.redirect
-  // );
 });
 const rememberCount = () => {
-  isRemember.value != isRemember.value;
+  isRemember.value = !isRemember.value;
 };
 
 const registerForm = reactive({
@@ -96,11 +93,15 @@ const Login = async () => {
       type: 'success',
     });
   } else {
-    await home.A_LOGIN(loginForm);
-    isRemember.value ? user.setUserCount(loginForm) : user.removeUserCount(); //保存账号密码
-    setTimeout(() => {
-      router.push(`${router.currentRoute.value.query.redirect}`);
-    }, 500);
+    let res = await home.A_LOGIN(loginForm);
+    if (res.data.success) {
+      user.setUserInfo(res.data.data);
+      isRemember.value ? user.setUserCount(loginForm) : user.removeUserCount(); //保存账号密码
+      setTimeout(() => {
+        router.push(`${router.currentRoute.value.query.redirect}`);
+      }, 500);
+    } else {
+    }
   }
 };
 const toRegister = () => {
@@ -316,6 +317,7 @@ const register = () => {
   opacity: 0;
   /* 设置初始透明度为0 */
   animation: slideRight 1s ease forwards;
+  -webkit-animation: slideRight 1s ease forwards;
   /* 设置动画效果 */
 }
 
@@ -338,6 +340,7 @@ const register = () => {
   transition: 0.3s;
   /* 设置过渡效果 */
   animation: slideTop 1s ease forwards;
+  -webkit-animation: slideTop 1s ease forwards;
   /* 设置动画效果 */
   animation-delay: calc(0.2s * var(--i));
   /* 设置动画延迟时间 */
@@ -382,6 +385,7 @@ const register = () => {
   opacity: 0;
   /* 设置初始透明度为0 */
   animation: slideBottom 1s ease forwards;
+  -webkit-animation: slideBottom 1s ease forwards;
   /* 设置动画效果 */
   animation-delay: 0.7s;
   /* 设置动画延迟时间 */
@@ -397,6 +401,7 @@ const register = () => {
   border-right: 2px solid white;
   /* 添加光标闪烁效果 */
   animation: blink 0.5s step-end infinite;
+  -webkit-animation: blink 0.5s step-end infinite;
 }
 
 /* 设置首页内容标题的样式 */
@@ -404,6 +409,7 @@ const register = () => {
   margin-bottom: 30px;
   /* 设置下方间距 */
   animation: slideTop 1s ease forwards;
+  -webkit-animation: slideTop 1s ease forwards;
   /* 设置动画效果 */
   animation-delay: 0.7s;
   /* 设置动画延迟时间 */
@@ -420,6 +426,7 @@ const register = () => {
   opacity: 0;
   /* 设置初始透明度为0 */
   animation: slideRight 1s ease forwards;
+  -webkit-animation: slideRight 1s ease forwards;
   /* 设置动画效果 */
   animation-delay: 1s;
   /* 设置动画延迟时间 */
@@ -430,6 +437,7 @@ const register = () => {
   font-size: 18px;
   /* 设置字体大小 */
   animation: slideLeft 1s ease forwards;
+  -webkit-animation: slideLeft 1s ease forwards;
   /* 设置动画效果 */
   animation-delay: 0.7s;
   /* 设置动画延迟时间 */
@@ -452,6 +460,7 @@ const register = () => {
   transition: 0.5s ease;
   opacity: 0;
   animation: slideLeft 1s ease forwards;
+  -webkit-animation: slideLeft 1s ease forwards;
   animation-delay: calc(0.2s * var(--i));
 }
 
@@ -475,6 +484,7 @@ const register = () => {
   transition: 0.5s ease;
   opacity: 0;
   animation: slideTop 1s ease forwards;
+  -webkit-animation: slideTop 1s ease forwards;
   animation-delay: 2s;
 }
 
@@ -583,6 +593,7 @@ const register = () => {
   box-shadow: inset 15px 10px 40px #00d0ff21, 10px 10px 20px #0070ffa6,
     15px 15px 30px #fef0f0, inset -10px -10px 20px #008aff85;
   animation: move-08aaad4e 6s linear infinite;
+  -webkit-animation: move-08aaad4e 6s linear infinite;
 }
 
 .loginMain::after {
@@ -595,6 +606,7 @@ const register = () => {
   top: 80px;
   border-radius: 50%;
   animation: move2 6s linear infinite;
+  -webkit-animation: move2 6s linear infinite;
   filter: blur(1px);
 }
 
@@ -608,6 +620,7 @@ const register = () => {
   top: 70px;
   border-radius: 50%;
   animation: move3 6s linear infinite;
+  -webkit-animation: move3 6s linear infinite;
   filter: blur(1px);
 }
 @keyframes move {
