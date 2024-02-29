@@ -274,7 +274,7 @@ function changeSun() {
           </div>
         </div>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="16" style="height:100%;">
         <div class="introducePage">
           <div class="pageTitle">关于我的页面</div>
           <!-- 博客前台 -->
@@ -283,15 +283,27 @@ function changeSun() {
               <div class="projectName">博客前台</div>
               <div class="projectContent">
                 <p>基于Next.js 13开发</p>
-                <p>UI层使用Antd、Sass、Tailwind</p>
-                <p>数据请求使用Fetch</p>
-                <p>解析markdown采用 marked</p>
-                <p>生成文章目录使用 markdown-navbar ，语法高亮 highlight.js</p>
+                <p>UI层使用antd-mobile、Tailwind</p>
+                <p>数据请求使用Fetch、axios路由拦截器</p>
+                <p>解析markdown采用remark转换文档</p>
+                <p>生成文章目录使用 github-markdown.css ，语法高亮 highlight.js</p>
+                <p>token通过js-cookie和next-cookie在服务端和客户端之间保存</p>
               </div>
             </div>
             <div class="pageImage">
-              <div class="imageTitle">前台码源</div>
-              <div class="imageAbout"></div>
+              <div class="imageTitle">
+                <a
+                  onclick="window.open('https://gitee.com/iioouu/xxt-todolist.git')"
+                  title="xxx"
+                >前台码源</a>
+              </div>
+              <div class="imageAbout">
+                <img
+                  src="~@/assets/project/myWeb.png"
+                  style="max-width: 100%;max-height:100%;object-fit:contain"
+                  alt
+                />
+              </div>
             </div>
           </div>
           <!-- 后台管理系统 -->
@@ -307,14 +319,22 @@ function changeSun() {
               </div>
             </div>
             <div class="pageImage">
-              <div class="imageTitle">后台码源</div>
-              <div class="imageAbout"></div>
+              <div class="imageTitle">
+                <a onclick="window.open('https://gitee.com/iioouu/xxt-blog.git')" title="xxx">后台码源</a>
+              </div>
+              <div class="imageAbout">
+                <img
+                  src="~@/assets/project/next13blog.png"
+                  style="max-width: 100%;max-height:100%;object-fit:contain"
+                  alt
+                />
+              </div>
             </div>
           </div>
           <!-- 中台数据接口 -->
           <div class="middleground">
             <div class="describe">
-              <div class="projectName">博客前台</div>
+              <div class="projectName">中端数据</div>
               <div class="projectContent">
                 <p>基于express + MySQL开发</p>
                 <p>使用nginx反向代理获取储存文件</p>
@@ -324,8 +344,16 @@ function changeSun() {
               </div>
             </div>
             <div class="pageImage">
-              <div class="imageTitle">前台码源</div>
-              <div class="imageAbout"></div>
+              <div class="imageTitle">
+                <a onclick="window.open('https://gitee.com/iioouu/xxt-server.git')" title="xxx">中端码源</a>
+              </div>
+              <div class="imageAbout">
+                <img
+                  src="~@/assets/project/SERVER.png"
+                  style="max-width: 100%;max-height:100%;object-fit:contain"
+                  alt
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -508,6 +536,28 @@ function changeSun() {
         width: 50%;
         height: 100%;
         padding: 10px;
+        overflow-y: auto;
+        /* 滚动条 */
+        &::-webkit-scrollbar {
+          width: 10px;
+          height: 10px;
+        }
+        &::-webkit-scrollbar-track {
+          background: #fff;
+          border-radius: 2px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: rgb(205, 206, 206);
+
+          border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: #333;
+        }
+        &::-webkit-scrollbar-corner {
+          background: #fff;
+        }
+
         .projectName {
           color: #e7f2fd;
           font-size: 23px;
@@ -522,12 +572,19 @@ function changeSun() {
       .pageImage {
         width: 50%;
         height: 100%;
+        display: flex;
+        flex-direction: column;
         .imageTitle {
-          color: #dae6f3;
+          height: 20%;
           font-size: 23px;
           margin: 10px;
+          a {
+            color: #dae6f3;
+          }
         }
         .imageAbout {
+          height: 80%;
+          text-align: center;
         }
       }
     }
@@ -673,7 +730,7 @@ function changeSun() {
   cursor: url('/static/pokemon/后台运行.cur'), auto;
   position: absolute;
   bottom: 20vh;
-  right: 15vw;
+  right: 5vw;
 }
 
 /* 设计一个圆形的盒子 */
