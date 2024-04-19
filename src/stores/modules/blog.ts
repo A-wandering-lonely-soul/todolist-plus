@@ -13,9 +13,7 @@ export const useBlogStore = defineStore('blog', {
   actions: {
     // 获取所有博客
     GET_BLOG_DATA(data?: object) {
-      return http('GET', '/blog/get-blog-list', true, data).then((res) => {
-        return res.data;
-      });
+      return http('GET', '/blog/get-blog-list', true, data).then((res) => res);
     },
     //删除
     DELETE_BLOG_DATA(data: object) {

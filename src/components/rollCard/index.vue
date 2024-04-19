@@ -139,8 +139,8 @@ const unflipFn = () => {
   padding: 0;
   height: auto;
   margin: 0 2em;
-  width: 20em;
-  height: 35em;
+  width: 15em;
+  height: 25em;
   float: left;
   transition: all 0.2s ease-out;
   border: none;

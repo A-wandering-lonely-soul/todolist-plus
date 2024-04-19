@@ -37,8 +37,8 @@ const resetData = () => {
 const getBlogData = () => {
   //获取列表
   blog.GET_BLOG_DATA(formInline).then((res: any) => {
-    blogList.value = res.data; // 更新响应式变量的值
-    total.value = res.total;
+    blogList.value = res.data.data; // 更新响应式变量的值
+    total.value = res.data.total;
   });
   // blog.GET_BLOG_DATA(formInline).then((res) => {
   //   Object.assign(blogList, data);
@@ -81,17 +81,37 @@ const rowStyle = reactive({
   'font-weight': '400',
   color: '#333333',
 });
+//表格排序方式
+const indexMethod = (index: number) => {
+  if (JSON.stringify(formInline) != '{}') {
+    return (formInline.pageNum - 1) * formInline.pageSize + index + 1;
+  } else {
+    return index + 1;
+  }
+};
 </script>
-
 <template>
   <div class="contain">
     <div class="topBar">
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+      <el-form
+        :inline="true"
+        :model="formInline"
+        class="demo-form-inline"
+        size="large"
+      >
         <el-form-item label="标题">
-          <el-input v-model="formInline.title" placeholder="请输入标题" clearable />
+          <el-input
+            v-model="formInline.title"
+            placeholder="请输入标题"
+            clearable
+          />
         </el-form-item>
         <el-form-item label="标签">
-          <el-input v-model="formInline.keywords" placeholder="请添加标签" clearable />
+          <el-input
+            v-model="formInline.keywords"
+            placeholder="请添加标签"
+            clearable
+          />
         </el-form-item>
         <el-form-item label="日期">
           <el-date-picker
@@ -118,14 +138,47 @@ const rowStyle = reactive({
           :header-cell-style="tableStyle"
           :row-style="rowStyle"
         >
-          <el-table-column type="index" width="50" />
-          <el-table-column prop="date" label="创建日期" align="center" />
-          <el-table-column prop="title" label="标题" align="center" />
-          <el-table-column prop="keywords" label="标签" align="center" />
+          <el-table-column
+            type="index"
+            width="100"
+            align="center"
+            label="序号"
+            :index="indexMethod"
+          ></el-table-column>
+          <el-table-column
+            prop="date"
+            label="创建日期"
+            align="center"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="title"
+            label="标题"
+            align="center"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="keywords"
+            label="标签"
+            align="center"
+            show-overflow-tooltip
+          />
           <el-table-column fixed="right" align="center" label="操作">
             <template v-slot="{ row }">
-              <el-button link type="primary" size="default" @click="delFn(row.id)">删除</el-button>
-              <el-button link type="primary" size="default" @click="editFn(row.id)">编辑</el-button>
+              <el-button
+                link
+                type="primary"
+                size="default"
+                @click="delFn(row.id)"
+                >删除</el-button
+              >
+              <el-button
+                link
+                type="primary"
+                size="default"
+                @click="editFn(row.id)"
+                >编辑</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -146,6 +199,9 @@ const rowStyle = reactive({
 :deep(.el-table--fit) {
   height: 100%;
   overflow: auto;
+}
+:deep(.el-form-item__label) {
+  font-size: 20px;
 }
 .demo-form-inline .el-input {
   --el-input-width: 220px;

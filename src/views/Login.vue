@@ -90,7 +90,7 @@ const Login = async () => {
   } else if (!loginForm.password) {
     ElMessage({
       message: '请输入密码',
-      type: 'success',
+      type: 'warning',
     });
   } else {
     let res = await home.A_LOGIN(loginForm);
@@ -136,17 +136,24 @@ const register = () => {
   <div class="bigBox">
     <header class="header">
       <!-- 网站Logo -->
-      <a href="https://winterfinale.com:8080/" class="logo">This is a Logo!</a>
+      <a href="#" class="logo">This is a Logo!</a>
       <!-- 导航栏 -->
       <nav class="navbar">
         <!-- 导航栏选项1 -->
-        <a href="https://winterfinale.com:8080/" class="item" style="--i: 1">Home</a>
+        <a
+          href="https://a-wandering-lonely-soul.github.io/personal-web/"
+          class="item"
+          style="--i: 1"
+          >Home</a
+        >
         <!-- 导航栏选项2 -->
-        <a href="https://winterfinale.com:8080/" class="item" style="--i: 2">About</a>
+        <a href="https://winterfinale.com:8080/" class="item" style="--i: 2"
+          >blog</a
+        >
         <!-- 导航栏选项3 -->
-        <a href="https://winterfinale.com:8080/" class="item" style="--i: 3">Skills</a>
+        <a href="#" class="item" style="--i: 3">Skills</a>
         <!-- 导航栏选项4 -->
-        <a href="https://winterfinale.com:8080/" class="item" style="--i: 4">Me</a>
+        <a href="#" class="item" style="--i: 4">Me</a>
       </nav>
     </header>
 
@@ -168,24 +175,24 @@ const register = () => {
         <!-- 社交媒体链接 -->
         <div class="social-media">
           <!-- 社交媒体链接1 -->
-          <a href="https://winterfinale.com:8080/" style="--i: 7">
+          <a href="#" style="--i: 7">
             <i class="bx bxl-tiktok"></i>
           </a>
           <!-- 社交媒体链接2 -->
-          <a href="https://winterfinale.com:8080/" style="--i: 8">
+          <a href="#" style="--i: 8">
             <i class="bx bxl-facebook-circle"></i>
           </a>
           <!-- 社交媒体链接3 -->
-          <a href="https://winterfinale.com:8080/" style="--i: 9">
+          <a href="https://gitee.com/iioouu" style="--i: 9">
             <i class="bx bxl-google"></i>
           </a>
           <!-- 社交媒体链接4 -->
-          <a href="https://winterfinale.com:8080/" style="--i: 10">
+          <a href="#" style="--i: 10">
             <i class="bx bxl-linkedin-square"></i>
           </a>
         </div>
         <!-- 主页按钮 -->
-        <a href="https://winterfinale.com:8080/" class="btn">Learn More</a>
+        <a href="https://www.v2ex.com/" class="btn">Learn More</a>
       </div>
       <!-- 主页图片 -->
       <div class="loginMain">
@@ -193,7 +200,12 @@ const register = () => {
           <p>
             用户名
             <br />
-            <input type="text" v-model="loginForm.username" class="textinput" placeholder="请输入用户名" />
+            <input
+              type="text"
+              v-model="loginForm.username"
+              class="textinput"
+              placeholder="请输入用户名"
+            />
           </p>
           <p>
             密码
@@ -242,7 +254,7 @@ const register = () => {
             重复密码
             <br />
             <input
-              type="password2"
+              type="password"
               v-model="registerForm.password2"
               class="textinput"
               placeholder="请输入密码"

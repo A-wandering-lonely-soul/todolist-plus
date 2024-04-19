@@ -31,6 +31,14 @@ export interface itemType {
   imgs: (string | ArrayBuffer | null)[];
   id?: string | number;
 }
+export interface userType {
+  username: string;
+  password: string;
+  ip: string | null;
+  level: number;
+  avatar: string | ArrayBuffer | null;
+  id?: string | number;
+}
 
 export interface LoginResponse {
   success: boolean;

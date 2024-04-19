@@ -100,17 +100,27 @@ onMounted(() => {
         :model="formModel"
         :rules="rules"
         class="demo-form-inline"
+        size="large"
       >
         <el-form-item label="标题" prop="title">
-          <el-input v-model="formModel.title" placeholder="请输入标题" clearable />
+          <el-input
+            v-model="formModel.title"
+            placeholder="请输入标题"
+            clearable
+          />
         </el-form-item>
         <el-form-item label="标签" prop="keywords">
-          <el-input v-model="formModel.keywords" placeholder="请添加标签" clearable />
+          <el-input
+            v-model="formModel.keywords"
+            placeholder="请添加标签"
+            clearable
+          />
         </el-form-item>
       </el-form>
-      <el-button type="primary" @click="onSubmit">提交</el-button>
+      <el-button type="primary" size="large" @click="onSubmit">提交</el-button>
     </div>
     <div class="mdeditor">
+      <!-- markdown 编辑器 -->
       <MdEditor
         v-model="formModel.contentHtml"
         @onUploadImg="handleOnUploadImg"
@@ -118,12 +128,14 @@ onMounted(() => {
       />
     </div>
   </div>
-  <!-- markdown 编辑器 -->
 </template>
 
 <style lang="less" scoped>
 .demo-form-inline .el-input {
   --el-input-width: 220px;
+}
+:deep(.el-form-item__label) {
+  font-size: 20px;
 }
 .contain {
   display: flex;

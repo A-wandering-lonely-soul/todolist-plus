@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, toRaw, reactive, watch, toRefs } from 'vue';
-import { useHomeStore } from '@/stores';
+import { useTodoStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import { Minus, Plus } from '@element-plus/icons-vue';
 import type { FormInstance, FormRules } from 'element-plus';
@@ -23,9 +23,9 @@ const handleMouseMove = (e: MouseEvent) => {
 const formSize = ref('default');
 const ruleFormRef = ref<InstanceType<typeof FormInstance>>();
 const addGroupRef = ref<InstanceType<typeof FormInstance>>();
-const home = useHomeStore();
-home.A_GET_TASK_GROUP();
-const homeInfo = storeToRefs(home);
+const todo = useTodoStore();
+todo.A_GET_TASK_GROUP();
+const homeInfo = storeToRefs(todo);
 const getlist = computed(() => homeInfo.todoData.value);
 //修改分组标题
 const editTitle = async (e: String, groupId: String | Number) => {
@@ -34,7 +34,7 @@ const editTitle = async (e: String, groupId: String | Number) => {
       group_title: e,
       id: groupId,
     };
-    let res = await home.A_CREATE_TASK_GROUP(data);
+    let res = await todo.A_CREATE_TASK_GROUP(data);
   }
 };
 // 使用 watch 函数进行深度监听
@@ -73,7 +73,7 @@ const addItem = (group_id: Number) => {
   dialogVisible.value = true;
 };
 const reduceItem = (group_id: Number) => {
-  home.A_DELETE_TASK_GROUP({ id: group_id });
+  todo.A_DELETE_TASK_GROUP({ id: group_id });
 };
 //弹窗
 const dialogVisible = ref(false);
@@ -117,7 +117,7 @@ const rules = reactive<InstanceType<typeof FormRules>>({
 const trueForm = async () => {
   await ruleFormRef.value.validate((valid: boolean, fields: any) => {
     if (valid) {
-      home.A_CREATED_TASK({
+      todo.A_CREATED_TASK({
         group_id: groupIndex.value,
         item: listItem,
       });
@@ -197,7 +197,7 @@ const addNewGroup = () => {
 const TrueCreateGroup = async () => {
   await addGroupRef.value.validate((valid: boolean, fields: any) => {
     if (valid) {
-      home.A_CREATE_TASK_GROUP(groupData);
+      todo.A_CREATE_TASK_GROUP(groupData);
       groupClose();
     } else {
       console.log('error submit!', fields);
@@ -237,7 +237,10 @@ const observeBox = () => {
     <el-row>
       <div class="wordGroup" v-for="item in getlist" :key="item.group_id">
         <div class="wordHeard">
-          <XxtTextEdit :content="item.group_title" @func="editTitle($event, item.group_id)"></XxtTextEdit>
+          <XxtTextEdit
+            :content="item.group_title"
+            @func="editTitle($event, item.group_id)"
+          ></XxtTextEdit>
 
           <div class="delOrAdd">
             <el-popconfirm
@@ -268,7 +271,11 @@ const observeBox = () => {
         </div>
         <div class="wordList">
           <div v-for="item2 in item.list" :key="item2">
-            <XxtWorkTag :objData="item2" :idIndex="item2.id" @getInfo="editEcho"></XxtWorkTag>
+            <XxtWorkTag
+              :objData="item2"
+              :idIndex="item2.id"
+              @getInfo="editEcho"
+            ></XxtWorkTag>
           </div>
         </div>
       </div>
@@ -301,17 +308,31 @@ const observeBox = () => {
               v-for="(img, index) in listItem.imgs"
               :key="index"
             />
-            <div v-if="listItem.imgs.length == 0" class="add-img-btn" @click="clickFileInput">
+            <div
+              v-if="listItem.imgs.length == 0"
+              class="add-img-btn"
+              @click="clickFileInput"
+            >
               <Plus></Plus>
             </div>
             <div v-else class="add-img-btn" @click="reduceFile">
               <Minus></Minus>
             </div>
-            <input class="file-input" ref="fileInput" type="file" @change="fileChange" />
+            <input
+              class="file-input"
+              ref="fileInput"
+              type="file"
+              @change="fileChange"
+            />
           </div>
         </el-form-item>
         <el-form-item label="优先级">
-          <el-select v-model="listItem.level" class="m-2" placeholder="Select" size="large">
+          <el-select
+            v-model="listItem.level"
+            class="m-2"
+            placeholder="Select"
+            size="large"
+          >
             <el-option
               v-for="item in LEVEL_LIST"
               :key="item.value"
@@ -328,7 +349,12 @@ const observeBox = () => {
         </span>
       </template>
     </el-dialog>
-    <el-dialog v-model="groupVisible" title="新建分组" width="30%" :before-close="groupClose">
+    <el-dialog
+      v-model="groupVisible"
+      title="新建分组"
+      width="30%"
+      :before-close="groupClose"
+    >
       <el-form
         :size="formSize"
         :model="groupData"

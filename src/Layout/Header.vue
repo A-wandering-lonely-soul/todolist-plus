@@ -15,7 +15,9 @@
           </el-icon>
         </el-upload>
         <span class="text-large font-600 mr-3">NEXT</span>
-        <span class="text-sm mr-2" style="color: var(--el-text-color-regular)">博客</span>
+        <span class="text-sm mr-2" style="color: var(--el-text-color-regular)"
+          >博客</span
+        >
         <el-tag class="blogLink">
           <a :href="blogAddress">点击跳转</a>
         </el-tag>
@@ -23,7 +25,9 @@
     </template>
     <template #extra>
       <div class="flex items-center">
-        <el-button type="primary" class="ml-2" @click="loginOut">退出登录</el-button>
+        <el-button type="primary" class="ml-2" @click="loginOut"
+          >退出登录</el-button
+        >
       </div>
     </template>
   </el-page-header>
@@ -35,7 +39,7 @@ import { ref, computed, onBeforeMount } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
 import type { UploadProps } from 'element-plus';
-import { useHomeStore, userInfoStore } from '@/stores';
+import { useHomeStore, userInfoStore, useAccountStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import axios from 'axios';
 const user = userInfoStore();
@@ -45,6 +49,7 @@ const Info = computed(() => {
   return userInfo.userInfo.value || {};
 });
 const home = useHomeStore();
+const account = useAccountStore();
 const imageUrl = ref('');
 const uploadImg = async (data: any) => {
   let file = data.file;
@@ -64,9 +69,9 @@ const uploadImg = async (data: any) => {
           id: Info.value.id,
           avatarUrl: res.data.data,
         };
-        let value: any = await home.upLoadAvatar(userData);
+        let value: any = await account.upLoadAvatar(userData);
         if (value.data.success) {
-          let personalDada: any = await home.getUserById({
+          let personalDada: any = await account.getUserById({
             userId: Info.value.id,
           }); //重新获取用户信息
           console.log('personalDada', personalDada);
@@ -103,7 +108,9 @@ const blogAddress = `https://winterfinale.com:8080?token=${localStorage.getItem(
 )}`;
 const loginOut = () => {
   userInfoStore().loginOut();
-  router.push('/login');
+  setTimeout(() => {
+    router.push('/login');
+  }, 500);
 };
 const onBack = () => {
   console.log('router', router);
@@ -125,10 +132,14 @@ onBeforeMount(() => {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  min-height: 45px;
+}
+.avatar-uploader {
+  background-color: gainsboro;
 }
 .avatar-uploader .avatar {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   display: block;
 }
 .avatar-uploader .el-upload {
@@ -147,8 +158,8 @@ onBeforeMount(() => {
 .el-icon.avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   text-align: center;
 }
 .el-page-header {

@@ -1,18 +1,14 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-} from '@element-plus/icons-vue';
+import { Hide, View } from '@element-plus/icons-vue';
 import { staticRouter } from '@/router/index';
+
 const isCollapse = ref(true);
 const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+  // console.log(key, keyPath);
 };
 const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+  // console.log(key, keyPath);
 };
 const menulist = ref<any[]>([]);
 onMounted(() => {
@@ -22,10 +18,16 @@ onMounted(() => {
 
 <template>
   <div class="leftMenu">
-    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
-      <el-radio-button :label="false">展开</el-radio-button>
-      <el-radio-button :label="true">收起</el-radio-button>
-    </el-radio-group>
+    <el-switch
+      style="
+        margin: 0 0 20px 15px;
+        --el-switch-on-color: #409eff;
+        --el-switch-off-color: #13ce66;
+      "
+      v-model="isCollapse"
+      :active-action-icon="Hide"
+      :inactive-action-icon="View"
+    />
     <el-menu
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
@@ -79,8 +81,8 @@ onMounted(() => {
   margin: 0 3px;
 }
 .smallIcon {
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   min-width: 23px;
   min-height: 23px;
   object-fit: contain;
