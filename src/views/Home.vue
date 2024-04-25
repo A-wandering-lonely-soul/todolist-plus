@@ -24,6 +24,7 @@ import Hearder from '@/Layout/Header.vue';
     flex: 1;
     display: flex;
     .routerView {
+      min-width: calc(100vw - var(--menu-expand-width));
       flex: 1;
       background-color: var(--page-background);
     }

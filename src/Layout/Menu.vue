@@ -90,9 +90,10 @@ onMounted(() => {
 .leftMenu {
   float: left;
   max-width: 300px;
+  max-height: calc(100vh - var(--hearder-height));
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
-  min-height: 90vh;
+  // min-height: 90vh;
 }
 </style>

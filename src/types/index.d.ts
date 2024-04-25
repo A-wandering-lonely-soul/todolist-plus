@@ -36,7 +36,7 @@ export interface userType {
   password: string;
   ip: string | null;
   level: number;
-  avatar: string | ArrayBuffer | null;
+  avatar: string | undefined;
   id?: string | number;
 }
 
