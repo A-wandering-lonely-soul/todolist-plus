@@ -1,7 +1,6 @@
 import instance, { http } from '@/utils/request';
 import { defineStore } from 'pinia';
 import { ElMessage } from 'element-plus';
-import type { LoginResponse } from '@/types';
 
 export const useBlogStore = defineStore('blog', {
   state() {

@@ -2,7 +2,6 @@ import instance, { http } from '@/utils/request';
 import { todoStorage } from '@/utils/storage';
 import { defineStore } from 'pinia';
 import { ElMessage } from 'element-plus';
-import type { LoginResponse } from '@/types';
 
 export const useHomeStore = defineStore('home', {
   // persist: true,

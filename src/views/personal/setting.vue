@@ -126,6 +126,7 @@ const handleMouseup = () => {
 };
 //切换黑夜白天模式
 import { useDark, useToggle } from '@vueuse/core';
+import { changeSun, changeMoon } from '@/utils/themeChange';
 const isDark = useDark();
 
 const toggleSunny = () => {
@@ -138,18 +139,6 @@ const toggleMoon = () => {
   changeMoon();
   useToggle(isDark);
 };
-function changeMoon() {
-  let domStyle = document.documentElement.style;
-  domStyle.setProperty('--title-color', 'pink');
-  domStyle.setProperty('--content-background', '#121212');
-  domStyle.setProperty('--page-background', '#143f5f');
-}
-function changeSun() {
-  let domStyle = document.documentElement.style;
-  domStyle.setProperty('--title-color', '#000');
-  domStyle.setProperty('--content-background', '#fff');
-  domStyle.setProperty('--page-background', '#edf8f3');
-}
 </script>
 
 <template>
@@ -180,11 +169,13 @@ function changeSun() {
         <!-- 视频资源地址和格式 -->
       </video>
     </div>
-    <el-row class="bigbox" @mouseup="()=>isActive=false">
+    <el-row class="bigbox" @mouseup="() => (isActive = false)">
       <el-col :span="5" class="leftInfo">
         <div class="card">
           <div class="imgBox">
-            <img src="https://pic.baike.soso.com/p/20131210/20131210175039-1645093212.jpg" />
+            <img
+              src="https://pic.baike.soso.com/p/20131210/20131210175039-1645093212.jpg"
+            />
           </div>
           <div class="content_card">
             <div class="details">
@@ -274,7 +265,7 @@ function changeSun() {
           </div>
         </div>
       </el-col>
-      <el-col :span="16" style="height:100%;">
+      <el-col :span="16" style="height: 100%">
         <div class="introducePage">
           <div class="pageTitle">关于我的页面</div>
           <!-- 博客前台 -->
@@ -286,7 +277,9 @@ function changeSun() {
                 <p>UI层使用antd-mobile、Tailwind</p>
                 <p>数据请求使用Fetch、axios路由拦截器</p>
                 <p>解析markdown采用remark转换文档</p>
-                <p>生成文章目录使用 github-markdown.css ，语法高亮 highlight.js</p>
+                <p>
+                  生成文章目录使用 github-markdown.css ，语法高亮 highlight.js
+                </p>
                 <p>token通过js-cookie和next-cookie在服务端和客户端之间保存</p>
               </div>
             </div>
@@ -295,12 +288,13 @@ function changeSun() {
                 <a
                   onclick="window.open('https://gitee.com/iioouu/xxt-todolist.git')"
                   title="xxx"
-                >前台码源</a>
+                  >前台码源</a
+                >
               </div>
               <div class="imageAbout">
                 <img
                   src="~@/assets/project/myWeb.png"
-                  style="max-width: 100%;max-height:100%;object-fit:contain"
+                  style="max-width: 100%; max-height: 100%; object-fit: contain"
                   alt
                 />
               </div>
@@ -320,12 +314,16 @@ function changeSun() {
             </div>
             <div class="pageImage">
               <div class="imageTitle">
-                <a onclick="window.open('https://gitee.com/iioouu/xxt-blog.git')" title="xxx">后台码源</a>
+                <a
+                  onclick="window.open('https://gitee.com/iioouu/xxt-blog.git')"
+                  title="xxx"
+                  >后台码源</a
+                >
               </div>
               <div class="imageAbout">
                 <img
                   src="~@/assets/project/next13blog.png"
-                  style="max-width: 100%;max-height:100%;object-fit:contain"
+                  style="max-width: 100%; max-height: 100%; object-fit: contain"
                   alt
                 />
               </div>
@@ -345,12 +343,16 @@ function changeSun() {
             </div>
             <div class="pageImage">
               <div class="imageTitle">
-                <a onclick="window.open('https://gitee.com/iioouu/xxt-server.git')" title="xxx">中端码源</a>
+                <a
+                  onclick="window.open('https://gitee.com/iioouu/xxt-server.git')"
+                  title="xxx"
+                  >中端码源</a
+                >
               </div>
               <div class="imageAbout">
                 <img
                   src="~@/assets/project/SERVER.png"
-                  style="max-width: 100%;max-height:100%;object-fit:contain"
+                  style="max-width: 100%; max-height: 100%; object-fit: contain"
                   alt
                 />
               </div>
@@ -376,24 +378,44 @@ function changeSun() {
           </div>
           <div>
             <!-- 面板容器，包含了多个链接和图标元素 -->
-            <p class="panel" style="--i: 0" :class="{ active: isActive }" @click="toggleFullscreen">
+            <p
+              class="panel"
+              style="--i: 0"
+              :class="{ active: isActive }"
+              @click="toggleFullscreen"
+            >
               <!-- 面板元素，包含链接和图标 -->
               <i style="width: 1.5em; height: 1.5em">
                 <FullScreen />
               </i>
               <!-- 图标元素 -->
             </p>
-            <p class="panel" style="--i: 1" :class="{ active: isActive }" @click="toggleAmplify">
+            <p
+              class="panel"
+              style="--i: 1"
+              :class="{ active: isActive }"
+              @click="toggleAmplify"
+            >
               <i style="width: 1.5em; height: 1.5em">
                 <Search />
               </i>
             </p>
-            <p class="panel" style="--i: 2" :class="{ active: isActive }" @click="toggleSunny">
+            <p
+              class="panel"
+              style="--i: 2"
+              :class="{ active: isActive }"
+              @click="toggleSunny"
+            >
               <i style="width: 1.5em; height: 1.5em">
                 <Sunny />
               </i>
             </p>
-            <p class="panel" style="--i: 3" :class="{ active: isActive }" @click="toggleMoon">
+            <p
+              class="panel"
+              style="--i: 3"
+              :class="{ active: isActive }"
+              @click="toggleMoon"
+            >
               <i style="width: 1.5em; height: 1.5em">
                 <Moon />
               </i>
@@ -402,7 +424,7 @@ function changeSun() {
               class="panel"
               style="--i: 4"
               :class="{ active: isActive }"
-              @click="()=>isActive=false"
+              @click="() => (isActive = false)"
             >
               <i style="width: 1.5em; height: 1.5em">
                 <CircleCloseFilled />
@@ -412,7 +434,7 @@ function changeSun() {
               class="panel"
               style="--i: 5"
               :class="{ active: isActive }"
-              @click="()=>isActive=false"
+              @click="() => (isActive = false)"
             >
               <i style="width: 1.5em; height: 1.5em">
                 <CircleCloseFilled />

@@ -57,6 +57,15 @@ export const staticRouter = [
         },
         component: () => import('@/views/todolist/index.vue'),
       },
+      {
+        path: '/todo/dynamicCharts',
+        name: 'dynamicCharts',
+        meta: {
+          icon: 'Charts',
+          title: '动态图表',
+        },
+        component: () => import('@/views/todolist/dynamicCharts.vue'),
+      },
     ],
   },
   {

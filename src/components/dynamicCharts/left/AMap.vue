@@ -1,7 +1,5 @@
 <template>
-  <div class="bigbox">
-    <div id="mapContainer"></div>
-  </div>
+  <div id="mapContainer"></div>
 </template>
 
 <script setup lang="ts">
@@ -37,13 +35,9 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
-.bigbox {
-  width: 600px;
-  height: 600px;
-}
 #mapContainer {
-  width: 600px;
-  height: 600px;
+  width: 100%;
+  height: 100%;
 }
 .amap-logo,
 .amap-copyright {

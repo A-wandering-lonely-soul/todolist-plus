@@ -10,7 +10,7 @@ export default defineConfig({
   //设置反向代理，跨域
   server: {
     // host: '0.0.0.0',//设置地址：http://localhost
-    port: 2233, // 设置服务启动端口号
+    port: 1111, // 设置服务启动端口号
     // open: true, // 设置服务启动时是否自动打开浏览器
     cors: true, // 允许跨域
     proxy: {

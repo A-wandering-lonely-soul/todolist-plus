@@ -39,8 +39,3 @@ export interface userType {
   avatar: string | undefined;
   id?: string | number;
 }
-
-export interface LoginResponse {
-  success: boolean;
-  msg: string;
-}
