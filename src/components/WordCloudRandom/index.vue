@@ -135,7 +135,7 @@ class RandomAnimate {
   setPosition(item: AnimateElement) {
     const maxX = this.container!.clientWidth - item.clientWidth;
     const maxY = this.container!.clientHeight - item.clientHeight;
-    console.log('maxX', maxX);
+    // console.log('maxX', maxX);
 
     const { animateInfo, prevAnimateInfo } = item;
     const _animate = JSON.parse(JSON.stringify(animateInfo));

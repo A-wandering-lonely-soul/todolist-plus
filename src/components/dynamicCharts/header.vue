@@ -1,5 +1,5 @@
 <template>
-  <div class="es-screen-header">
+  <div class="es-screen-header" :style="{ backgroundImage: borderImage }">
     <h1 class="es-screen-logo">
       <span>ES Big Screen</span>
     </h1>
@@ -16,11 +16,16 @@ import { computed, onBeforeUnmount, ref } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 import darkIcon from '@/assets/screen/qiehuan_dark.png';
 import lightIcon from '@/assets/screen/qiehuan_light.png';
+import borderDark from '@/assets/screen/header_border_dark.png';
+import borderLight from '@/assets/screen/header_border_light.png';
 import { changeSun, changeMoon } from '@/utils/themeChange';
 
 const isDark = useDark();
 import moment from 'moment';
 const icon = computed(() => (isDark.value ? darkIcon : lightIcon));
+const borderImage = computed(
+  () => `url(${isDark.value ? borderDark : borderLight})`
+);
 const currentTime = ref('');
 const timeId = ref();
 const handleChangeTheme = () => {
@@ -47,7 +52,7 @@ startTime();
   position: relative;
   width: 100%;
   height: 100%;
-  background-image: url('@/assets/screen/header_border_dark.png');
+  // background-image: url('@/assets/screen/header_border_dark.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   animation: fade 3s;

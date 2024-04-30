@@ -1,52 +1,113 @@
+<script setup lang="ts"></script>
+
 <template>
-  <div class="bigbox">
-    <div id="mapContainer"></div>
-  </div>
+  <div class="card">测试页面，正待开发</div>
 </template>
 
-<script setup lang="ts">
-import { onMounted, shallowRef } from 'vue';
-import '@amap/amap-jsapi-types';
-import AMapLoader from '@amap/amap-jsapi-loader';
-
-const map = shallowRef<AMap.Map | null>(null);
-
-function initMap() {
-  AMapLoader.load({
-    key: '0ca3ab7c32bffa60361cb7006d055cd0', // 申请好的Web端开发者Key，首次调用 load 时必填
-    version: '2.0', // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-    plugins: [], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
-  })
-    .then((MyAMap: typeof AMap) => {
-      map.value = new MyAMap.Map('mapContainer', {
-        mapStyle: 'amap://styles/darkblue',
-      });
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-}
-
-onMounted(() => {
-  initMap();
-});
-
-defineExpose({
-  map,
-});
-</script>
-
 <style lang="less" scoped>
-.bigbox {
-  width: 600px;
-  height: 600px;
+@property --rotate {
+  syntax: '<angle>';
+  initial-value: 132deg;
+  inherits: false;
 }
-#mapContainer {
-  width: 600px;
-  height: 600px;
+
+@card-height: 65vh;
+@card-width: calc(@card-height / 1.5);
+
+body {
+  min-height: 100vh;
+  background: #212534;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
 }
-.amap-logo,
-.amap-copyright {
+
+.card {
+  margin: 20px auto;
+  background: #191c29;
+  width: @card-width;
+  height: @card-height;
+  padding: 3px;
+  position: relative;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  font-size: 1.5em;
+  color: rgb(88 199 250 / 0%);
+  cursor: pointer;
+  font-family: cursive;
+}
+
+.card:hover {
+  color: rgb(88 199 250 / 100%);
+  transition: color 1s;
+}
+.card:hover:before,
+.card:hover:after {
+  animation: none;
   opacity: 0;
+}
+
+.card::before {
+  content: '';
+  width: 104%;
+  height: 102%;
+  border-radius: 8px;
+  background-image: linear-gradient(
+    var(--rotate),
+    #5ddcff,
+    #3c67e3 43%,
+    #4e00c2
+  );
+  position: absolute;
+  z-index: -1;
+  top: -1%;
+  left: -2%;
+  animation: spin 2.5s linear infinite;
+}
+
+.card::after {
+  position: absolute;
+  content: '';
+  top: calc(@card-height / 6);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.8);
+  filter: blur(calc(@card-height / 6));
+  background-image: linear-gradient(
+    var(--rotate),
+    #5ddcff,
+    #3c67e3 43%,
+    #4e00c2
+  );
+  opacity: 1;
+  transition: opacity 0.5s;
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+a {
+  color: #212534;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 2rem;
 }
 </style>

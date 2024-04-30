@@ -1,7 +1,7 @@
 <template>
   <div class="es-block">
     <Title>地区销量趋势</Title>
-    <div style="width: 100%; height: 90%">
+    <div style="width: 100%; height: calc(100% - var(--el-title-height))">
       <Chart :option="option" />
     </div>
   </div>

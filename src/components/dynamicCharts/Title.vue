@@ -16,6 +16,7 @@ defineProps({
 .es-screen-title {
   position: relative;
   padding-left: 20px;
+  line-height: 2rem;
   &::before {
     content: '';
     position: absolute;

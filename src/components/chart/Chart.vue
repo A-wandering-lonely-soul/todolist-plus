@@ -25,7 +25,11 @@ function init() {
     setOption(props.option);
   }
 }
-function setOption(option, notMerge?: boolean, lazyUpdate?: boolean) {
+function setOption(
+  option: EChartsCoreOption,
+  notMerge?: boolean,
+  lazyUpdate?: boolean
+) {
   chart.value!.setOption(option, notMerge, lazyUpdate);
 }
 

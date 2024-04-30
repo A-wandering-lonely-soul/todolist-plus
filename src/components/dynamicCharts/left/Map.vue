@@ -1,7 +1,7 @@
 <template>
   <div class="es-block">
     <Title>商家分布</Title>
-    <div style="width: 100%; height: 98%">
+    <div style="width: 100%; height: calc(100% - var(--el-title-height))">
       <Chart :option="option" />
     </div>
   </div>
@@ -21,7 +21,7 @@ const option = ref({
     map: 'china',
     top: '5%',
     bottom: '5%',
-    zoom: 1,
+    zoom: 0.8,
     itemStyle: {
       areaColor: '#2E72BF',
       borderColor: '#333',
@@ -57,7 +57,5 @@ const option = ref({
 .es-block {
   width: 400px;
   height: 100%;
-  padding: 16px;
-  // background-color: var(--es-block-bg);
 }
 </style>
