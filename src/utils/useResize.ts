@@ -1,8 +1,8 @@
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 
-// 默认适配宽高
-export const width = 1920;
-export const height = 1080;
+// 屏幕宽高
+export const width = window.innerWidth || 1920;
+export const height = window.innerHeight || 1080;
 
 type ResizeType = {
   w?: number;
@@ -13,13 +13,14 @@ type ResizeType = {
 
 export const useResize = (options: ResizeType = {}) => {
   const { w = width, h = height, fullScreen = false, delay = 100 } = options;
+
   // 缩放元素
   const screenRef = ref<any>(null);
   const scale = ref(1);
   function resize() {
-    // 浏览器宽高
-    const clientWidth = document.body.clientWidth;
-    const clientHeight = document.body.clientHeight;
+    // 浏览器页面宽高
+    const clientWidth = window.innerWidth;
+    const clientHeight = window.innerHeight;
 
     // 计算宽高缩放比例
     const scaleW = clientWidth / w;
@@ -27,10 +28,10 @@ export const useResize = (options: ResizeType = {}) => {
 
     if (clientWidth / clientHeight > w / h) {
       // 如果浏览器的宽高比大于设计稿的宽高比，就取浏览器高度和设计稿高度之比
-      scale.value = scaleH * 1.15;
+      scale.value = scaleH * 1;
     } else {
       // 如果浏览器的宽高比小于设计稿的宽高比，就取浏览器宽度和设计稿宽度之比
-      scale.value = scaleW * 1.15;
+      scale.value = scaleW * 1;
     }
 
     if (fullScreen) {

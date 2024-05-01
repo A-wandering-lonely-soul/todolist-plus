@@ -10,7 +10,7 @@ export const useSortable = (listRef: Ref<any[]>) => {
     Sortable.create(containerRef.value!, {
       swapThreshold: 1,
       animation: 150,
-      onUpdate(e) {
+      onUpdate(e: any) {
         const item = listRef.value[e.oldIndex];
         listRef.value.splice(e.oldIndex, 1);
         listRef.value.splice(e.newIndex, 0, item);

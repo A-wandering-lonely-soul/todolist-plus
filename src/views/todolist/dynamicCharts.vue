@@ -1,6 +1,13 @@
 <template>
   <div :class="['es-screen-container', { light: !isDark }]">
-    <div ref="screenRef" class="es-screen">
+    <div
+      ref="screenRef"
+      class="es-screen"
+      :style="{
+        width: `${originalWidth * scale}px`,
+        height: `${originalHeight * scale - 45}px`,
+      }"
+    >
       <div class="screen-header">
         <Header></Header>
       </div>
@@ -24,12 +31,14 @@ import { onMounted, ref } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 import { useResize } from '@/utils/useResize';
 
-const { screenRef } = useResize();
+const { screenRef, scale } = useResize();
 
 import Header from '@/components/dynamicCharts/header.vue';
 import LEFT from '@/components/dynamicCharts/left/index.vue';
 import RIGHT from '@/components/dynamicCharts/right/index.vue';
 import MIDDLE from '@/components/dynamicCharts/center/index.vue';
+const originalWidth = ref(window.innerWidth); // 初始宽度，单位px
+const originalHeight = ref(window.innerHeight); // 初始高度，单位px
 const isDark = useDark();
 // onMounted(() => {
 //   const screenData: any = {
@@ -54,7 +63,10 @@ const isDark = useDark();
   color: var(--es-screen-text-color);
   display: flex;
   flex-direction: column;
+  align-items: center;
   .es-screen {
+    max-width: 100%;
+    max-height: calc(100% - var(--hearder-height));
     display: flex;
     width: 100%;
     height: 100%;
