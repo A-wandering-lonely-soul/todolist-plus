@@ -1,13 +1,6 @@
 <template>
   <div :class="['es-screen-container', { light: !isDark }]">
-    <div
-      ref="screenRef"
-      class="es-screen"
-      :style="{
-        width: `${originalWidth * scale}px`,
-        height: `${originalHeight * scale - 45}px`,
-      }"
-    >
+    <div ref="screenRef" class="es-screen">
       <div class="screen-header">
         <Header></Header>
       </div>
@@ -37,8 +30,7 @@ import Header from '@/components/dynamicCharts/header.vue';
 import LEFT from '@/components/dynamicCharts/left/index.vue';
 import RIGHT from '@/components/dynamicCharts/right/index.vue';
 import MIDDLE from '@/components/dynamicCharts/center/index.vue';
-const originalWidth = ref(window.innerWidth); // 初始宽度，单位px
-const originalHeight = ref(window.innerHeight); // 初始高度，单位px
+
 const isDark = useDark();
 // onMounted(() => {
 //   const screenData: any = {
@@ -61,10 +53,11 @@ const isDark = useDark();
   height: 100%;
   background: var(--es-screen-bg);
   color: var(--es-screen-text-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  overflow: hidden;
   .es-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
     max-width: 100%;
     max-height: calc(100% - var(--hearder-height));
     display: flex;

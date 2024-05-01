@@ -1,8 +1,8 @@
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 
 // 屏幕宽高
-export const width = window.innerWidth || 1920;
-export const height = window.innerHeight || 1080;
+export const width = window.screen.width || 1920;
+export const height = window.screen.height || 1080;
 
 type ResizeType = {
   w?: number;
