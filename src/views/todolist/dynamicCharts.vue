@@ -1,6 +1,10 @@
 <template>
   <div :class="['es-screen-container', { light: !isDark }]">
-    <div ref="screenRef" class="es-screen">
+    <div
+      ref="screenRef"
+      class="es-screen"
+      :style="{ paddingLeft: screePdLeft, paddingTop: screePdHeight }"
+    >
       <div class="screen-header">
         <Header></Header>
       </div>
@@ -20,27 +24,44 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed, watch } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 import { useResize } from '@/utils/useResize';
+import { userInfoStore } from '@/stores';
+import { storeToRefs } from 'pinia';
 
+const user = userInfoStore();
+const userInfo = storeToRefs(user);
+const isCollapse = computed(() => {
+  //用户账号和密码
+  return userInfo.isCollapse.value !== undefined
+    ? userInfo.isCollapse.value
+    : true;
+});
+
+//计算左侧偏离值（菜单栏宽度）
+const screePdLeft = computed(() => {
+  return isCollapse.value
+    ? 'var(--menu-close-width)'
+    : 'var(--menu-expand-width)';
+});
+const screePdHeight = computed(() => {
+  return 'var(--hearder-height)';
+});
 const { screenRef, scale } = useResize();
 
+// watch(
+//   userInfo.isCollapse,
+//   (newV) => {
+//   },
+//   { deep: true }
+// );
 import Header from '@/components/dynamicCharts/header.vue';
 import LEFT from '@/components/dynamicCharts/left/index.vue';
 import RIGHT from '@/components/dynamicCharts/right/index.vue';
 import MIDDLE from '@/components/dynamicCharts/center/index.vue';
 
 const isDark = useDark();
-// onMounted(() => {
-//   const screenData: any = {
-//     width: screenRef.value.offsetWidth,
-//     height: screenRef.value.offsetHeight,
-//     fullScreen: false,
-//     delay: 100,
-//   };
-//   useResize(screenData);
-// });
 </script>
 <style lang="less" scoped>
 .es-screen-container {
@@ -48,21 +69,26 @@ const isDark = useDark();
   --es-screen-text-color: #fff;
   --es-block-bg: #222733;
   --el-title-height: 2rem;
-  padding: 0 10px;
+  --es-screen-width: 1920px;
+  --es-screen-height: 1080px;
+  --muenu-height: 0;
   width: 100%;
   height: 100%;
   background: var(--es-screen-bg);
   color: var(--es-screen-text-color);
   overflow: hidden;
   .es-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    max-width: 100%;
-    max-height: calc(100% - var(--hearder-height));
+    position: absolute;
+    user-select: none;
+    top: 50%;
+    left: 50%;
+    width: var(--es-screen-width);
+    height: var(--es-screen-height);
+    margin-left: calc(var(--es-screen-width) * 0.5 - var(--es-screen-width));
+    margin-top: calc(var(--es-screen-height) * 0.5 - var(--es-screen-height));
+    // max-width: calc(100% - var(--menu-close-width));
+    // max-height: calc(100% - var(--hearder-height));
     display: flex;
-    width: 100%;
-    height: 100%;
     flex-direction: column;
 
     .screen-header {

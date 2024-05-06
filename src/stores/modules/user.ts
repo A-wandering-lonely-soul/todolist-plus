@@ -6,10 +6,14 @@ export const userInfoStore = defineStore('user', {
     return {
       userCount: userCountString ? JSON.parse(userCountString) : {},
       userInfo: userInfoString ? JSON.parse(userInfoString) : {},
+      isCollapse: true,
     };
   },
   getters: {},
   actions: {
+    setIsCollapse(flag: boolean) {
+      this.isCollapse = flag;
+    },
     setUserCount(data: object) {
       localStorage.setItem('userCount', JSON.stringify(data));
     },

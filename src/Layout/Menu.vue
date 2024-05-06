@@ -2,13 +2,18 @@
 import { ref, onMounted } from 'vue';
 import { Hide, View } from '@element-plus/icons-vue';
 import { staticRouter } from '@/router/index';
+import { userInfoStore } from '@/stores';
 
-const isCollapse = ref(true);
+const user = userInfoStore();
+let isCollapse = ref(true);
 const handleOpen = (key: string, keyPath: string[]) => {
   // console.log(key, keyPath);
 };
 const handleClose = (key: string, keyPath: string[]) => {
   // console.log(key, keyPath);
+};
+const changeExpand = (e: boolean) => {
+  user.setIsCollapse(e);
 };
 const menulist = ref<any[]>([]);
 onMounted(() => {
@@ -19,6 +24,7 @@ onMounted(() => {
 <template>
   <div class="leftMenu">
     <el-switch
+      @change="changeExpand"
       style="
         margin: 0 0 20px 15px;
         --el-switch-on-color: #409eff;
@@ -89,11 +95,14 @@ onMounted(() => {
 }
 .leftMenu {
   float: left;
-  max-width: 300px;
   max-height: calc(100vh - var(--hearder-height));
 }
+//展开宽度
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  // min-height: 90vh;
+  width: var(--menu-expand-width);
+}
+//关闭宽度
+.el-menu--collapse {
+  width: var(--menu-close-width);
 }
 </style>

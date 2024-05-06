@@ -1,8 +1,8 @@
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-// 屏幕宽高
-export const width = window.screen.width || 1920;
-export const height = window.screen.height || 1080;
+//设计图像素
+export const width = 1920;
+export const height = 1080;
 
 type ResizeType = {
   w?: number;
@@ -13,14 +13,13 @@ type ResizeType = {
 
 export const useResize = (options: ResizeType = {}) => {
   const { w = width, h = height, fullScreen = false, delay = 100 } = options;
-
   // 缩放元素
   const screenRef = ref<any>(null);
   const scale = ref(1);
   function resize() {
     // 浏览器页面宽高
-    const clientWidth = window.innerWidth;
-    const clientHeight = window.innerHeight;
+    const clientWidth = document.body.clientWidth;
+    const clientHeight = document.body.clientHeight;
 
     // 计算宽高缩放比例
     const scaleW = clientWidth / w;

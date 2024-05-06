@@ -100,7 +100,6 @@ const Login = async () => {
       setTimeout(() => {
         router.push(`${router.currentRoute.value.query.redirect}`);
       }, 500);
-    } else {
     }
   }
 };
