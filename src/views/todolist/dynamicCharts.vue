@@ -39,16 +39,16 @@ const isCollapse = computed(() => {
     : true;
 });
 
+const { screenRef, scale } = useResize();
 //计算左侧偏离值（菜单栏宽度）
 const screePdLeft = computed(() => {
   return isCollapse.value
-    ? 'var(--menu-close-width)'
-    : 'var(--menu-expand-width)';
+    ? `calc(var(--menu-close-width) / ${scale.value})`
+    : `calc(var(--menu-expand-width) / ${scale.value})`;
 });
 const screePdHeight = computed(() => {
-  return 'var(--hearder-height)';
+  return `calc(var(--hearder-height) / ${scale.value})`;
 });
-const { screenRef, scale } = useResize();
 
 // watch(
 //   userInfo.isCollapse,
