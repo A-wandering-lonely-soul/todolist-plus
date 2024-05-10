@@ -27,10 +27,10 @@ export const useResize = (options: ResizeType = {}) => {
 
     if (clientWidth / clientHeight > w / h) {
       // 如果浏览器的宽高比大于设计稿的宽高比，就取浏览器高度和设计稿高度之比
-      scale.value = scaleH * 1;
+      scale.value = scaleH;
     } else {
       // 如果浏览器的宽高比小于设计稿的宽高比，就取浏览器宽度和设计稿宽度之比
-      scale.value = scaleW * 1;
+      scale.value = scaleW;
     }
 
     if (fullScreen) {

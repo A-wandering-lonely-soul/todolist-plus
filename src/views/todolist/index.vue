@@ -189,7 +189,7 @@ let groupData = reactive({ group_title: '', list: [] });
 const groupVisible = ref(false);
 const groupClose = () => {
   groupVisible.value = false;
-  groupData = { group_title: '', list: [] };
+  groupData = reactive({ group_title: '', list: [] });
 };
 const addNewGroup = () => {
   groupVisible.value = true;
@@ -244,7 +244,7 @@ const observeBox = () => {
 
           <div class="delOrAdd">
             <el-popconfirm
-              title="Are you sure to delete the group?"
+              title="你确定要删除这个分组吗?"
               @confirm="reduceItem(item.group_id)"
             >
               <template #reference>

@@ -24,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from 'vue';
-import { useDark, useToggle } from '@vueuse/core';
+import { computed,  } from 'vue';
+import { useDark } from '@vueuse/core';
 import { useResize } from '@/utils/useResize';
 import { userInfoStore } from '@/stores';
 import { storeToRefs } from 'pinia';
@@ -50,12 +50,6 @@ const screePdHeight = computed(() => {
   return `calc(var(--hearder-height) / ${scale.value})`;
 });
 
-// watch(
-//   userInfo.isCollapse,
-//   (newV) => {
-//   },
-//   { deep: true }
-// );
 import Header from '@/components/dynamicCharts/header.vue';
 import LEFT from '@/components/dynamicCharts/left/index.vue';
 import RIGHT from '@/components/dynamicCharts/right/index.vue';
@@ -86,8 +80,6 @@ const isDark = useDark();
     height: var(--es-screen-height);
     margin-left: calc(var(--es-screen-width) * 0.5 - var(--es-screen-width));
     margin-top: calc(var(--es-screen-height) * 0.5 - var(--es-screen-height));
-    // max-width: calc(100% - var(--menu-close-width));
-    // max-height: calc(100% - var(--hearder-height));
     display: flex;
     flex-direction: column;
 
@@ -99,16 +91,13 @@ const isDark = useDark();
       flex: 1;
       &_left {
         width: 400px;
-        // background-color: red;
       }
       &_middle {
         flex: 1;
         min-width: 400px;
-        // background-color: yellow;
       }
       &_right {
         width: 400px;
-        // background-color: blue;
       }
     }
   }
