@@ -15,8 +15,8 @@ export default defineConfig({
     cors: true, // 允许跨域
     proxy: {
       '/api': {
-        // target: 'http://206.237.29.83:3000/', //代理的地址
-        target: 'http://localhost:3000/',
+        target: 'http://206.237.29.83:3000/', //代理的地址
+        // target: 'http://localhost:3000/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''), //这里的/需要转义
       },

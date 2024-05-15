@@ -1,5 +1,5 @@
 <template>
-  <el-page-header :icon="null" @back="onBack">
+  <el-page-header :icon="null" title="todoList" @back="onBack">
     <template #content>
       <div class="sign">
         <el-upload
@@ -123,8 +123,13 @@ const onBack = () => {
     notify('返回任务列表');
   }
 };
+//进入页面时避免只启用部分黑暗样式
+import { useDark } from '@vueuse/core';
+import { changeSun, changeMoon } from '@/utils/themeChange';
+const isDark = useDark();
 onBeforeMount(() => {
-  imageUrl.value = Info.value.avatar;
+  imageUrl.value = Info.value.avatar; //获取头像
+  isDark.value ? changeMoon() : changeSun();
 });
 </script>
 <style scoped lang="less">

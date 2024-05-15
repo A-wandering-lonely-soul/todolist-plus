@@ -39,7 +39,7 @@ export const useAccountStore = defineStore('account', {
     },
     // 通过id获取个人信息
     getUserById(data: object) {
-      return http('GET', '/user/get-user-byId', true, data).then((res) => {
+      return http('GET', '/user/get-count-byId', true, data).then((res) => {
         return res;
       });
     },
