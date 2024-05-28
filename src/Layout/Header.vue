@@ -14,13 +14,20 @@
             <Plus />
           </el-icon>
         </el-upload>
-        <span class="text-large font-600 mr-3">NEXT</span>
-        <span class="text-sm mr-2" style="color: var(--el-text-color-regular)"
-          >博客</span
-        >
-        <el-tag class="blogLink">
-          <a :href="blogAddress">点击跳转</a>
-        </el-tag>
+        <el-dropdown class="blogLink" @command="handleClick">
+          <span class="el-dropdown-link">
+            NEXT博客
+            <el-icon class="el-icon--right">
+              <arrow-down />
+            </el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item :command="1"> 1.0 </el-dropdown-item>
+              <el-dropdown-item :command="2">2.0</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </template>
     <template #extra>
@@ -103,9 +110,17 @@ const beforeAvatarUpload: InstanceType<typeof UploadProps> = (rawFile: any) => {
   }
   return true;
 };
-const blogAddress = `https://winterfinale.com:8080?token=${localStorage.getItem(
+const blogAddress1 = `https://winterfinale.com:8080?token=${localStorage.getItem(
   'x-token'
 )}`;
+const blogAddress2 = `http://winterfinale.com:3001`;
+const handleClick = (e: number) => {
+  if (e == 1) {
+    window.open(blogAddress1);
+  } else if (e == 2) {
+    window.open(blogAddress2);
+  }
+};
 const loginOut = () => {
   userInfoStore().loginOut();
   setTimeout(() => {
@@ -133,6 +148,9 @@ onBeforeMount(() => {
 });
 </script>
 <style scoped lang="less">
+.el-tooltip__trigger:focus-visible {
+  outline: unset;
+}
 .sign {
   display: flex;
   justify-content: flex-start;
@@ -178,9 +196,6 @@ onBeforeMount(() => {
 }
 .blogLink {
   margin: 0.2em;
-  a:hover {
-    color: skyblue;
-    cursor: url('/static/pokemon/后台运行.cur'), auto;
-  }
+  color: var(--title-color);
 }
 </style>

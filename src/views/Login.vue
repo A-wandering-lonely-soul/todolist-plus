@@ -603,8 +603,8 @@ const register = () => {
   background: transparent;
   box-shadow: inset 15px 10px 40px #00d0ff21, 10px 10px 20px #0070ffa6,
     15px 15px 30px #fef0f0, inset -10px -10px 20px #008aff85;
-  animation: move-08aaad4e 6s linear infinite;
-  -webkit-animation: move-08aaad4e 6s linear infinite;
+  animation: move 6s linear infinite;
+  -webkit-animation: move 6s linear infinite;
 }
 
 .loginMain::after {

@@ -6,7 +6,7 @@ router.beforeEach((to, from, next) => {
   if (getToken) {
     //token存在则不允许会登录页
     if (to.path === '/login' || to.path === '/Login') {
-      next('/todo/list');
+      next('/todo/dynamicCharts');
     } else {
       next();
     }

@@ -2,6 +2,35 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 export const staticRouter = [
   {
+    path: '/todo',
+    name: 'todo',
+    meta: {
+      icon: 'Todo',
+      title: '待办列表',
+    },
+    component: () => import('@/views/Home.vue'),
+    children: [
+      {
+        path: '/todo/list',
+        name: 'list',
+        meta: {
+          icon: 'List',
+          title: '待办列表',
+        },
+        component: () => import('@/views/todolist/index.vue'),
+      },
+      {
+        path: '/todo/dynamicCharts',
+        name: 'dynamicCharts',
+        meta: {
+          icon: 'Charts',
+          title: '动态图表',
+        },
+        component: () => import('@/views/todolist/dynamicCharts.vue'),
+      },
+    ],
+  },
+  {
     path: '/personal',
     name: 'personal',
     meta: {
@@ -36,35 +65,6 @@ export const staticRouter = [
           title: '用户管理',
         },
         component: () => import('@/views/personal/account.vue'),
-      },
-    ],
-  },
-  {
-    path: '/todo',
-    name: 'todo',
-    meta: {
-      icon: 'Todo',
-      title: '待办列表',
-    },
-    component: () => import('@/views/Home.vue'),
-    children: [
-      {
-        path: '/todo/list',
-        name: 'list',
-        meta: {
-          icon: 'List',
-          title: '待办列表',
-        },
-        component: () => import('@/views/todolist/index.vue'),
-      },
-      {
-        path: '/todo/dynamicCharts',
-        name: 'dynamicCharts',
-        meta: {
-          icon: 'Charts',
-          title: '动态图表',
-        },
-        component: () => import('@/views/todolist/dynamicCharts.vue'),
       },
     ],
   },

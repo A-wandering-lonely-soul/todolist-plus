@@ -49,7 +49,7 @@ const initAMap = () => {
       citySearch.getLocalCity(function (status: string, result: any) {
         if (status === 'complete' && result.info === 'OK') {
           // 查询成功，result即为当前所在城市信息
-          console.log(result.city);
+          // console.log(result.city);
 
           //加载天气查询插件
           AMap.plugin('AMap.Weather', function () {
@@ -58,7 +58,7 @@ const initAMap = () => {
 
             //执行实时天气信息查询
             weather.getLive(result.city, function (err: object, data: object) {
-              console.log(err, data);
+              // console.log(err, data);
               Object.assign(weatherData, data);
             });
           });
