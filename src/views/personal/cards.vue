@@ -82,6 +82,10 @@ onMounted(() => {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  box-shadow: 0 4px 6px -1px rgba(45, 97, 221, 1),
+    0 10px 15px -3px rgba(1, 88, 143, 1);
+  position: relative;
+  z-index: 88;
   background: linear-gradient(to bottom, #2d61dd, transparent 50%, #01588f);
   border: 5px solid;
   border-image: linear-gradient(to bottom, #24e7fd, transparent 50%, #24e7fd);
@@ -116,13 +120,19 @@ onMounted(() => {
 @keyframes backgroundColorChange {
   0% {
     background: linear-gradient(to bottom, #01588f, transparent 50%, #01588f);
+    box-shadow: 0 4px 6px -1px rgba(1, 88, 143, 1),
+      0 10px 15px -3px rgba(1, 88, 143, 1);
   }
   50% {
     background: linear-gradient(to bottom, #0692f6, transparent 50%, #0692f6);
+    box-shadow: 0 4px 6px -1px rgba(6, 146, 246, 1),
+      0 10px 15px -3px rgba(6, 146, 246, 1);
   }
 
   100% {
     background: linear-gradient(to bottom, #2d61dd, transparent 50%, #2d61dd);
+    box-shadow: 0 4px 6px -1px rgba(45, 97, 221, 1),
+      0 10px 15px -3px rgba(45, 97, 221, 1);
   }
 }
 
