@@ -117,7 +117,7 @@ const router = createRouter({
   routes: [
     {
       path: '/:catchALL(.*)',
-      redirect: '/todo/list',
+      redirect: '/todo/dynamicCharts',
     },
     {
       path: '/login',

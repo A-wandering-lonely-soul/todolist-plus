@@ -66,7 +66,11 @@ onMounted(() => {
   </div>
   <div class="box">
     <div v-for="card in cardList" :key="card.id" class="card">
-      <XxtRollCard ref="rollcard" :image1="card.img1" :image2="card.img2"></XxtRollCard>
+      <XxtRollCard
+        ref="rollcard"
+        :image1="card.img1"
+        :image2="card.img2"
+      ></XxtRollCard>
     </div>
   </div>
 </template>
@@ -78,9 +82,12 @@ onMounted(() => {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background: linear-gradient(-45deg, #52eeb2, #ce3e3e, #3523d5, #239dd5);
-  background-size: 400% 400%;
-  animation: anime 8s ease infinite;
+  background: linear-gradient(to bottom, #2d61dd, transparent 50%, #01588f);
+  border: 5px solid;
+  border-image: linear-gradient(to bottom, #24e7fd, transparent 50%, #24e7fd);
+  animation: borderColorChange 5s ease infinite,
+    backgroundColorChange 10s ease infinite;
+  background-size: 100% 100%;
   i {
     width: 2rem;
     height: 2rem;
@@ -89,32 +96,36 @@ onMounted(() => {
     cursor: url('/static/pokemon/后台运行.cur'), auto;
   }
 }
-
-@keyframes anime {
+@keyframes borderColorChange {
   0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@-webkit-keyframes anime {
-  0% {
-    background-position: 0% 50%;
+    border-image: linear-gradient(to bottom, #24e7fd, transparent 50%, #24e7fd)
+      1;
   }
 
   50% {
-    background-position: 100% 50%;
+    border-image: linear-gradient(to bottom, #0692f6, transparent 50%, #0692f6)
+      1;
   }
 
   100% {
-    background-position: 0% 50%;
+    border-image: linear-gradient(to bottom, #2d61dd, transparent 50%, #2d61dd)
+      1;
   }
 }
+
+@keyframes backgroundColorChange {
+  0% {
+    background: linear-gradient(to bottom, #01588f, transparent 50%, #01588f);
+  }
+  50% {
+    background: linear-gradient(to bottom, #0692f6, transparent 50%, #0692f6);
+  }
+
+  100% {
+    background: linear-gradient(to bottom, #2d61dd, transparent 50%, #2d61dd);
+  }
+}
+
 .box {
   display: flex;
   // flex-direction: column;

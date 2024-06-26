@@ -67,6 +67,10 @@ const loginForm = reactive({
   username: '',
   password: '',
 });
+const uservalid = ref(true);
+const psdvalid = ref(true);
+const uservalid2 = ref(true);
+const psdvalid2 = ref(true);
 onMounted(() => {
   JSON.stringify(Count.value) != '{}'
     ? Object.assign(loginForm, Count.value)
@@ -81,18 +85,38 @@ const registerForm = reactive({
   password: '',
   password2: '',
 });
-const Login = async () => {
-  if (!loginForm.username) {
-    ElMessage({
-      message: '请输入用户名',
-      type: 'warning',
-    });
-  } else if (!loginForm.password) {
-    ElMessage({
-      message: '请输入密码',
-      type: 'warning',
-    });
+const checkPassword = () => {
+  if (loginForm.password) {
+    psdvalid.value = true;
   } else {
+    psdvalid.value = false;
+  }
+};
+const checkPassword2 = () => {
+  if (registerForm.password) {
+    psdvalid2.value = true;
+  } else {
+    psdvalid2.value = false;
+  }
+};
+const checkUsername = () => {
+  if (loginForm.username) {
+    uservalid.value = true;
+  } else {
+    uservalid.value = false;
+  }
+};
+const checkUsername2 = () => {
+  if (registerForm.username) {
+    uservalid2.value = true;
+  } else {
+    uservalid2.value = false;
+  }
+};
+const Login = async () => {
+  checkPassword();
+  checkUsername();
+  if (uservalid.value && psdvalid.value) {
     let res = await home.A_LOGIN(loginForm);
     if (res.data.success) {
       user.setUserInfo(res.data.data);
@@ -105,29 +129,32 @@ const Login = async () => {
 };
 const toRegister = () => {
   isLogin.value = false;
+  loginForm.username = '';
+  loginForm.password = '';
+  uservalid.value = true;
+  psdvalid.value = true;
 };
 const toLogin = () => {
   isLogin.value = true;
+  registerForm.username = '';
+  registerForm.password = '';
+  registerForm.password2 = '';
+  uservalid2.value = true;
+  psdvalid2.value = true;
 };
 const register = () => {
-  if (!registerForm.username) {
-    ElMessage({
-      message: '请输入用户名',
-      type: 'warning',
-    });
-  } else if (!registerForm.password) {
-    ElMessage({
-      message: '请输入密码',
-      type: 'warning',
-    });
-  } else if (registerForm.password != registerForm.password2) {
-    ElMessage({
-      message: '两次密码不一致',
-      type: 'warning',
-    });
-  } else {
-    home.A_REGISTER(registerForm);
-    isLogin.value = true;
+  checkPassword2();
+  checkUsername2();
+  if (psdvalid2.value && uservalid2.value) {
+    if (registerForm.password != registerForm.password2) {
+      ElMessage({
+        message: '两次密码不一致',
+        type: 'warning',
+      });
+    } else {
+      home.A_REGISTER(registerForm);
+      isLogin.value = true;
+    }
   }
 };
 </script>
@@ -195,82 +222,147 @@ const register = () => {
       </div>
       <!-- 主页图片 -->
       <div class="loginMain">
-        <form v-if="isLogin">
-          <p>
-            用户名
-            <br />
+        <div class="loginForm" v-if="isLogin">
+          <div class="inputBox">
+            <p>用户名</p>
             <input
               type="text"
               v-model="loginForm.username"
               class="textinput"
               placeholder="请输入用户名"
+              @blur="checkUsername"
             />
-          </p>
-          <p>
-            密码
-            <br />
+            <div class="el-form-item__error" v-if="!uservalid">
+              用户名不能为空
+            </div>
+          </div>
+          <div class="inputBox">
+            <p>密码</p>
             <input
               type="password"
               v-model="loginForm.password"
               class="textinput"
               placeholder="请输入密码"
+              @blur="checkPassword"
+              @keyup.enter="Login()"
             />
-          </p>
-          <p>
-            <input id="remember" type="checkbox" @click="rememberCount" />
-            <label for="remember">记住密码</label>
-          </p>
-          <p>
-            <input type="button" @click="Login" value="登录" />
-          </p>
+            <div class="el-form-item__error" v-if="!psdvalid">密码不能为空</div>
+          </div>
+
+          <div class="rememberPsd">
+            <div class="checkbox" @click="rememberCount">
+              <div v-if="isRemember" class="isRemember"></div>
+            </div>
+            <span>记住密码</span>
+          </div>
+          <div class="cut-corner-rectangle" @click="Login()">
+            <span>登 录</span>
+            <svg viewBox="0 0 418 62" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="grad1">
+                  <stop offset="0%" stop-color="#02e8ff">
+                    <animate
+                      attributeName="stop-color"
+                      values="#02e8ff;#629aff;#3c03c3"
+                      dur="5s"
+                      repeatCount="indefinite"
+                    />
+                  </stop>
+                  <stop offset="100%" stop-color="#02e8ff">
+                    <animate
+                      attributeName="stop-color"
+                      values="#02e8ff;#3c03c3;#629aff"
+                      dur="5s"
+                      repeatCount="indefinite"
+                    />
+                  </stop>
+                </linearGradient>
+              </defs>
+              <polygon
+                points="10,0 418,0 418,10 418,52 408,62 0,62 0,52 0,10"
+                fill="url(#grad1)"
+                opacity="0.5"
+              />
+            </svg>
+          </div>
           <p class="txt">
             还没有账户？
             <a href="#" @click="toRegister">注册</a>
           </p>
-        </form>
-        <form v-else>
-          <p>
-            用户名
-            <br />
+        </div>
+        <div class="registForm" v-else>
+          <div class="inputBox">
+            <p>用户名</p>
             <input
               type="text"
               v-model="registerForm.username"
               class="textinput"
               placeholder="请输入用户名"
+              @blur="checkUsername2"
             />
-          </p>
-          <p>
-            密码
-            <br />
+            <div class="el-form-item__error" v-if="!uservalid2">
+              用户名不能为空
+            </div>
+          </div>
+          <div class="inputBox">
+            <p>密码</p>
+            <input
+              type="password"
+              v-model="registerForm.password"
+              class="textinput"
+              placeholder="请输入密码"
+              @blur="checkPassword2"
+              @keyup.enter="Login()"
+            />
+            <div class="el-form-item__error" v-if="!psdvalid2">
+              密码不能为空
+            </div>
+          </div>
+          <div class="inputBox">
+            <p>重复密码</p>
             <input
               type="password"
               v-model="registerForm.password"
               class="textinput"
               placeholder="请输入密码"
             />
-          </p>
-          <p>
-            重复密码
-            <br />
-            <input
-              type="password"
-              v-model="registerForm.password2"
-              class="textinput"
-              placeholder="请输入密码"
-            />
-          </p>
-          <p>
-            <input id="remember" type="checkbox" @click="rememberCount" />
-            <label for="remember">记住密码</label>
-          </p>
-          <p>
-            <input type="button" @click="register" value="注册" />
-          </p>
+          </div>
+
+          <div class="cut-corner-rectangle" @click="register()">
+            <span>注 册</span>
+            <svg viewBox="0 0 418 62" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="grad1">
+                  <stop offset="0%" stop-color="#02e8ff">
+                    <animate
+                      attributeName="stop-color"
+                      values="#02e8ff;#629aff;#3c03c3"
+                      dur="5s"
+                      repeatCount="indefinite"
+                    />
+                  </stop>
+                  <stop offset="100%" stop-color="#02e8ff">
+                    <animate
+                      attributeName="stop-color"
+                      values="#02e8ff;#3c03c3;#629aff"
+                      dur="5s"
+                      repeatCount="indefinite"
+                    />
+                  </stop>
+                </linearGradient>
+              </defs>
+              <polygon
+                points="10,0 418,0 418,10 418,52 408,62 0,62 0,52 0,10"
+                fill="url(#grad1)"
+                opacity="0.5"
+              />
+            </svg>
+          </div>
           <p class="txt">
             已有账户？
             <a href="#" @click="toLogin">登录</a>
           </p>
-        </form>
+        </div>
       </div>
     </section>
   </div>
@@ -596,6 +688,7 @@ const register = () => {
   // position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 45rem;
   height: 45rem;
   box-sizing: border-box;
@@ -605,8 +698,82 @@ const register = () => {
     15px 15px 30px #fef0f0, inset -10px -10px 20px #008aff85;
   animation: move 6s linear infinite;
   -webkit-animation: move 6s linear infinite;
+  .loginForm,
+  .registForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .inputBox {
+      margin-bottom: 25px;
+      position: relative;
+      .el-form-item__error {
+        color: #f56c6c;
+        font-size: 20px;
+        line-height: 25px;
+        padding-top: 4px;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%, 0px);
+      }
+    }
+  }
+  .rememberPsd {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 3rem;
+    .checkbox {
+      cursor: url('/static/pokemon/后台运行.cur'), pointer;
+      width: 18px;
+      height: 18px;
+      background: url('/static/loginImage/checkbox.png');
+      background-size: 100% 100%;
+      margin: 0 10px;
+      position: relative;
+      overflow: visible;
+      .isRemember {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 21px;
+        height: 21px;
+        background-image: url('/static/loginImage/right.png');
+        background-size: 100% 100%;
+      }
+    }
+    span {
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      font-size: 20px;
+      color: #00eaff;
+    }
+  }
 }
-
+.cut-corner-rectangle {
+  cursor: url('/static/pokemon/后台运行.cur'), pointer;
+  width: 150px;
+  height: 50px;
+  position: relative;
+  span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Source Han Sans CN;
+    font-weight: bold;
+    font-size: 30px;
+    color: #ffffff;
+  }
+}
+.cut-corner-rectangle svg {
+  width: 100%;
+  height: 100%;
+}
+.cut-corner-rectangle polygon {
+  stroke: #00eaff;
+  stroke-width: 2;
+}
 .loginMain::after {
   position: absolute;
   content: '';
@@ -675,19 +842,10 @@ const register = () => {
     top: 110px;
   }
 }
-form {
-  opacity: 0.8;
-  text-align: center;
-  padding: 0px 100px;
-  border-radius: 10px;
-  margin: 120px auto;
-}
-#remember {
-  margin: auto 5px;
-  cursor: url('/static/pokemon/正常选择.cur'), default;
-}
+
 p {
   -webkit-text-stroke: 1px #8e87c3;
+  color: rgb(72, 24, 116);
   font-size: 25px;
   line-height: 40px;
 }
@@ -705,24 +863,6 @@ p {
   -webkit-text-stroke: 0px;
   color: saddlebrown;
   outline-style: none;
-}
-
-input[type='button'] {
-  width: 110px;
-  height: 40px;
-  text-align: center;
-  outline-style: none;
-  border-style: none;
-  border-radius: 50px;
-  background: rgb(31, 209, 218);
-  -webkit-text-stroke: 0px;
-  box-shadow: inset 4px 4px 10px rgba(160, 162, 158, 0.814),
-    4px 4px 10px rgba(117, 117, 117, 0.3),
-    15px 15px 30px rgba(72, 70, 70, 0.193),
-    inset -2px -2px 10px rgba(255, 254, 254, 0.873);
-}
-input[type='button']:hover {
-  background-color: rgb(31, 218, 78);
 }
 
 a {
