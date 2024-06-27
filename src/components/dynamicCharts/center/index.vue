@@ -3,16 +3,7 @@
     <XxtWordCloud class="wrapper">
       <div class="item" v-for="item in indiArr" :key="item.title">
         <div class="es-screen-header-background"></div>
-        <div class="shape" :class="[item.type, item.color]">
-          <div class="six-wrapper" v-if="item.type === 'six'">
-            <div class="main1 tool"></div>
-            <div class="main2 tool"></div>
-            <div class="main3 tool"></div>
-            <div class="main4 tool"></div>
-            <div class="main5 tool"></div>
-            <div class="main6 tool"></div>
-          </div>
-        </div>
+        <div class="shape" :class="[item.type, item.color]"></div>
         <div class="title">{{ item.title }}</div>
       </div>
     </XxtWordCloud>
@@ -112,152 +103,23 @@ const indiArr = ref([
         left: 50%;
         transform: translate(-50%, -50%);
         margin-bottom: 10px;
-        // 圆形
-        &.zero {
-          width: 33px;
-          height: 33px;
-          border-radius: 50%;
-          // background-color: red;
-          &.color1 {
-            background-color: #d64c3b;
-          }
-          &.color2 {
-            background-color: #ffd943;
-          }
-          &.color3 {
-            background-color: #ffa328;
-          }
-          &.color4 {
-            background-color: #46c2ff;
-          }
-          &.color5 {
-            background-color: #8f0eb8;
-          }
-          &.color6 {
-            background-color: #232cff;
-          }
+        &.color1 {
+          background-color: #d64c3b;
         }
-        // 三角形
-        &.three {
-          top: 75px;
-          left: 33%;
-          width: 0;
-          height: 0;
-          // border: 40px solid red;
-          // border-color: red transparent transparent transparent;
-          transform-origin: 50% 0 0;
-          transform: scaleX(0.6) rotateX(180deg);
-          &.color1 {
-            border: 40px solid #d64c3b;
-            border-color: #d64c3b transparent transparent transparent;
-          }
-          &.color2 {
-            border: 40px solid #ffd943;
-            border-color: #ffd943 transparent transparent transparent;
-          }
-          &.color3 {
-            border: 40px solid #ffa328;
-            border-color: #ffa328 transparent transparent transparent;
-          }
-          &.color4 {
-            border: 40px solid #46c2ff;
-            border-color: #46c2ff transparent transparent transparent;
-          }
-          &.color5 {
-            border: 40px solid #8f0eb8;
-            border-color: #8f0eb8 transparent transparent transparent;
-          }
-          &.color6 {
-            border: 40px solid #232cff;
-            border-color: #232cff transparent transparent transparent;
-          }
+        &.color2 {
+          background-color: #ffd943;
         }
-        // 正方形
-        &.four {
-          width: 33px;
-          height: 33px;
-          // background-color: red;
-          &.color1 {
-            background-color: #d64c3b;
-          }
-          &.color2 {
-            background-color: #ffd943;
-          }
-          &.color3 {
-            background-color: #ffa328;
-          }
-          &.color4 {
-            background-color: #46c2ff;
-          }
-          &.color5 {
-            background-color: #8f0eb8;
-          }
-          &.color6 {
-            background-color: #232cff;
-          }
+        &.color3 {
+          background-color: #ffa328;
         }
-        // 六边形
-        &.six {
-          left: 46%;
-          .six-wrapper {
-            transform: scale(0.3);
-            .main2 {
-              transform: rotate(60deg);
-            }
-            .main3 {
-              transform: rotate(120deg);
-            }
-            .main4 {
-              transform: rotate(180deg);
-            }
-            .main5 {
-              transform: rotate(240deg);
-            }
-            .main6 {
-              transform: rotate(300deg);
-            }
-            .tool {
-              width: 0px;
-              height: 0px;
-              border-right: calc(60px / 1.732) solid transparent;
-              border-left: calc(60px / 1.732) solid transparent;
-              // border-bottom: 60px solid red;
-              transform-origin: top;
-              position: absolute;
-              top: 0;
-              left: 0;
-            }
-          }
-          &.color1 {
-            .tool {
-              border-bottom: 60px solid #d64c3b;
-            }
-          }
-          &.color2 {
-            .tool {
-              border-bottom: 60px solid #ffd943;
-            }
-          }
-          &.color3 {
-            .tool {
-              border-bottom: 60px solid #ffa328;
-            }
-          }
-          &.color4 {
-            .tool {
-              border-bottom: 60px solid #46c2ff;
-            }
-          }
-          &.color5 {
-            .tool {
-              border-bottom: 60px solid #8f0eb8;
-            }
-          }
-          &.color6 {
-            .tool {
-              border-bottom: 60px solid #232cff;
-            }
-          }
+        &.color4 {
+          background-color: #46c2ff;
+        }
+        &.color5 {
+          background-color: #8f0eb8;
+        }
+        &.color6 {
+          background-color: #232cff;
         }
       }
       .title {
