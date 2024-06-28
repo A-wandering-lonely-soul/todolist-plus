@@ -1,25 +1,52 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed, onMounted } from 'vue';
+import { getAssetsFile } from '@/utils/pub-use';
 const props = defineProps({
+  cardId: {
+    type: Number,
+    default: 1,
+  },
   image1: {
     type: String,
-    default:
-      'https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a2b28a6f79ee4cd5a17504777866ae07~tplv-k3u1fbpfcp-watermark.image?',
+    default: '宝剑.webp',
   },
   image2: {
     type: String,
-    default:
-      'https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/40065b66b32344038d988c525a18f171~tplv-k3u1fbpfcp-no-mark:420:420:300:420.awebp?',
+    default: '卡背.webp',
   },
+});
+
+const isPositive = ref(false); //是否正面
+const isHidden = ref(false); //是否隐藏标签
+const reset = (id: number) => {
+  //恢复初始状态
+  if (props.cardId != id) {
+    isPositive.value = false;
+    isHidden.value = false;
+  }
+};
+const toHidden = (id: number) => {
+  //隐藏标签
+  if (props.cardId != id) {
+    isHidden.value = true;
+  }
+};
+defineExpose({
+  toHidden,
+  reset,
+});
+const emits = defineEmits(['rotate']);
+const bgimg1 = ref('');
+const bgimg2 = ref('');
+onMounted(() => {
+  bgimg1.value = getAssetsFile(props.image1);
+  bgimg2.value = getAssetsFile(props.image2);
 });
 const card = ref();
 const innerCardBackface = ref();
 const unflip = ref();
 const innerCard = ref();
-const item = ref(null);
-const parent = ref(null);
-const bgimg1 = ref(props.image1);
-const bgimg2 = ref(props.image2);
+
 const calculateAngle = (e: any, item: any, parent: any) => {
   item.value = item;
   parent.value = parent;
@@ -81,11 +108,15 @@ const handleMouseLeave = () => {
 const flipFn = () => {
   if (card.value) {
     card.value.classList.add('flipped');
+    isPositive.value = true;
+    emits('rotate', true);
   }
 };
 const unflipFn = () => {
   if (card.value) {
     card.value.classList.remove('flipped');
+    isPositive.value == false;
+    emits('rotate', false);
   }
 };
 </script>
@@ -105,7 +136,9 @@ const unflipFn = () => {
           'background-size': '100% 100%',
         }"
       >
-        <span class="unflip" ref="unflip" @click="unflipFn">返回</span>
+        <span class="unflip" ref="unflip" v-show="!isHidden" @click="unflipFn"
+          >返回</span
+        >
       </span>
     </span>
     <span
@@ -116,7 +149,9 @@ const unflipFn = () => {
         'background-size': '100% 100%',
       }"
     >
-      <span class="flip" ref="flip" @click="flipFn">翻转</span>
+      <span class="flip" ref="flip" v-show="!isHidden" @click="flipFn"
+        >翻转</span
+      >
       <span class="glare"></span>
     </span>
   </div>
@@ -173,7 +208,7 @@ const unflipFn = () => {
   width: 100%;
   border-radius: 14px;
   height: 100%;
-  transform: rotateY(180deg);
+  transform: scaleX(-1);
   background-size: auto 102%;
   background-position: -2px -5px;
 }

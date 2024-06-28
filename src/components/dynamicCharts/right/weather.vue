@@ -1,24 +1,26 @@
 <template>
-  <div class="es-block">
-    <Title>天气</Title>
-    <div style="width: 100%; height: calc(100% - var(--el-title-height))">
-      <div class="container">
-        <div class="approximately">
-          <div class="city-name">{{ weatherData.city }}</div>
-          <p class="weather">{{ weatherData.weather }}</p>
-          <h2 class="temp">
-            <em>{{ weatherData.temperature }}</em
-            >℃
-          </h2>
-        </div>
-        <div class="detail">
-          <span>风力：{{ weatherData.windPower }}级</span> |
-          <span>风向：{{ weatherData.windDirection }}</span> |
-          <span>空气湿度：{{ weatherData.humidity }}</span>
+  <XxtCardBorder>
+    <div class="es-block">
+      <Title>天气</Title>
+      <div style="width: 100%; height: calc(100% - var(--el-title-height))">
+        <div class="container">
+          <div class="approximately">
+            <div class="city-name">{{ weatherData.city }}</div>
+            <p class="weather">{{ weatherData.weather }}</p>
+            <h2 class="temp">
+              <em>{{ weatherData.temperature }}</em
+              >℃
+            </h2>
+          </div>
+          <div class="detail">
+            <span>风力：{{ weatherData.windPower }}级</span> |
+            <span>风向：{{ weatherData.windDirection }}</span> |
+            <span>空气湿度：{{ weatherData.humidity }}</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </XxtCardBorder>
 </template>
 
 <script setup lang="ts">

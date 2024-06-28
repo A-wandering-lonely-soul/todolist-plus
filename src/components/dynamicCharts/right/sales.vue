@@ -1,10 +1,12 @@
 <template>
-  <div class="es-block">
-    <Title>地区销售排行</Title>
-    <div style="width: 100%; height: calc(100% - var(--el-title-height))">
-      <Chart :option="option" />
+  <XxtCardBorder>
+    <div class="es-block">
+      <Title>地区销售排行</Title>
+      <div style="width: 100%; height: calc(100% - var(--el-title-height))">
+        <Chart :option="option" />
+      </div>
     </div>
-  </div>
+  </XxtCardBorder>
 </template>
 
 <script setup lang="ts">
