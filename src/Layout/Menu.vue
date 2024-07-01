@@ -96,6 +96,7 @@ onMounted(() => {
 .leftMenu {
   float: left;
   max-height: calc(100vh - var(--hearder-height));
+  z-index: 99;
 }
 //展开宽度
 .el-menu-vertical-demo:not(.el-menu--collapse) {

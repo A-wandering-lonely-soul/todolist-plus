@@ -108,7 +108,11 @@ export const cards_x = reactive([
     img1: '愚者.webp',
   },
 ]);
-export const content = {
+interface Content {
+  [key: string]: string;
+}
+
+export const content: Content = {
   '1x1':
     '今天适合静心冥想，聆听内心的声音。女祭司的智慧与权杖的行动力将帮助你找到正确的方向。',
   '1x2':

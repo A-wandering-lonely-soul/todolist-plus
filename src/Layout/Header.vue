@@ -151,6 +151,9 @@ onBeforeMount(() => {
 .el-tooltip__trigger:focus-visible {
   outline: unset;
 }
+.el-page-header {
+  z-index: 99;
+}
 .sign {
   display: flex;
   justify-content: flex-start;

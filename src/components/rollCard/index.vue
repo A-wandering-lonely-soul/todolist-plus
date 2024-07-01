@@ -18,23 +18,23 @@ const props = defineProps({
 
 const isPositive = ref(false); //是否正面
 const isHidden = ref(false); //是否隐藏标签
-const reset = (id: number) => {
+const reset = (id?: number) => {
   //恢复初始状态
-  if (props.cardId != id) {
+  if (id && props.cardId == id) {
+    //当前选中id就是这张卡的不用回复
+  } else {
     isPositive.value = false;
     isHidden.value = false;
   }
 };
+
 const toHidden = (id: number) => {
   //隐藏标签
   if (props.cardId != id) {
     isHidden.value = true;
   }
 };
-defineExpose({
-  toHidden,
-  reset,
-});
+
 const emits = defineEmits(['rotate']);
 const bgimg1 = ref('');
 const bgimg2 = ref('');
@@ -119,6 +119,22 @@ const unflipFn = () => {
     emits('rotate', false);
   }
 };
+const allflipFn = () => {
+  card.value.classList.add('flipped');
+  isHidden.value = true;
+  isPositive.value = true;
+};
+const allunflipFn = () => {
+  card.value.classList.remove('flipped');
+  isHidden.value = true;
+  isPositive.value == false;
+};
+defineExpose({
+  toHidden,
+  reset,
+  allflipFn,
+  allunflipFn,
+});
 </script>
 <template>
   <div

@@ -1,14 +1,23 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
 import { cards_s, cards_x, content } from '@/components/rollCard/cards';
-
+import { ElMessage, ElMessageBox } from 'element-plus';
 let cardList_s = reactive<any>([]);
 const smallCardId = ref<null | number>(null); //选中的小牌id
 const rollcardRefs = reactive<any>([]);
 const refresh = () => {
   cardList_s.splice(0, cardList_s.length);
 
-  getCardList_s();
+  getCardList_s(); //小牌列表刷新
+  ischecked.value = false; //关闭大牌列表
+  bigCardId.value = null;
+  smallCardId.value = null;
+  identification.value = '';
+  taluoContent.value = '';
+  isCompleted.value = false;
+  showImage.value = false;
+  Object.assign(cardList_x, []);
+  Object.assign(cardList_s, []);
 };
 const getCardList_s = () => {
   const arr = Array.from({ length: cards_s.length }, (_, i) => i);
@@ -48,8 +57,20 @@ const checkcard = (flag: boolean, id: number) => {
 };
 let ischecked = ref(false); //按钮是否已经按下
 const checkedCard_s = () => {
-  ischecked.value = true;
-  getCardList_x(); //获取大牌列表
+  if (isCompleted.value) return;
+  if (smallCardId.value || ischecked.value) {
+    ischecked.value = true;
+    getCardList_x(); //获取大牌列表
+    ElMessage({
+      type: 'success',
+      message: '请再挑选一张大阿卡那牌',
+    });
+  } else {
+    ElMessage({
+      type: 'warning',
+      message: '请翻转左侧的小阿卡那牌',
+    });
+  }
 };
 
 onMounted(() => {
@@ -72,22 +93,52 @@ const getCardList_x = () => {
   cardList_x = newArr;
 };
 
-// const cards = reactive([
-//   { src: 'Card 1 Front', backsrc: 'Card 1 Back', flipped: false },
-//   { src: 'Card 2 Front', backsrc: 'Card 2 Back', flipped: false },
-//   { src: 'Card 4 Front', backsrc: 'Card 3 Back', flipped: false },
-//   { src: 'Card 4 Front', backsrc: 'Card 4 Back', flipped: false },
-//   { src: 'Card 5 Front', backsrc: 'Card 5 Back', flipped: false },
-//   { src: 'Card 6 Front', backsrc: 'Card 6 Back', flipped: false },
-//   { src: 'Card 7 Front', backsrc: 'Card 7 Back', flipped: false },
-//   { src: 'Card 8 Front', backsrc: 'Card 8 Back', flipped: false },
-//   { src: 'Card 9 Front', backsrc: 'Card 9 Back', flipped: false },
-//   { src: 'Card 10 Front', backsrc: 'Card 10 Back', flipped: false },
-// ]);
-const flipCard = (index: any) => {
-  cardList_x[index].flipped = !cardList_x[index].flipped;
+const bigCardId = ref<null | number>(null); //选中的大牌id
+const identification = ref<string>(''); //大牌和小牌id组成的字符串
+const taluoContent = ref<string>('');
+const isCompleted = ref(false); //是否已经完成占扑
+const taluoContentRef = ref<any>(null);
+const flipCard = (card: any, index: number) => {
+  if (isCompleted.value) return;
+  bigCardId.value = card.id;
+  let cardvalue = cardList_x.find((item: any) => item.flipped);
+  if (cardvalue != undefined) {
+    return;
+  } else {
+    identification.value = `${bigCardId.value}x${smallCardId.value}`;
+    cardList_x[index].flipped = !cardList_x[index].flipped;
+    isCompleted.value = true;
+    showImage.value = true;
+    //打字效果
+    let text = content[identification.value];
+    const textArray = text.split('');
+    let index2 = 0;
+    const type = () => {
+      if (index2 < textArray.length) {
+        taluoContent.value += textArray[index2];
+        index2++;
+        setTimeout(type, 200);
+      } else {
+        taluoContentRef.value.style.borderRight = 'none';
+      }
+    };
+    setTimeout(() => {
+      type();
+    }, 500);
+  }
+};
+const showImage = ref(false);
+const closeMoralBox = () => {
+  showImage.value = false;
 };
 const flipAllCards = () => {
+  //小牌翻转
+  rollcardRefs.forEach((rollcardRef: any) => {
+    if (rollcardRef) {
+      rollcardRef.allflipFn();
+    }
+  });
+  //大牌翻转
   cardList_x.forEach((card: any) => {
     if (!card.flipped) {
       card.flipped = true;
@@ -95,6 +146,13 @@ const flipAllCards = () => {
   });
 };
 const flipAllToFront = () => {
+  //小牌复原
+  rollcardRefs.forEach((rollcardRef: any) => {
+    if (rollcardRef) {
+      rollcardRef.allunflipFn();
+    }
+  });
+  //大牌复原
   cardList_x.forEach((card: any) => {
     card.flipped = false;
   });
@@ -120,45 +178,60 @@ const flipAllToFront = () => {
         </div>
       </div>
       <div class="introduce">
-        <span>今日运势占扑</span>
-        <p>选择一张小阿卡那牌</p>
-        <div
-          class="checkButton"
-          :class="{ checked: ischecked }"
-          v-if="smallCardId || ischecked"
-          @click="checkedCard_s"
-        >
-          {{ ischecked ? '已确认' : '确认选择' }}
+        <div class="centerBox">
+          <span>今日运势占扑</span>
+          <p>选择一张小阿卡那牌</p>
+          <div
+            class="checkButton"
+            :class="{ checked: ischecked }"
+            @click="checkedCard_s"
+          >
+            {{ ischecked ? '已确认' : '确认选择' }}
+          </div>
         </div>
       </div>
     </div>
-    <div class="box_x">
-      <div class="bigCard">
-        <div
-          v-for="(card, index) in cardList_x"
-          :key="index"
-          :class="{
-            card: true,
-            flipped: card.flipped,
-          }"
-          @click="flipCard(index)"
-        >
-          <div class="front">
-            <img :src="getAssetsFile('卡背.webp')" alt="" />
-          </div>
-          <div class="back">
-            <img :src="getAssetsFile(card.img1)" alt="" />
+    <transition name="el-zoom-in-top">
+      <div class="box_x" v-show="ischecked">
+        <div class="bigCard">
+          <div
+            v-for="(card, index) in cardList_x"
+            :key="index"
+            :class="{
+              card: true,
+              flipped: card.flipped,
+            }"
+            @click="flipCard(card, index)"
+          >
+            <div class="front">
+              <img :src="getAssetsFile('卡背.webp')" alt="" />
+            </div>
+            <div class="back">
+              <img :src="getAssetsFile(card.img1)" alt="" />
+            </div>
           </div>
         </div>
+        <div class="buttongroup" v-if="isCompleted">
+          <button @click="flipAllCards" class="button">
+            <span>全部展开</span>
+          </button>
+          <button @click="flipAllToFront" class="button">
+            <span>复原 </span>
+          </button>
+        </div>
       </div>
-      <div class="buttongroup">
-        <button @click="flipAllCards" class="button">
-          <span>全部展开</span>
-        </button>
-        <button @click="flipAllToFront" class="button">
-          <span>复原 </span>
-        </button>
+    </transition>
+
+    <div class="image-container" v-show="showImage">
+      <div class="img">
+        <img src="@/assets/ba/getbluecard.jpg" alt="" />
+        <div class="moral">
+          <span class="content-effect" ref="taluoContentRef">
+            {{ taluoContent }}
+          </span>
+        </div>
       </div>
+      <Close class="closeContent" @click="closeMoralBox"></Close>
     </div>
   </div>
 </template>
@@ -168,6 +241,89 @@ const flipAllToFront = () => {
   background: #152036;
   width: 100%;
   min-height: 100%;
+  position: relative;
+  .image-container {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 32vw;
+    height: 36vh;
+    position: fixed;
+    z-index: 98;
+    .img {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      animation: fadeIn 2s 0.5s forwards; /* 延迟0.5秒开始动画 */
+      background: url(@/assets/ba/紫卡.png) no-repeat;
+      background-size: cover;
+      overflow: visible;
+      padding: 1rem;
+      .moral {
+        flex: 1;
+        overflow-y: auto;
+        font-size: 2rem;
+        line-height: 2.2rem;
+        .content-effect {
+          font-family: monospace;
+          font-size: 24px;
+          border-right: 3px solid black;
+          white-space: wrap;
+          overflow: hidden;
+        }
+      }
+      img {
+        object-fit: contain;
+        height: 40%;
+        animation: insertIn 2s 1s forwards;
+      }
+    }
+    .closeContent {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+      transition: transform 0.5s ease;
+      &:hover {
+        transform: scale(1.2) rotate(90deg);
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0) 70%
+      );
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      animation: glowEffect 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes glowEffect {
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+      }
+    }
+  }
 }
 .refresh {
   height: 3rem;
@@ -234,7 +390,7 @@ const flipAllToFront = () => {
     min-height: 300px;
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     flex-wrap: wrap;
     .card {
       width: 150px;
@@ -341,13 +497,12 @@ const flipAllToFront = () => {
 .box_s {
   display: flex;
   // flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   flex-wrap: wrap;
   width: 100%;
   min-height: 50%;
   margin: 0;
-
-  padding: 1em 0em;
+  padding: 1em;
   font-family: Inter, sans-serif;
   display: flex;
   justify-content: space-between;
@@ -365,44 +520,62 @@ const flipAllToFront = () => {
   }
   .introduce {
     flex: 1;
-    min-width: 250px;
     height: 28em;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    span {
-      color: #fff;
-      font-size: 35px;
-      line-height: 40px;
-    }
-    p {
-      font-weight: bold;
-      font-size: 30px;
-      line-height: 40px;
-      color: purple;
-    }
-    .checkButton {
-      align-items: center;
-      background: linear-gradient(121deg, #05a7c4, #64c1a5);
-      border-radius: 20px;
-      color: #fff;
-      cursor: pointer;
+    justify-content: flex-end;
+
+    .centerBox {
+      border-radius: 10px;
+      border: #01588f 2px solid;
+      padding: 10px;
+      height: 100%;
       display: flex;
-      font-size: 33px;
-      font-weight: 500;
-      height: 200px;
-      justify-content: center;
-      margin-right: 20px;
-      position: relative;
-      width: 300px;
-      &:hover {
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      min-width: 250px;
+      span {
+        color: #fff;
+        font-size: 35px;
+        line-height: 40px;
+      }
+      p {
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 40px;
+        color: pink;
+      }
+      .checkButton {
+        align-items: center;
+        background: linear-gradient(121deg, #05a7c4, #64c1a5);
+        border-radius: 20px;
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        font-size: 33px;
+        font-weight: 500;
+        height: 180px;
+        justify-content: center;
+        margin-right: 20px;
+        position: relative;
+        width: 260px;
+        &:hover {
+          background: linear-gradient(121deg, #e4860d, #c16764);
+        }
+      }
+      .checked {
         background: linear-gradient(121deg, #e4860d, #c16764);
       }
     }
-    .checked {
-      background: linear-gradient(121deg, #e4860d, #c16764);
-    }
+  }
+}
+@keyframes insertIn {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 @keyframes slideIn {
