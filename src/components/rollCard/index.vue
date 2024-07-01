@@ -175,7 +175,7 @@ const unflipFn = () => {
   height: auto;
   margin: 0 2em;
   width: 15em;
-  height: 25em;
+  height: 30em;
   float: left;
   transition: all 0.2s ease-out;
   border: none;

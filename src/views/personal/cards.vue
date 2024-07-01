@@ -56,6 +56,7 @@ onMounted(() => {
   getCardList_s();
 });
 //这部分是大牌的函数
+import { getAssetsFile } from '@/utils/pub-use';
 let cardList_x = reactive<any>([]);
 // 随机获取十个对象
 const getCardList_x = () => {
@@ -64,34 +65,37 @@ const getCardList_x = () => {
       .sort(() => 0.5 - Math.random()) // 打乱数组
       .slice(0, numberOfObjects); // 获取前10个元素
   }
-
-  cardList_x.value = getRandomObjects(cards_x, 10);
+  let newArr = getRandomObjects(cards_x, 10);
+  for (let item of newArr) {
+    item.flipped = false;
+  }
+  cardList_x = newArr;
 };
 
-const cards = reactive([
-  { src: 'Card 1 Front', backsrc: 'Card 1 Back', flipped: false },
-  { src: 'Card 2 Front', backsrc: 'Card 2 Back', flipped: false },
-  { src: 'Card 4 Front', backsrc: 'Card 3 Back', flipped: false },
-  { src: 'Card 4 Front', backsrc: 'Card 4 Back', flipped: false },
-  { src: 'Card 5 Front', backsrc: 'Card 5 Back', flipped: false },
-  { src: 'Card 6 Front', backsrc: 'Card 6 Back', flipped: false },
-  { src: 'Card 7 Front', backsrc: 'Card 7 Back', flipped: false },
-  { src: 'Card 8 Front', backsrc: 'Card 8 Back', flipped: false },
-  { src: 'Card 9 Front', backsrc: 'Card 9 Back', flipped: false },
-  { src: 'Card 10 Front', backsrc: 'Card 10 Back', flipped: false },
-]);
+// const cards = reactive([
+//   { src: 'Card 1 Front', backsrc: 'Card 1 Back', flipped: false },
+//   { src: 'Card 2 Front', backsrc: 'Card 2 Back', flipped: false },
+//   { src: 'Card 4 Front', backsrc: 'Card 3 Back', flipped: false },
+//   { src: 'Card 4 Front', backsrc: 'Card 4 Back', flipped: false },
+//   { src: 'Card 5 Front', backsrc: 'Card 5 Back', flipped: false },
+//   { src: 'Card 6 Front', backsrc: 'Card 6 Back', flipped: false },
+//   { src: 'Card 7 Front', backsrc: 'Card 7 Back', flipped: false },
+//   { src: 'Card 8 Front', backsrc: 'Card 8 Back', flipped: false },
+//   { src: 'Card 9 Front', backsrc: 'Card 9 Back', flipped: false },
+//   { src: 'Card 10 Front', backsrc: 'Card 10 Back', flipped: false },
+// ]);
 const flipCard = (index: any) => {
-  cards[index].flipped = !cards[index].flipped;
+  cardList_x[index].flipped = !cardList_x[index].flipped;
 };
 const flipAllCards = () => {
-  cards.forEach((card) => {
+  cardList_x.forEach((card: any) => {
     if (!card.flipped) {
       card.flipped = true;
     }
   });
 };
 const flipAllToFront = () => {
-  cards.forEach((card) => {
+  cardList_x.forEach((card: any) => {
     card.flipped = false;
   });
 };
@@ -129,28 +133,30 @@ const flipAllToFront = () => {
       </div>
     </div>
     <div class="box_x">
-      <div
-        v-for="(card, index) in cards"
-        :key="index"
-        :class="{
-          card: true,
-          flipped: card.flipped,
-        }"
-        @click="flipCard(index)"
-      >
-        <div class="front">
-          <h2>{{ card.src }}</h2>
-        </div>
-        <div class="back">
-          <p>{{ card.backsrc }}</p>
+      <div class="bigCard">
+        <div
+          v-for="(card, index) in cardList_x"
+          :key="index"
+          :class="{
+            card: true,
+            flipped: card.flipped,
+          }"
+          @click="flipCard(index)"
+        >
+          <div class="front">
+            <img :src="getAssetsFile('卡背.webp')" alt="" />
+          </div>
+          <div class="back">
+            <img :src="getAssetsFile(card.img1)" alt="" />
+          </div>
         </div>
       </div>
       <div class="buttongroup">
         <button @click="flipAllCards" class="button">
-          <span>全部翻转</span>
+          <span>全部展开</span>
         </button>
         <button @click="flipAllToFront" class="button">
-          <span>翻转正面 </span>
+          <span>复原 </span>
         </button>
       </div>
     </div>
@@ -223,111 +229,113 @@ const flipAllToFront = () => {
   }
 }
 .box_x {
-  display: flex;
   width: 100%;
-  min-height: 700px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin: auto auto;
-  .card-container {
+  .bigCard {
+    min-height: 300px;
     display: flex;
-    width: 1200px;
-    height: 700px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: auto auto;
-  }
-
-  .card {
-    width: 200px;
-    height: 300px;
-    margin: 10px;
-    perspective: 1000px;
-    cursor: pointer;
-    transition: transform 0.6s;
-  }
-
-  .flipped .front {
-    transform: rotateY(180deg);
-  }
-
-  .flipped .back {
-    transform: rotateY(0deg);
-  }
-
-  .front,
-  .back {
     width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-      rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-  }
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    .card {
+      width: 150px;
+      height: 300px;
+      margin: 10px;
+      perspective: 1000px;
+      cursor: pointer;
+      transition: transform 0.6s;
+    }
 
-  .front {
-    background-color: #3498db;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: rotateY(0deg);
-    transition: transform 0.6s;
-  }
+    .flipped .front {
+      transform: rotateY(180deg);
+    }
 
-  .back {
-    background-color: #e74c3c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: rotateY(-180deg);
-    transition: transform 0.6s;
-  }
+    .flipped .back {
+      transform: rotateY(0deg);
+    }
 
+    .front,
+    .back {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+        rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    }
+
+    .front {
+      background-color: #3498db;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: rotateY(0deg);
+      transition: transform 0.6s;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    .back {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: rotateY(-180deg);
+      transition: transform 0.6s;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
   .buttongroup {
-    margin: auto auto;
-  }
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .button {
+      display: inline-block;
+      border-radius: 4px;
+      background-color: #9d9def;
+      border: none;
+      color: #ffffff;
+      text-align: center;
+      font-size: 28px;
+      padding: 20px;
+      width: 200px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+      vertical-align: middle;
+    }
 
-  .button {
-    display: inline-block;
-    border-radius: 4px;
-    background-color: #9d9def;
-    border: none;
-    color: #ffffff;
-    text-align: center;
-    font-size: 28px;
-    padding: 20px;
-    width: 200px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
-    vertical-align: middle;
-  }
+    .button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
 
-  .button span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-  }
+    .button span:after {
+      content: '»';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
 
-  .button span:after {
-    content: '»';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-  }
+    .button:hover span {
+      padding-right: 25px;
+    }
 
-  .button:hover span {
-    padding-right: 25px;
-  }
-
-  .button:hover span:after {
-    opacity: 1;
-    right: 0;
+    .button:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
   }
 }
 .box_s {
