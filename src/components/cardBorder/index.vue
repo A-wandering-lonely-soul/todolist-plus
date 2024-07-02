@@ -40,7 +40,7 @@ const isDark = useDark();
   color: rgb(88 199 250 / 100%);
 }
 .card:hover {
-  color: rgb(88 199 250 / 0);
+  color: rgb(255, 255, 255);
   transition: color 1s;
 }
 .card:hover:before,

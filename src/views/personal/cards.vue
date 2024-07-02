@@ -390,7 +390,7 @@ const flipAllToFront = () => {
     min-height: 300px;
     display: flex;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
     .card {
       width: 150px;
@@ -510,8 +510,8 @@ const flipAllToFront = () => {
   .smallCard {
     min-height: 30em;
     min-width: 60%;
-
     display: flex;
+    justify-content: flex-end;
     align-items: center;
     .card {
       animation: slideIn 0.5s;
@@ -523,9 +523,10 @@ const flipAllToFront = () => {
     height: 28em;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
 
     .centerBox {
+      margin-left: 20px;
       border-radius: 10px;
       border: #01588f 2px solid;
       padding: 10px;
@@ -557,7 +558,6 @@ const flipAllToFront = () => {
         font-weight: 500;
         height: 180px;
         justify-content: center;
-        margin-right: 20px;
         position: relative;
         width: 260px;
         &:hover {
@@ -580,7 +580,7 @@ const flipAllToFront = () => {
 }
 @keyframes slideIn {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(100%);
   }
   100% {
     transform: translateX(0);
