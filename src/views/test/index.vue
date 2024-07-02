@@ -39,7 +39,7 @@ body {
   display: flex;
   font-size: 1.5em;
   color: rgb(88 199 250 / 0%);
-  cursor: pointer;
+  cursor: url('/static/pokemon/后台运行.cur'), pointer;
   font-family: cursive;
 }
 

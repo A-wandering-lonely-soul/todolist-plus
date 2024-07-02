@@ -33,7 +33,7 @@ const isDark = useDark();
   display: flex;
   font-size: 1.5em;
   color: rgb(0 0 0 / 100%);
-  cursor: pointer;
+  cursor: url('/static/pokemon/后台运行.cur'), pointer;
   font-family: cursive;
 }
 .light {

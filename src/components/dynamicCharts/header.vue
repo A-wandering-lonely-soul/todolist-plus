@@ -86,7 +86,7 @@ startTime();
     img {
       width: 30px;
       margin-right: 16px;
-      cursor: pointer;
+      cursor: url('/static/pokemon/后台运行.cur'), pointer;
       transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       &:hover {
         transform: scale(1.2);

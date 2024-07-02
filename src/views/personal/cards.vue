@@ -30,7 +30,7 @@ const getCardList_s = () => {
   const interval = setInterval(() => {
     if (count < cards_s.length) {
       // 每隔一秒生成一个方块
-      cardList_s.push(cards_s[arr[count]]);
+      cardList_s.unshift(cards_s[arr[count]]);
       count++;
     } else {
       clearInterval(interval);
@@ -287,7 +287,7 @@ const flipAllToFront = () => {
       font-size: 20px;
       top: 0;
       right: 0;
-      cursor: pointer;
+      cursor: url('/static/pokemon/后台运行.cur'), pointer;
       transition: transform 0.5s ease;
       &:hover {
         transform: scale(1.2) rotate(90deg);
@@ -397,7 +397,7 @@ const flipAllToFront = () => {
       height: 300px;
       margin: 10px;
       perspective: 1000px;
-      cursor: pointer;
+      cursor: url('/static/pokemon/后台运行.cur'), pointer;
       transition: transform 0.6s;
     }
 
@@ -463,13 +463,13 @@ const flipAllToFront = () => {
       padding: 20px;
       width: 200px;
       transition: all 0.5s;
-      cursor: pointer;
+      cursor: url('/static/pokemon/后台运行.cur'), pointer;
       margin: 5px;
       vertical-align: middle;
     }
 
     .button span {
-      cursor: pointer;
+      cursor: url('/static/pokemon/后台运行.cur'), pointer;
       display: inline-block;
       position: relative;
       transition: 0.5s;
@@ -552,7 +552,7 @@ const flipAllToFront = () => {
         background: linear-gradient(121deg, #05a7c4, #64c1a5);
         border-radius: 20px;
         color: #fff;
-        cursor: pointer;
+        cursor: url('/static/pokemon/后台运行.cur'), pointer;
         display: flex;
         font-size: 33px;
         font-weight: 500;
@@ -580,7 +580,7 @@ const flipAllToFront = () => {
 }
 @keyframes slideIn {
   0% {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
   100% {
     transform: translateX(0);

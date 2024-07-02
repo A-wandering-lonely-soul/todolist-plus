@@ -399,7 +399,7 @@ const indexMethod = (index: number) => {
 .avatar-uploader .el-upload {
   border: 1px dashed var(--el-border-color);
   border-radius: 6px;
-  cursor: pointer;
+  cursor: url('/static/pokemon/后台运行.cur'), pointer;
   position: relative;
   overflow: hidden;
   transition: var(--el-transition-duration-fast);
