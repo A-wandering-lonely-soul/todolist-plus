@@ -2,7 +2,7 @@
 import { ref, onMounted, reactive } from 'vue';
 const toMyBlog = () => {
   //跳转到我的博客
-  window.location.href = 'https://winterfinale.com:8080/';
+  window.location.href = 'https://agnw.me:8080/';
 };
 const isAmplify = ref(false); //是否拥有放大功能
 const toggleAmplify = () => {

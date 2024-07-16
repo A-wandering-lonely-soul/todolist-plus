@@ -173,9 +173,7 @@ const register = () => {
           >Home</a
         >
         <!-- 导航栏选项2 -->
-        <a href="https://winterfinale.com:8080/" class="item" style="--i: 2"
-          >blog</a
-        >
+        <a href="https://agnw.me:8080/" class="item" style="--i: 2">blog</a>
         <!-- 导航栏选项3 -->
         <a href="#" class="item" style="--i: 3">Skills</a>
         <!-- 导航栏选项4 -->
