@@ -1,7 +1,7 @@
 <template>
   <XxtCardBorder>
     <div class="es-block">
-      <Title>库存和销量分析</Title>
+      <Title>新一线城市魅力榜</Title>
       <div style="width: 100%; height: calc(100% - var(--el-title-height))">
         <Chart :option="option" />
       </div>
@@ -58,8 +58,8 @@ function getSeries() {
       },
       data: [
         {
-          name: item.name + '\n\n' + item.sales,
-          value: item.sales,
+          name: item.name + '\n\n' + item.percent + '%',
+          value: item.percent,
           itemStyle: {
             color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
               {
@@ -79,7 +79,7 @@ function getSeries() {
           },
         },
         {
-          value: item.stock,
+          value: item.meta,
           itemStyle: {
             color: '#333843',
           },

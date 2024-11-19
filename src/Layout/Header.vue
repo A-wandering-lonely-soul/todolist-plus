@@ -113,7 +113,7 @@ const beforeAvatarUpload: InstanceType<typeof UploadProps> = (rawFile: any) => {
 const blogAddress1 = `https://agnw.me:8080?token=${localStorage.getItem(
   'x-token'
 )}`;
-const blogAddress2 = `http://agnw.me:3001`;
+const blogAddress2 = `https://agnw.me:3002`;
 const handleClick = (e: number) => {
   if (e == 1) {
     window.open(blogAddress1);

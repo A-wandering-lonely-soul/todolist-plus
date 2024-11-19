@@ -72,7 +72,7 @@ export const staticRouter = [
     path: '/blog',
     name: 'blog',
     meta: {
-      icon: 'gpt',
+      icon: 'article',
       title: '博客管理',
     },
     component: () => import('@/views/Home.vue'),

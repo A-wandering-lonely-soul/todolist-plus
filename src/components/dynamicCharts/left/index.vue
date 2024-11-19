@@ -17,7 +17,7 @@ import { shallowRef } from 'vue';
 import { useSortable } from '@/utils/useSortable';
 
 import Left1 from './Map.vue';
-import Left2 from './LocalTrending.vue';
+import Left2 from './employment.vue';
 const components = shallowRef([
   { name: 'left1', component: Left1 },
   { name: 'left2', component: Left2 },

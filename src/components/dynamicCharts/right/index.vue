@@ -14,8 +14,8 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue';
 import { useSortable } from '@/utils/useSortable';
-import Right1 from './inventory.vue';
-import Right2 from './sales.vue';
+import Right1 from './newCharm.vue';
+import Right2 from './charm.vue';
 import Right3 from './weather.vue';
 const components = shallowRef([
   { name: 'right1', component: Right1 },

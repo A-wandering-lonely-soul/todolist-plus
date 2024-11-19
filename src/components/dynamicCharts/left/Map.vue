@@ -1,7 +1,7 @@
 <template>
   <XxtCardBorder>
     <div class="es-block">
-      <Title>商家分布</Title>
+      <Title>城市分布</Title>
       <div style="width: 100%; height: calc(100% - var(--el-title-height))">
         <Chart :option="option" />
       </div>
@@ -25,7 +25,7 @@ const option = ref({
     bottom: '5%',
     zoom: 0.8,
     itemStyle: {
-      areaColor: '#2E72BF',
+      areaColor: '#f3f1ec',
       borderColor: '#333',
     },
   },

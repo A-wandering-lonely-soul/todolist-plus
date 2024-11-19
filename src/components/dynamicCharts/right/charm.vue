@@ -1,7 +1,7 @@
 <template>
   <XxtCardBorder>
     <div class="es-block">
-      <Title>地区销售排行</Title>
+      <Title>城市魅力指数</Title>
       <div style="width: 100%; height: calc(100% - var(--el-title-height))">
         <Chart :option="option" />
       </div>
@@ -37,12 +37,12 @@ const option = ref({
   xAxis: {
     type: 'category',
     axisTick: { show: false },
+    data: allData.map((item) => item.name),
   },
   yAxis: {
     type: 'value',
     splitLine: { show: false },
     axisLine: { show: true },
-    data: allData.map((item) => item.name),
   },
   dataZoom: {
     show: false,

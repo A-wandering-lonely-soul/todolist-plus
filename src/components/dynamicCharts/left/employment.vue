@@ -1,7 +1,7 @@
 <template>
   <XxtCardBorder>
     <div class="es-block">
-      <Title>地区销量趋势</Title>
+      <Title>不同行业国企就业人数</Title>
       <div style="width: 100%; height: calc(100% - var(--el-title-height))">
         <Chart :option="option" />
       </div>
@@ -15,7 +15,7 @@ import Title from '../Title.vue';
 import Chart from '@/components/chart/Chart.vue';
 import allData from '@/assets/data/trend.json';
 import * as echarts from 'echarts';
-const choiceType = 'map';
+const choiceType = 'dimensions';
 const option = ref({
   grid: {
     left: '3%',
@@ -29,7 +29,7 @@ const option = ref({
   },
   legend: {
     left: 20,
-    top: '8%',
+    top: '0%',
     icon: 'circle',
     data: allData[choiceType].data,
     textStyle: {
@@ -39,7 +39,7 @@ const option = ref({
   xAxis: {
     type: 'category',
     boundaryGap: false,
-    data: allData.common.month,
+    data: allData.common.year,
   },
   yAxis: {
     type: 'value',

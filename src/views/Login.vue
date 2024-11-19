@@ -379,7 +379,7 @@ const register = () => {
   width: 100%;
   height: 100%;
   color: #fff;
-  background-image: url(https://ts1.cn.mm.bing.net/th/id/R-C.fe2cb92a9809a66b8ea0b5046d1ed9aa?rik=%2fV8LlDUqV6ALpg&riu=http%3a%2f%2fimg.pconline.com.cn%2fimages%2fupload%2fupc%2ftx%2fwallpaper%2f1308%2f17%2fc2%2f24561028_1376699679461.jpg&ehk=B6h1WTUP7MXtzYqgUfEXmcFR2epNpUivg8Ev2udBFXA%3d&risl=&pid=ImgRaw&r=0);
+  background-image: url(/static/loginImage/arola.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -542,6 +542,12 @@ const register = () => {
   /* 设置动画效果 */
   animation-delay: 0.7s;
   /* 设置动画延迟时间 */
+}
+p {
+  -webkit-text-stroke: 1px #8deeff;
+  color: rgb(72, 24, 116);
+  font-size: 25px;
+  line-height: 40px;
 }
 
 /* 设置首页图片的样式 */
@@ -839,13 +845,6 @@ const register = () => {
     left: 140px;
     top: 110px;
   }
-}
-
-p {
-  -webkit-text-stroke: 1px #8e87c3;
-  color: rgb(72, 24, 116);
-  font-size: 25px;
-  line-height: 40px;
 }
 
 .textinput {

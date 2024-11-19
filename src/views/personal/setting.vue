@@ -338,7 +338,7 @@ const toggleMoon = () => {
                 <p>使用nginx反向代理获取储存文件</p>
                 <p>登录使用jwk校验</p>
                 <p>后台服务通过nginx部署</p>
-                <p>数据库MySQL通过宝塔一键部署</p>
+                <p>使用MySQL存取数据</p>
               </div>
             </div>
             <div class="pageImage">

@@ -78,8 +78,7 @@ const initAMap = () => {
 .container {
   height: 100%;
   width: 100%;
-  // background-color: #0000006e;
-  // color: #fff;
+  color: #000;
   opacity: 0.6;
   display: flex;
   flex-direction: column;

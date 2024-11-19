@@ -14,42 +14,22 @@
 import { ref } from 'vue';
 const indiArr = ref([
   {
-    title: '销售数据',
+    title: '城市分部',
     type: 'four',
     color: 'color2',
   },
   {
-    title: '库存数据',
-    type: 'four',
-    color: 'color2',
-  },
-  {
-    title: '顾客数据',
+    title: '就业数据',
     type: 'four',
     color: 'color3',
   },
   {
-    title: '财务数据',
-    type: 'four',
-    color: 'color3',
-  },
-  {
-    title: '营销数据',
+    title: '魅力数据',
     type: 'four',
     color: 'color4',
   },
   {
-    title: '员工数据',
-    type: 'six',
-    color: 'color1',
-  },
-  {
-    title: '竞争数据',
-    type: 'six',
-    color: 'color1',
-  },
-  {
-    title: '市场数据',
+    title: '天气数据',
     type: 'six',
     color: 'color1',
   },
