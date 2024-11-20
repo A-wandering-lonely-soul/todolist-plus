@@ -228,36 +228,16 @@ const toggleMoon = () => {
                 </div>
               </div>
               <div class="Btn">
-                <button @click="toMyBlog">+关注</button>
+                <button @click="toMyBlog">
+                  <el-icon style="vertical-align: middle; margin-right: 5px">
+                    <Plus />
+                  </el-icon>
+                  关注
+                </button>
                 <button>
-                  <span>
-                    <svg
-                      t="1683123965373"
-                      class="icon"
-                      viewBox="0 0 1024 1024"
-                      version="1.1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      p-id="2236"
-                      width="200"
-                      height="200"
-                    >
-                      <path
-                        d="M887.808 841.04533332H129.024c-35.84 0-65.024-29.184-65.024-65.024V219.98933332c0-35.84 29.184-65.024 65.024-65.024h759.296c35.84 0 65.024 29.184 65.024 65.024v556.032c-0.512 35.84-29.696 65.024-65.536 65.024zM129.024 206.16533332c-7.68 0-13.824 6.144-13.824 13.824v556.032c0 7.68 6.144 13.824 13.824 13.824h759.296c7.68 0 13.824-6.144 13.824-13.824V219.98933332c0-7.68-6.144-13.824-13.824-13.824H129.024z"
-                        fill="#000000"
-                        p-id="2237"
-                      />
-                      <path
-                        d="M486.912 555.86133332L203.264 272.21333332c-10.24-10.24-10.24-26.112 0-36.352s26.112-10.24 36.352 0l283.648 283.648c10.24 10.24 10.24 26.112 0 36.352-10.24 9.728-26.624 9.728-36.352 0z"
-                        fill="#000000"
-                        p-id="2238"
-                      />
-                      <path
-                        d="M813.568 271.18933332l-283.648 283.648c-10.24 10.24-26.112 10.24-36.352 0s-10.24-26.112 0-36.352l283.648-283.648c10.24-10.24 26.112-10.24 36.352 0 9.728 10.24 9.728 26.624 0 36.352z"
-                        fill="#000000"
-                        p-id="2239"
-                      />
-                    </svg>
-                  </span>
+                  <el-icon style="vertical-align: middle; margin-right: 5px">
+                    <Message />
+                  </el-icon>
                   <span @click="toMyBlog">私信</span>
                 </button>
               </div>
@@ -729,17 +709,16 @@ const toggleMoon = () => {
   font-weight: 400;
   opacity: 0.5;
 }
-.card .content_card .details .Btn button svg {
-  text-align: center;
-  width: 1rem;
-  height: 1rem;
-}
+
 .card .content_card .details .Btn {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 .card .content_card .details .Btn button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0.75rem 1.25rem;
   border-radius: 0.75rem;
   border: none;
