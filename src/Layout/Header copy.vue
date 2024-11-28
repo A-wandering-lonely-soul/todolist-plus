@@ -8,10 +8,6 @@
             <Plus />
           </el-icon>
         </div>
-        <XxtImgpond
-          v-model:uploadVisible="dialogVisible"
-          v-model:imageUrl="imageUrl"
-        ></XxtImgpond>
         <el-dropdown class="blogLink" @command="handleClick">
           <span class="el-dropdown-link">
             NEXT博客
@@ -36,6 +32,25 @@
       </div>
     </template>
   </el-page-header>
+  <el-dialog
+    v-model="dialogVisible"
+    title="修改头像"
+    width="30%"
+    :before-close="closeAvatar"
+  >
+    <el-upload
+      class="avatar-uploader"
+      action="#"
+      :show-file-list="false"
+      :before-upload="beforeAvatarUpload"
+      :http-request="uploadImg"
+    >
+      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+      <el-icon v-else class="avatar-uploader-icon">
+        <Plus />
+      </el-icon>
+    </el-upload>
+  </el-dialog>
 </template>
 <script lang="ts" setup>
 import router from '@/router';
@@ -43,8 +58,10 @@ import { ElNotification as notify } from 'element-plus';
 import { ref, computed, onBeforeMount } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
-import { useHomeStore, userInfoStore } from '@/stores';
+import type { UploadProps } from 'element-plus';
+import { useHomeStore, userInfoStore, useAccountStore } from '@/stores';
 import { storeToRefs } from 'pinia';
+import axios from 'axios';
 const user = userInfoStore();
 const userInfo = storeToRefs(user);
 //打开头像弹窗
@@ -52,14 +69,69 @@ const dialogVisible = ref(false);
 const openAvatar = () => {
   dialogVisible.value = true;
 };
-
+//关闭弹窗
+const closeAvatar = () => {
+  dialogVisible.value = false;
+};
 //包含ip和头像、用户名、创建时间
 const Info = computed(() => {
   return userInfo.userInfo.value || {};
 });
-
+const home = useHomeStore();
+const account = useAccountStore();
 const imageUrl = ref('');
+const uploadImg = async (data: any) => {
+  let file = data.file;
+  new Promise((rev, rej) => {
+    const form = new FormData();
+    form.append('avatar', file);
+    axios
+      .post('/api/getimg', form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-token': window.localStorage.getItem('x-token'),
+        },
+      })
+      .then(async (res) => {
+        imageUrl.value = res.data.data; //图片回显
+        let userData = {
+          id: Info.value.id,
+          avatarUrl: res.data.data,
+        };
+        let value: any = await account.upLoadAvatar(userData);
+        if (value.data.success) {
+          let personalDada: any = await account.getUserById({
+            userId: Info.value.id,
+          }); //重新获取用户信息
+          console.log('personalDada', personalDada);
 
+          user.setUserInfo(personalDada.data.data);
+          ElMessage({
+            type: 'success',
+            message: value.data.msg,
+          });
+        } else {
+          ElMessage({
+            type: 'error',
+            message: '更新图片失败',
+          });
+        }
+
+        return rev(res);
+      })
+      .catch((error) => rej(error));
+  });
+};
+const beforeAvatarUpload: InstanceType<typeof UploadProps> = (rawFile: any) => {
+  if (rawFile.type !== 'image/jpeg') {
+    ElMessage.error('Avatar picture must be JPG format!');
+    return false;
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error('Avatar picture size can not exceed 2MB!');
+    return false;
+  }
+  return true;
+};
 const blogAddress1 = `https://agnw.me:8080?token=${localStorage.getItem(
   'x-token'
 )}`;

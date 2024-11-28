@@ -47,7 +47,7 @@ onMounted(() => {
           <template #title>
             <img
               class="smallIcon"
-              :src="`static/${item.meta.icon}.jpg`"
+              :src="`/static/${item.meta.icon}.jpg`"
               alt="item2.meta.altText as string"
             />
             <span style="margin: 0 10px">{{ item.meta.title }}</span>
@@ -57,7 +57,7 @@ onMounted(() => {
               <el-menu-item :index="item2.path">
                 <img
                   class="smallIcon"
-                  :src="`static/${item2.meta.icon}.jpg`"
+                  :src="`/static/${item2.meta.icon}.jpg`"
                   alt="item2.meta.altText as string"
                 />
                 <span style="margin: 0 10px">
@@ -70,7 +70,7 @@ onMounted(() => {
         <el-menu-item v-else :index="item.path">
           <img
             class="smallIcon"
-            :src="`static/${item.meta.icon}.jpg`"
+            :src="`/static/${item.meta.icon}.jpg`"
             alt="item2.meta.altText as string"
           />
           <template #title>

@@ -1,4 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import {
+  createRouter,
+  createWebHashHistory,
+  createWebHistory,
+} from 'vue-router';
 
 export const staticRouter = [
   {
@@ -113,7 +117,8 @@ const router = createRouter({
   scrollBehavior() {
     return { top: 0, behavior: 'smooth' };
   },
-  history: createWebHashHistory(),
+  // history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: [
     {
       path: '/:catchALL(.*)',

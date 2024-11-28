@@ -1,10 +1,24 @@
 <script setup>
-import { ref, nextTick, onBeforeUnmount } from 'vue';
+import { ref, nextTick, onBeforeUnmount, computed, toRefs } from 'vue';
 import { ElMessage } from 'element-plus';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
 import axios from 'axios';
-import { userInfoStore } from '@/stores';
+import { userInfoStore, useAccountStore } from '@/stores';
+import { storeToRefs } from 'pinia';
+const account = useAccountStore();
+const props = defineProps({
+  uploadVisible: Boolean,
+  imageUrl: String,
+});
+const { uploadVisible, imageUrl } = toRefs(props);
+const emit = defineEmits(['update:uploadVisible', 'update:imageUrl']);
+const handleBeforeClose = () => {
+  emit('update:uploadVisible', false);
+  clearImage();
+  uploadImage.value = null;
+  previewImage.value = null;
+};
 const user = userInfoStore();
 const userInfo = storeToRefs(user);
 //包含ip和头像、用户名、创建时间
@@ -14,13 +28,11 @@ const Info = computed(() => {
 const imageSrc = ref(null);
 const croppedImageSrc = ref(null);
 const dialogTitle = ref({ imgTitle: '上传图片' });
-const dialogVisible = ref({ imgCropperVisible: true });
 const fileList = ref([]);
 
 const uploadImage = ref(null);
 const previewImage = ref(null);
 let cropper = null;
-const attraction_detail = ref({ imageUrl: '' });
 const beforeUpload = (file) => {
   const isImage = file.type.startsWith('image/');
   if (!isImage) {
@@ -91,11 +103,12 @@ const uploadCroppedImage = async () => {
     });
 
     if (response.data.success) {
-      dialogVisible.value.imgVisible = false;
-      attraction_detail.value.imageUrl = response.data.data;
+      emit('update:uploadVisible', false);
+      emit('update:imageUrl', response.data.data);
+      handleBeforeClose();
       let userData = {
         id: Info.value.id,
-        avatarUrl: res.data.data,
+        avatarUrl: response.data.data,
       };
       let value = await account.upLoadAvatar(userData);
       if (value.data.success) {
@@ -108,17 +121,12 @@ const uploadCroppedImage = async () => {
           type: 'success',
           message: value.data.msg,
         });
-      } else {
-        ElMessage({
-          type: 'error',
-          message: '更新图片失败',
-        });
       }
     } else {
       ElMessage.error(response.data.msg || '上传失败');
     }
   } catch (error) {
-    ElMessage.error('上传失败');
+    ElMessage.error('更新头像失败');
   }
 };
 
@@ -146,7 +154,7 @@ onBeforeUnmount(() => {
     <el-dialog
       :title="dialogTitle.imgTitle"
       width="800px"
-      v-model="dialogVisible.imgCropperVisible"
+      v-model="uploadVisible"
       :before-close="handleBeforeClose"
     >
       <div
@@ -212,24 +220,22 @@ onBeforeUnmount(() => {
         action="https://agnw.me:3000/api/getimg"
         multiple
         v-model:file-list="fileList"
-        limit="1"
+        :limit="1"
         :show-file-list="false"
         :before-upload="beforeUpload"
       >
         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
         <div class="el-upload__text">
-          Drop file here or <em>click to upload</em>
+          拖动图片至此 或者 <em>点击此处选择路径</em>
         </div>
         <template #tip>
-          <div class="el-upload__tip">
-            jpg/png files with a size less than 500kb
-          </div>
+          <div class="el-upload__tip">jpg/png 格式的文件小于 500kb</div>
         </template>
       </el-upload>
     </el-dialog>
   </div>
   <div>
-    <img :src="BASE_URL + attraction_detail.imageUrl" alt="" />
+    <!-- <img :src="imageUrl" alt="" /> -->
   </div>
 </template>
 <style lang="less" scoped>
