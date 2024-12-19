@@ -1,255 +1,233 @@
-<script setup>
-import { ref, nextTick, onBeforeUnmount } from 'vue';
-import { ElMessage } from 'element-plus';
-import Cropper from 'cropperjs';
-import 'cropperjs/dist/cropper.css';
-import axios from 'axios';
-import { userInfoStore } from '@/stores';
-const user = userInfoStore();
-const userInfo = storeToRefs(user);
-//包含ip和头像、用户名、创建时间
-const Info = computed(() => {
-  return userInfo.userInfo.value || {};
-});
-const imageSrc = ref(null);
-const croppedImageSrc = ref(null);
-const dialogTitle = ref({ imgTitle: '上传图片' });
-const dialogVisible = ref({ imgCropperVisible: true });
-const fileList = ref([]);
+<template>
+  <div class="pageBox">
+    <div class="muyu">
+      <div class="wrap">
+        <img
+          src="@/assets/muyu/my01.png"
+          alt="muyu"
+          ref="muyuRef"
+          class="my"
+          @click="play"
+        />
+        <img
+          src="@/assets/muyu/my02.png"
+          alt="muyugui"
+          :class="isAuto ? 'myg2' : 'myg'"
+        />
+        <div ref="eleAdd"></div>
+        <div class="autobtn" @click="autoPlay">
+          {{ !isAuto ? '自动积累功德' : '手动积累功德' }}
+        </div>
+      </div>
+      <!--木鱼声-->
+      <audio ref="audioMusic1">
+        <source src="@/assets/muyu/1.mp3" />
+      </audio>
+      <!--1s延迟木鱼声-->
+      <audio ref="audioMusic2">
+        <source src="@/assets/muyu/2.mp3" />
+      </audio>
+    </div>
+    <div class="total">功德：{{ merit }}</div>
+  </div>
+</template>
 
-const uploadImage = ref(null);
-const previewImage = ref(null);
-let cropper = null;
-const attraction_detail = ref({ imageUrl: '' });
-const beforeUpload = (file) => {
-  const isImage = file.type.startsWith('image/');
-  if (!isImage) {
-    ElMessage.error('只能上传图片文件');
-    return false;
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useUserStore } from '@/stores';
+import { storeToRefs } from 'pinia';
+const userStore = useUserStore();
+const isAuto = ref(false); // false 手动 true 自动
+const intervalFlag = ref(null);
+const eleAdd = ref(null);
+const audioMusic1 = ref(null);
+const audioMusic2 = ref(null);
+const muyuRef = ref(null);
+const { merit } = storeToRefs(userStore);
+// 自动/手动
+const play = () => {
+  if (isAuto.value) {
+    audioMusic2.value.currentTime = 0;
+    audioMusic2.value.play();
+    userStore.setMerit(+1);
+
+    let eleDiv = document.createElement('div');
+    eleDiv.classList.add('show2');
+    const add = eleAdd.value.appendChild(eleDiv);
+
+    setTimeout(() => {
+      eleAdd.value?.removeChild(add);
+    }, 4000);
+  } else {
+    audioMusic1.value.currentTime = 0;
+    audioMusic1.value.play();
+    userStore.setMerit(+1);
+
+    let eleDiv = document.createElement('div');
+    eleDiv.classList.add('show1');
+    const add = eleAdd.value.appendChild(eleDiv);
+
+    setTimeout(() => {
+      eleAdd.value?.removeChild(add);
+    }, 2000);
   }
-  const reader = new FileReader();
-  reader.onload = async (e) => {
-    imageSrc.value = e.target.result;
-    await nextTick();
-    initCropper();
-  };
-  reader.readAsDataURL(file);
-  return false;
 };
 
-const initCropper = () => {
-  if (cropper) {
-    cropper.destroy();
-  }
-  if (!uploadImage.value) return;
+const autoPlay = () => {
+  if (isAuto.value) {
+    isAuto.value = false;
+    clearInterval(intervalFlag.value);
 
-  cropper = new Cropper(uploadImage.value, {
-    aspectRatio: 1,
-    viewMode: 1,
+    // audioMusic1.value.play(); //自动的音乐
+    audioMusic1.value.pause(); //音乐停止
+  } else {
+    isAuto.value = true;
+    play();
+    //setInterval是两秒后开始执行，所以要先执行一次
+    intervalFlag.value = setInterval(play, 2000);
+  }
+};
+
+// 兼容移动端 active
+const mobileActive = () => {
+  muyuRef.value.addEventListener('touchstart', () => {
+    muyuRef.value.classList.add('active');
+  });
+
+  muyuRef.value.addEventListener('touchend', () => {
+    muyuRef.value.classList.remove('active');
   });
 };
 
-const cropImage = () => {
-  if (cropper) {
-    const canvas = cropper.getCroppedCanvas({
-      width: 200,
-      height: 200,
-    });
-    croppedImageSrc.value = canvas.toDataURL('image/png');
-  }
-};
-
-const clearImage = () => {
-  imageSrc.value = null;
-  croppedImageSrc.value = null;
-  fileList.value = [];
-  if (cropper) {
-    cropper.destroy();
-    cropper = null;
-  }
-};
-
-const uploadCroppedImage = async () => {
-  if (!croppedImageSrc.value) {
-    ElMessage.error('请先裁剪图片');
-    return;
-  }
-  try {
-    const blob = dataURLToBlob(croppedImageSrc.value);
-    const form = new FormData();
-    // form.append('avatar', file);
-    form.append('avatar', blob, 'avatar.png'); // 注意这里的表单字段名应为'file'
-    // const response = await axios.post(
-    //   'http://localhost:8888/v1/file/singleUploadFile',
-    //   formData
-    // );
-    const response = await axios.post('/api/getimg', form, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'x-token': window.localStorage.getItem('x-token'),
-      },
-    });
-
-    if (response.data.success) {
-      dialogVisible.value.imgVisible = false;
-      attraction_detail.value.imageUrl = response.data.data;
-      let userData = {
-        id: Info.value.id,
-        avatarUrl: res.data.data,
-      };
-      let value = await account.upLoadAvatar(userData);
-      if (value.data.success) {
-        let personalDada = await account.getUserById({
-          userId: Info.value.id,
-        }); //重新获取用户信息
-
-        user.setUserInfo(personalDada.data.data);
-        ElMessage({
-          type: 'success',
-          message: value.data.msg,
-        });
-      } else {
-        ElMessage({
-          type: 'error',
-          message: '更新图片失败',
-        });
-      }
-    } else {
-      ElMessage.error(response.data.msg || '上传失败');
-    }
-  } catch (error) {
-    ElMessage.error('上传失败');
-  }
-};
-
-const dataURLToBlob = (dataURL) => {
-  const arr = dataURL.split(',');
-  const mime = arr[0].match(/:(.*?);/)[1];
-  const bstr = atob(arr[1]);
-  let n = bstr.length;
-  const u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  return new Blob([u8arr], { type: mime });
-};
-
-onBeforeUnmount(() => {
-  if (cropper) {
-    cropper.destroy();
-  }
+onMounted(() => {
+  mobileActive();
+});
+onUnmounted(() => {
+  clearInterval(intervalFlag.value);
 });
 </script>
 
-<template>
-  <div>
-    <el-dialog
-      :title="dialogTitle.imgTitle"
-      width="800px"
-      v-model="dialogVisible.imgCropperVisible"
-      :before-close="handleBeforeClose"
-    >
-      <div
-        v-if="imageSrc"
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
-      >
-        <!-- Display cropped image or original image if not cropped with background -->
-        <div
-          style="
-            width: 50%;
-            padding: 10px;
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          "
-        >
-          <img
-            ref="previewImage"
-            :src="croppedImageSrc || imageSrc"
-            alt="Preview Image"
-            style="max-width: 100%; height: auto"
-          />
-        </div>
-
-        <!-- Upload image section without background -->
-        <div
-          style="
-            width: 50%;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          "
-        >
-          <img
-            ref="uploadImage"
-            :src="imageSrc"
-            alt="Source Image"
-            style="max-width: 100%; height: auto"
-          />
-        </div>
-      </div>
-
-      <!-- Centered buttons -->
-      <div v-if="imageSrc" style="margin-top: 20px; text-align: center">
-        <el-button type="primary" @click="cropImage">裁剪图片</el-button>
-        <el-button @click="clearImage">重新选择</el-button>
-        <el-button type="primary" @click="uploadCroppedImage"
-          >上传头像</el-button
-        >
-      </div>
-
-      <!-- Conditional display for upload component -->
-      <el-upload
-        v-if="!imageSrc"
-        class="upload-demo"
-        drag
-        action="https://agnw.me:3000/api/getimg"
-        multiple
-        v-model:file-list="fileList"
-        limit="1"
-        :show-file-list="false"
-        :before-upload="beforeUpload"
-      >
-        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-        <div class="el-upload__text">
-          Drop file here or <em>click to upload</em>
-        </div>
-        <template #tip>
-          <div class="el-upload__tip">
-            jpg/png files with a size less than 500kb
-          </div>
-        </template>
-      </el-upload>
-    </el-dialog>
-  </div>
-  <div>
-    <img :src="BASE_URL + attraction_detail.imageUrl" alt="" />
-  </div>
-</template>
 <style lang="less" scoped>
-.upload-demo .el-upload {
-  display: block;
-  width: 100%;
-  margin-bottom: 20px;
+.pageBox {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('@/assets/muyu/back.jpg');
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  .total {
+    color: #909090;
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 24px;
+  }
+}
+@keyframes run {
+  from {
+    transform: rotateZ(30deg);
+  }
+
+  to {
+    transform: rotateZ(12deg);
+  }
 }
 
-.el-upload__text {
-  color: #606266;
-  font-size: 14px;
-  line-height: 22px;
-  margin-top: 5px;
+.muyu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .wrap {
+    width: 600px;
+    height: 500px;
+    position: relative;
+    transform: translate(0, -30%);
+    .my {
+      width: 400px;
+      position: absolute;
+      bottom: 75px;
+      left: 100px;
+      &:active + .myg {
+        transform: rotateZ(12deg);
+        transition: 0.05s;
+      }
+    }
+    .myg {
+      height: 100px;
+      position: absolute;
+      left: 280px;
+      top: 80px;
+      transform: rotateZ(30deg);
+      transition: transform 0.5s cubic-bezier(0.85, 0.1, 0.89, 0.65);
+    }
+
+    .myg2 {
+      height: 100px;
+      position: absolute;
+      left: 280px;
+      top: 80px;
+      transform: rotateZ(30deg);
+      animation: run 1s alternate infinite cubic-bezier(0.85, 0.1, 0.89, 0.65);
+    }
+    .autobtn {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+
+      padding: 8px 12px;
+      border-radius: 5px;
+      background-color: #cecece;
+      color: #000;
+      font-size: 16px;
+      cursor: pointer;
+      user-select: none;
+
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      &:hover {
+        background-color: #888;
+      }
+      &:active {
+        background-color: #444;
+      }
+    }
+  }
+}
+</style>
+
+<style lang="less">
+@keyframes run1 {
+  from {
+    top: 150px;
+  }
+
+  to {
+    top: -100px;
+  }
+}
+.show1::after {
+  content: '功德+1';
+  color: #cecece;
+  font-size: 28px;
+  position: absolute;
+  top: 150px;
+  left: 240px;
+  animation: run1 2s 0.1s ease-in;
 }
 
-.el-upload__tip {
-  color: #909399;
-  font-size: 12px;
-  line-height: 1.5;
-  margin-top: 7px;
+.show2::after {
+  content: '功德+1';
+  color: #cecece;
+  font-size: 28px;
+  position: absolute;
+  top: 180px;
+  left: 240px;
+  animation: run1 2s 1s ease-in;
 }
 </style>

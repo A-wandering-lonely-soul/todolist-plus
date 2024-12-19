@@ -16,8 +16,19 @@ import 'element-plus/dist/index.css';
 import 'element-plus/theme-chalk/dark/css-vars.css'; //暗黑主题样式
 import '@/style/dark-var.less'; //自定义主题样式
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+// 数据持久化
+import piniaPluginPersist from 'pinia-plugin-persist';
 const pinia = createPinia();
+pinia.use(piniaPluginPersist);
 const app = createApp(App);
+
+// 为了解决setup语法下不支持 .$reset() 方法的问题
+pinia.use(({ store }) => {
+  const initialState = JSON.parse(JSON.stringify(store.$state));
+  store.$reset = () => {
+    store.$state = JSON.parse(JSON.stringify(initialState));
+  };
+});
 
 app.use(XxtUI);
 app.use(ElementPlus);
