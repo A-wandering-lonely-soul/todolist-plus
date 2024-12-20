@@ -39,3 +39,13 @@ export interface userType {
   avatar: string | undefined;
   id?: string | number;
 }
+
+export interface loginData {
+  username: string;
+  password: string;
+}
+export interface registData {
+  username: string;
+  password: string;
+  password2: string;
+}

@@ -20,8 +20,19 @@ export const useUserStore = defineStore(
   {
     persist: {
       enabled: true, // 开启缓存  默认会存储在本地localstorage
-      storage: sessionStorage, // 缓存使用方式
-      paths: ['merit'], // 需要缓存键
+      strategies: [
+        {
+          key: 'userStore',
+          storage: sessionStorage, // ✅ 正确写法
+          paths: ['merit'],
+        },
+      ],
+      // strategies: [ //自定义key和存储方式
+      //   {
+      //     key: 'indexStore',
+      //     storage: localStorage //可以选择对应的存储形式（localStorage或者sessionStroage）
+      //   }
+      // ]
     },
   }
 );
