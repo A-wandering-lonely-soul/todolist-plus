@@ -1,27 +1,22 @@
-# todolist
+# 项目介绍
 
-This template should help get you started developing with Vue 3 in Vite.
+一个基于后台管理模版衍生的vue3前端项目，本来是打算做一个多人协助的待办列表，后来想到啥就加啥，主要还是用于管理博客和代办事项。用户名admin，密码123456，数据我备份了，需要测试的别一次修改太多数据，服务器用的小水管，经不起折腾。
 
-## Recommended IDE Setup
+## 推荐的配置
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+node 18.16.1
 
-## Type Support for `.vue` Imports in TS
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## 用到的主要技术
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+element、echart、axios、less、pinia、typescript
 
-## Customize configuration
+## 个人配置
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+把vite.config文件里代理的后端地址改下即可
 
-## Project Setup
+## 运行项目
 
 ```sh
 npm install
@@ -33,13 +28,13 @@ npm install
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### 打包
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### 语法规范
 
 ```sh
 npm run lint
