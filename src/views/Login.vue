@@ -690,7 +690,7 @@ p {
 }
 //水滴表单
 .loginMain {
-  // position: relative;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;

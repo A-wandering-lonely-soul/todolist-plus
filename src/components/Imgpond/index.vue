@@ -27,7 +27,7 @@ const Info = computed(() => {
 });
 const imageSrc = ref(null);
 const croppedImageSrc = ref(null);
-const dialogTitle = ref({ imgTitle: '上传图片' });
+const dialogTitle = ref({ imgTitle: '上传头像' });
 const fileList = ref([]);
 
 const uploadImage = ref(null);
@@ -153,7 +153,7 @@ onBeforeUnmount(() => {
   <div>
     <el-dialog
       :title="dialogTitle.imgTitle"
-      width="800px"
+      width="500px"
       v-model="uploadVisible"
       :before-close="handleBeforeClose"
     >

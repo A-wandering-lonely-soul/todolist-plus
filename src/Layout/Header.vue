@@ -1,5 +1,5 @@
 <template>
-  <el-page-header :icon="null" title="todoList" @back="onBack">
+  <el-page-header :icon="null" title="待办列表" @back="onBack">
     <template #content>
       <div class="sign">
         <div @click="openAvatar" class="headerAvatar">
@@ -12,24 +12,25 @@
           v-model:uploadVisible="dialogVisible"
           v-model:imageUrl="imageUrl"
         ></XxtImgpond>
+        <div class="username">{{ Info.username }}</div>
+      </div>
+    </template>
+    <template #extra>
+      <div style="display: flex; align-items: center">
         <el-dropdown class="blogLink" @command="handleClick">
           <span class="el-dropdown-link">
-            NEXT博客
+            私人博客
             <el-icon class="el-icon--right">
               <arrow-down />
             </el-icon>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item :command="1"> 1.0 </el-dropdown-item>
+              <el-dropdown-item :command="1">1.0</el-dropdown-item>
               <el-dropdown-item :command="2">2.0</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-      </div>
-    </template>
-    <template #extra>
-      <div class="flex items-center">
         <el-button type="primary" class="ml-2" @click="loginOut"
           >退出登录</el-button
         >
@@ -81,7 +82,7 @@ const onBack = () => {
   console.log('router', router);
 
   if (String(router.currentRoute.value.path) == '/todo/list') {
-    router.go(0);
+    // router.go(0);
     notify('已在当前页面');
   } else {
     router.push('/todo/list');
@@ -98,6 +99,11 @@ onBeforeMount(() => {
 });
 </script>
 <style scoped lang="less">
+:deep(.el-page-header__title) {
+  &:hover {
+    color: #409eff;
+  }
+}
 .el-tooltip__trigger:focus-visible {
   outline: unset;
 }
@@ -106,7 +112,7 @@ onBeforeMount(() => {
 }
 .sign {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
   min-height: 45px;
   .headerAvatar {
@@ -116,6 +122,10 @@ onBeforeMount(() => {
       height: 35px;
       display: block;
     }
+  }
+  .username {
+    color: var(--title-color);
+    padding: 0 10px;
   }
 }
 .avatar-uploader {
@@ -161,7 +171,8 @@ onBeforeMount(() => {
   padding: 0.1em;
 }
 .blogLink {
-  margin: 0.2em;
+  margin-right: 1.2em;
+  padding: 0.2em;
   color: var(--title-color);
 }
 </style>
